@@ -22,6 +22,8 @@ namespace WiiBoxing3D
         SpriteBatch spriteBatch;
         GraphicsDevice device;
 
+        GamePlay gamePlay;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -41,6 +43,8 @@ namespace WiiBoxing3D
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             Window.Title = "Wii Boxing 3D";
+
+            gamePlay = new GamePlay(graphics);
 
             base.Initialize();
         }
@@ -77,7 +81,7 @@ namespace WiiBoxing3D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            gamePlay.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -90,7 +94,7 @@ namespace WiiBoxing3D
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            gamePlay.Draw(gameTime);
 
             base.Draw(gameTime);
         }
