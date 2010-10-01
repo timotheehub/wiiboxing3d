@@ -6,10 +6,10 @@
       <TargetPlatform>Windows</TargetPlatform>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\Wii Boxing 3D\WiiBoxing\Content\</RootDirectory>
-      <LoggerRootDirectory>D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\Wii Boxing 3D\WiiBoxing\</LoggerRootDirectory>
-      <IntermediateDirectory>D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\Wii Boxing 3D\WiiBoxing\Content\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\Wii Boxing 3D\WiiBoxing\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\wiiboxing\WiiBoxing\Content\</RootDirectory>
+      <LoggerRootDirectory>D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\wiiboxing\WiiBoxing\</LoggerRootDirectory>
+      <IntermediateDirectory>D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\wiiboxing\WiiBoxing\Content\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\wiiboxing\WiiBoxing\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
