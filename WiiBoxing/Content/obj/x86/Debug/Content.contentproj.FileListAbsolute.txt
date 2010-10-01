@@ -1,0 +1,2 @@
+C:\Users\Standard\Documents\Visual Studio 2008\Projects\WindowsGame1\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\Wii Boxing 3D\WiiBoxing\Content\obj\x86\Debug\ResolveAssemblyReference.cache
