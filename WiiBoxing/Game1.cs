@@ -18,17 +18,45 @@ namespace WiiBoxing3D
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
+        // Graphics 
+        public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GraphicsDevice device;
+        SpriteFont fontTimesNewRoman;
 
+        // Screens
+        public enum ScreenState { GAME_PLAY, MENU };
+        public ScreenState screenState;
         GamePlay gamePlay;
 
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            gamePlay = new GamePlay(this);
+
             Content.RootDirectory = "Content";
         }
+
+
+        /// <summary>
+        /// Write some text.
+        /// </summary>
+        public void DrawText(Vector2 position, string text, Color color)
+        {
+            // Find the center of the string
+            Vector2 FontOrigin = fontTimesNewRoman.MeasureString(text) / 2;
+
+            // Draw the string
+            spriteBatch.DrawString(fontTimesNewRoman, text, position, color,
+                0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
+        }
+
+
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -44,10 +72,12 @@ namespace WiiBoxing3D
             graphics.ApplyChanges();
             Window.Title = "Wii Boxing 3D";
 
-            gamePlay = new GamePlay(graphics);
+            screenState = ScreenState.GAME_PLAY;
 
             base.Initialize();
         }
+
+
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -59,7 +89,13 @@ namespace WiiBoxing3D
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            fontTimesNewRoman = Content.Load<SpriteFont>("Fonts\\Times New Roman");
+
+            gamePlay.LoadContent();
         }
+
+
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -69,6 +105,8 @@ namespace WiiBoxing3D
         {
             // TODO: Unload any non ContentManager content here
         }
+
+
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -86,6 +124,8 @@ namespace WiiBoxing3D
             base.Update(gameTime);
         }
 
+
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -93,8 +133,15 @@ namespace WiiBoxing3D
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.RenderState.DepthBufferEnable = true;
+            GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
 
-            gamePlay.Draw(gameTime);
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+
+            if( screenState == ScreenState.GAME_PLAY )
+                gamePlay.Draw(gameTime);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
