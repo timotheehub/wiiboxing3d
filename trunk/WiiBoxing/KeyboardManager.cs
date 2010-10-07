@@ -23,8 +23,7 @@ namespace WiiBoxing3D
         public KeyboardManager(Game1 aGame1)
         {
             oldKeyboardState = new KeyboardState();
-
-            game1 = aGame1; // will be used for the screen state
+            game1 = aGame1;
 
             Console.WriteLine("Keyboard Manager");
         }
