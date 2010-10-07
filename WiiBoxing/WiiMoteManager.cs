@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using WiimoteLib;
 using Microsoft.Xna.Framework;
-
+/*
 namespace WiimoteTest
 {
     class WiimoteTest
@@ -187,3 +187,4 @@ namespace WiimoteTest
         }
     }
 }
+*/

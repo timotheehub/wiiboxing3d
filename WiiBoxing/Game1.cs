@@ -28,6 +28,7 @@ namespace WiiBoxing3D
         public enum ScreenState { GAME_PLAY, MENU };
         public ScreenState screenState;
         GamePlay gamePlay;
+        KeyboardManager keyboardManager;
 
 
 
@@ -38,6 +39,7 @@ namespace WiiBoxing3D
         {
             graphics = new GraphicsDeviceManager(this);
             gamePlay = new GamePlay(this);
+            keyboardManager = new KeyboardManager(this);
 
             Content.RootDirectory = "Content";
         }
@@ -119,6 +121,7 @@ namespace WiiBoxing3D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            keyboardManager.Update(gameTime);
             gamePlay.Update(gameTime);
 
             base.Update(gameTime);

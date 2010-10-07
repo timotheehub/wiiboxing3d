@@ -12,3 +12,4 @@ D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\wiibox
 D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\wiiboxing\WiiBoxing\obj\x86\Debug\WiiBoxing3D.pdb
 D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\wiiboxing\WiiBoxing\bin\x86\Debug\Content\Models\BOX.xnb
 D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\wiiboxing\WiiBoxing\bin\x86\Debug\Content\Fonts\Times New Roman.xnb
+D:\Backup\Mes Documents\School\CS3249 - Elements of User Interface Design\wiiboxing\WiiBoxing\bin\x86\Debug\WiimoteLib.dll
