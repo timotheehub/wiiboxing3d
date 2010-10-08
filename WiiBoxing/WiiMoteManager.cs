@@ -19,6 +19,11 @@ namespace WiiBoxing3D
         Vector3 wiimoteVectors;
         Vector3 nunchukVectors;
         Vector2 nunchukJoystickVectors;
+        Vector2 ir1;
+        Vector2 ir2;
+        Vector2 ir3;
+        Vector2 ir4;
+        Vector2[] irPositions;
 
 
         // Constructor
@@ -29,6 +34,11 @@ namespace WiiBoxing3D
             wiimoteVectors = new Vector3(0.0F, 0.0F, 0.0F);
             nunchukVectors = new Vector3(0.0F, 0.0F, 0.0F);
             nunchukJoystickVectors = new Vector2(0.0F, 0.0F);
+            ir1 = new Vector2(0, 0);
+            ir2 = new Vector2(0, 0);
+            ir3 = new Vector2(0, 0);
+            ir4 = new Vector2(0, 0);
+            irPositions = new Vector2[4] {ir1,ir2,ir3,ir4};
                         
             game1 = aGame1; // will be used for the screen state
 
@@ -48,6 +58,10 @@ namespace WiiBoxing3D
         public Vector2 getNunchukJoystick()
         {
             return nunchukJoystickVectors;
+        }
+        public Vector2[] getIRPositions()
+        {
+            return irPositions;
         }
 
         // Connection
@@ -120,6 +134,13 @@ namespace WiiBoxing3D
         private void wiimote_onChange(WiimoteChangedEventArgs args)
         {
             WiimoteState ws = args.WiimoteState;
+
+            for (int i = 0; i < 4; i++)
+            {
+                irPositions[i].X = ws.IRState.IRSensors[i].RawPosition.X;
+                irPositions[i].Y = ws.IRState.IRSensors[i].RawPosition.Y;
+            }
+
 
             //Update the wiimote vectors
             wiimoteVectors.X = ws.AccelState.Values.X;
