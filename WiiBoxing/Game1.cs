@@ -29,7 +29,7 @@ namespace WiiBoxing3D
         public ScreenState screenState;
         GamePlay gamePlay;
         KeyboardManager keyboardManager;
-
+        WiimoteManager wiimoteManager;
 
 
         /// <summary>
@@ -40,6 +40,7 @@ namespace WiiBoxing3D
             graphics = new GraphicsDeviceManager(this);
             gamePlay = new GamePlay(this);
             keyboardManager = new KeyboardManager(this);
+            wiimoteManager = new WiimoteManager(this);
 
             Content.RootDirectory = "Content";
         }
