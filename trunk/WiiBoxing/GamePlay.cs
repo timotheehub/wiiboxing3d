@@ -18,7 +18,7 @@ namespace WiiBoxing3D
         Game1 game1;
 
         // Camera variables
-        Vector3 cameraPosition = new Vector3(0.0f, -50.0f, 20.0f);
+       // Vector3 cameraPosition = new Vector3(0.0f, -50.0f, 20.0f);
         Vector3 cameraLookAt = new Vector3(0.0f, 0.0f, 0.0f);
         Matrix cameraProjectionMatrix;
         Matrix cameraViewMatrix;
@@ -26,6 +26,9 @@ namespace WiiBoxing3D
         // Object variables
         GameObject aRandomGameObject;
         List<GameObject> gameObjects;
+
+        // Head tracking
+        Vector3 headPosition = new Vector3(0.0f, 0.0f, -50.0f);
 
 
 
@@ -46,18 +49,18 @@ namespace WiiBoxing3D
         {
             // Camera
             cameraViewMatrix = Matrix.CreateLookAt(
-                cameraPosition, cameraLookAt, Vector3.Up);
+               headPosition, cameraLookAt, Vector3.Up);
 
             cameraProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(
                 MathHelper.ToRadians(45.0f), game1.graphics.GraphicsDevice.Viewport.AspectRatio,
                 1.0f, 10000.0f);
-
+            
             // Objects
             gameObjects = new List<GameObject>();
             aRandomGameObject = new GameObject();
-            aRandomGameObject.model = game1.Content.Load<Model>("Models\\Box");
+            aRandomGameObject.model = game1.Content.Load<Model>("Models\\punching_bag");
             aRandomGameObject.rotation = new Vector3(1.57f, 0, 0f);
-            aRandomGameObject.scale = 0.2f;
+            aRandomGameObject.scale = 0.01f;
             gameObjects.Add(aRandomGameObject);
         }
 
