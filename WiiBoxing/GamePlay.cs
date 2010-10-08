@@ -18,8 +18,8 @@ namespace WiiBoxing3D
         Game1 game1;
 
         // Camera variables
-       // Vector3 cameraPosition = new Vector3(0.0f, -50.0f, 20.0f);
-        Vector3 cameraLookAt = new Vector3(0.0f, 0.0f, 0.0f);
+        // Vector3 cameraPosition = new Vector3(0.0f, -50.0f, 20.0f);
+        // Vector3 cameraLookAt = new Vector3(0.0f, 0.0f, 0.0f);
         Matrix cameraProjectionMatrix;
         Matrix cameraViewMatrix;
 
@@ -27,7 +27,7 @@ namespace WiiBoxing3D
         GameObject aRandomGameObject;
         List<GameObject> gameObjects;
 
-        // Head tracking
+        // Head position
         Vector3 headPosition = new Vector3(0.0f, 0.0f, -50.0f);
 
 
@@ -47,19 +47,12 @@ namespace WiiBoxing3D
         /// </summary>
         public void LoadContent()
         {
-            // Camera
-            cameraViewMatrix = Matrix.CreateLookAt(
-               headPosition, cameraLookAt, Vector3.Up);
-
-            cameraProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(
-                MathHelper.ToRadians(45.0f), game1.graphics.GraphicsDevice.Viewport.AspectRatio,
-                1.0f, 10000.0f);
+            UpdateCamera();
             
             // Objects
             gameObjects = new List<GameObject>();
             aRandomGameObject = new GameObject();
             aRandomGameObject.model = game1.Content.Load<Model>("Models\\punching_bag");
-            aRandomGameObject.rotation = new Vector3(1.57f, 0, 0f);
             aRandomGameObject.scale = 0.01f;
             gameObjects.Add(aRandomGameObject);
         }
@@ -70,24 +63,51 @@ namespace WiiBoxing3D
         /// </summary>
         public override void Update(GameTime gameTime)
         {
+            UpdateCamera();
+
             // Keyboard test
             KeyboardState keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                aRandomGameObject.rotation.Y += 0.05f;
+                headPosition.X += 0.5f;
             }
             if (keyboardState.IsKeyDown(Keys.Right))
             {
-                aRandomGameObject.rotation.Y -= 0.05f;
+                headPosition.X -= 0.5f;
             }
             if (keyboardState.IsKeyDown(Keys.Up))
             {
-                aRandomGameObject.rotation.X += 0.05f;
+                headPosition.Z += 0.5f;
             }
             if (keyboardState.IsKeyDown(Keys.Down))
             {
-                aRandomGameObject.rotation.X -= 0.05f;
+                headPosition.Z -= 0.5f;
             }
+        }
+
+
+        /// <summary>
+        /// Update the camera
+        /// </summary>
+        void UpdateCamera()
+        {
+            // Camera
+            cameraViewMatrix = Matrix.CreateLookAt(
+               headPosition, new Vector3(headPosition.X, headPosition.Y, 0), Vector3.UnitY);
+
+            cameraProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(
+                MathHelper.ToRadians(45.0f), game1.graphics.GraphicsDevice.Viewport.AspectRatio,
+                1.0f, 10000.0f);
+            
+            /*float aspectRatio = game1.graphics.GraphicsDevice.Viewport.AspectRatio;
+            float nearestPoint = 0.05f;
+            cameraProjectionMatrix = Matrix.CreatePerspectiveOffCenter(
+                                             nearestPoint * (-.5f * aspectRatio + headPosition.X) / headPosition.Z,
+                                             nearestPoint * (.5f * aspectRatio + headPosition.Y) / headPosition.Z,
+                                             nearestPoint * (-.5f - headPosition.X) / headPosition.Z,
+                                             nearestPoint * (.5f - headPosition.Y) / headPosition.Z,
+                                             nearestPoint, 1000.0f);*/
+            
         }
 
 
