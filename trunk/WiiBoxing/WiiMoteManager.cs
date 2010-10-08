@@ -11,7 +11,7 @@ using WiimoteLib;
 
 namespace WiiBoxing3D
 {
-    class WiimoteTest
+    class WiimoteManager
     {
         Game1 game1;
         Dictionary<Guid, Wiimote> mWiimoteMap;
@@ -22,7 +22,7 @@ namespace WiiBoxing3D
 
 
         // Constructor
-        public WiimoteTest(Game1 aGame1)
+        public WiimoteManager(Game1 aGame1)
         {
             mWiimoteMap = new Dictionary<Guid, Wiimote>();
             mWC = new WiimoteCollection();
@@ -36,6 +36,21 @@ namespace WiiBoxing3D
             Console.WriteLine("Wiimote Manager");
         }
 
+        // Accessors
+        public Vector3 getWiimoteVector()
+        {
+            return wiimoteVectors;
+        }
+        public Vector3 getNunchukVector()
+        {
+            return nunchukVectors;
+        }
+        public Vector2 getNunchukJoystick()
+        {
+            return nunchukJoystickVectors;
+        }
+
+        // Connection
 		private void Connect_Multiple_Wiimotes()
 		{
 			// find all wiimotes connected to the system
@@ -47,25 +62,16 @@ namespace WiiBoxing3D
 			}
 			catch(WiimoteNotFoundException ex)
 			{
-                Console.WriteLine("Wiimote not found error");
-                //Wiimote not found error
-                //write something to handle the exception
-				//e.g. MessageBox.Show(ex.Message, "Wiimote not found error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
+                Console.WriteLine("Wiimote not found error: " + ex.Message);
+          	}
 			catch(WiimoteException ex)
 			{
-                Console.WriteLine("Wiimote error");
-                //Wiimote error
-                //write something to handle the exception
-				//e.g. MessageBox.Show(ex.Message, "Wiimote error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
+                Console.WriteLine("Wiimote error: " + ex.Message);
+           	}
 			catch(Exception ex)
 			{
-                Console.WriteLine("Unknown error");
-                //Unknown error
-                //write something to handle the exception
-				//e.g. MessageBox.Show(ex.Message, "Unknown error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
+                Console.WriteLine("Unknown error: " + ex.Message);
+            }
 
 			foreach(Wiimote wm in mWC)
 			{
@@ -110,18 +116,6 @@ namespace WiiBoxing3D
         {
             foreach (Wiimote wm in mWC)
                 wm.Disconnect();
-        }
-        private Vector3 getWiimoteVector()
-        {
-            return wiimoteVectors;
-        }
-        private Vector3 getNunchukVector()
-        {
-            return nunchukVectors;
-        }
-        private Vector2 getNunchukJoystick()
-        {
-            return nunchukJoystickVectors;
         }
         private void wiimote_onChange(WiimoteChangedEventArgs args)
         {
