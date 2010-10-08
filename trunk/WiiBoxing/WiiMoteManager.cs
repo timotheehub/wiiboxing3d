@@ -137,8 +137,8 @@ namespace WiiBoxing3D
 
             for (int i = 0; i < 4; i++)
             {
-                irPositions[i].X = ws.IRState.IRSensors[i].RawPosition.X;
-                irPositions[i].Y = ws.IRState.IRSensors[i].RawPosition.Y;
+                irPositions[i].X = ws.IRState.IRSensors[i].Position.X;
+                irPositions[i].Y = ws.IRState.IRSensors[i].Position.Y;
             }
 
 
