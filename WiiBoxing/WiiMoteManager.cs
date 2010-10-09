@@ -29,6 +29,7 @@ namespace WiiBoxing3D
         // Constructor
         public WiimoteManager(Game1 aGame1)
         {
+
             mWiimoteMap = new Dictionary<Guid, Wiimote>();
             mWC = new WiimoteCollection();
             wiimoteVectors = new Vector3(0.0F, 0.0F, 0.0F);
@@ -94,8 +95,9 @@ namespace WiiBoxing3D
 				mWiimoteMap[wm.ID] = wm;
 
 				// connect it and set it up as always
-                wm.WiimoteChanged += wm_WiimoteChanged;
 				wm.WiimoteExtensionChanged += wm_WiimoteExtensionChanged;
+
+                wm.WiimoteChanged += new EventHandler<WiimoteChangedEventArgs>(wiimote_onChange);
 
 				wm.Connect();
 				if(wm.WiimoteState.ExtensionType != ExtensionType.BalanceBoard)
@@ -104,34 +106,18 @@ namespace WiiBoxing3D
 				wm.SetLEDs(index++);
 			}
 		}
-        void wm_WiimoteChanged(object sender, WiimoteChangedEventArgs e)
-        {
-            //ignore this for a moment
-            /*
-            //on wiimote change, this method will be invoke
-            Wiimote wi = mWiimoteMap[((Wiimote)sender).ID];
-            onKeyPress(e);
-            */
-        }
+        
         void wm_WiimoteExtensionChanged(object sender, WiimoteExtensionChangedEventArgs e)
         {
-            //ignore this for a moment
-            //On etension change, this method will be invoke. Currently we can leave it blank
-            // find the control for this Wiimote
-            /* Wiimote wi = mWiimoteMap[((Wiimote)sender).ID];
-
-            if (e.Inserted)
-                ((Wiimote)sender).SetReportType(InputReport.IRExtensionAccel, true);
-            else
-                ((Wiimote)sender).SetReportType(InputReport.IRAccel, true);
-             */
+            //When user remove/insert the nunchuk
+            Console.WriteLine("Extension Changed");
         }
         private void Disconnect_Multiple_Wiimotes()
         {
             foreach (Wiimote wm in mWC)
                 wm.Disconnect();
         }
-        private void wiimote_onChange(WiimoteChangedEventArgs args)
+        private void wiimote_onChange(object sender, WiimoteChangedEventArgs args)
         {
             WiimoteState ws = args.WiimoteState;
 
@@ -157,6 +143,7 @@ namespace WiiBoxing3D
                     
                     nunchukJoystickVectors.X = ws.NunchukState.Joystick.X;
                     nunchukJoystickVectors.Y = ws.NunchukState.Joystick.Y;
+
                     break;
             }
              
@@ -167,6 +154,10 @@ namespace WiiBoxing3D
                         {
                             // Button A pressed
                             Console.WriteLine("A");
+                            //Remove this after test.
+                            //Vector2[] print = getIRPositions();
+                            //Console.WriteLine("IR1 X: " + print[0].X + " IR1 Y: " + print[0].Y);
+                            //Console.WriteLine("IR2 X: " + print[1].X + " IR2 Y: " + print[1].Y);
                         }
                         if (ws.ButtonState.B)
                         {
