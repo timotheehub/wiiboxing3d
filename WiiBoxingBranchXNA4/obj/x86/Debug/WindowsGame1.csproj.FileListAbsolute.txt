@@ -1,0 +1,6 @@
+C:\Users\Standard\Documents\Visual Studio 2008\Projects\WindowsGame1\bin\x86\Debug\WindowsGame1.exe
+C:\Users\Standard\Documents\Visual Studio 2008\Projects\WindowsGame1\bin\x86\Debug\WindowsGame1.pdb
+C:\Users\Standard\Documents\Visual Studio 2008\Projects\WindowsGame1\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Standard\Documents\Visual Studio 2008\Projects\WindowsGame1\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Standard\Documents\Visual Studio 2008\Projects\WindowsGame1\obj\x86\Debug\WindowsGame1.exe
+C:\Users\Standard\Documents\Visual Studio 2008\Projects\WindowsGame1\obj\x86\Debug\WindowsGame1.pdb

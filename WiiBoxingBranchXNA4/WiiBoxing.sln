@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiBoxing3D", "WiiBoxing3D.csproj", "{4EAF38FD-B3D1-437A-B349-405F252C70A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiBoxingContent", "Content\WiiBoxingContent.contentproj", "{4DD61B2F-A1A0-43F6-9143-1BFB7206C5FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EAF38FD-B3D1-437A-B349-405F252C70A0}.Debug|x86.ActiveCfg = Debug|x86
+		{4EAF38FD-B3D1-437A-B349-405F252C70A0}.Debug|x86.Build.0 = Debug|x86
+		{4EAF38FD-B3D1-437A-B349-405F252C70A0}.Release|x86.ActiveCfg = Release|x86
+		{4EAF38FD-B3D1-437A-B349-405F252C70A0}.Release|x86.Build.0 = Release|x86
+		{4DD61B2F-A1A0-43F6-9143-1BFB7206C5FD}.Debug|x86.ActiveCfg = Debug|x86
+		{4DD61B2F-A1A0-43F6-9143-1BFB7206C5FD}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
