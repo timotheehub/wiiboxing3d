@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="WiiBoxing">
+</Property><Property Name="Solution File" Value="D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\WiiBoxing.sln">
+</Property><Property Name="User Options File" Value="D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\WiiBoxing.suo">
+</Property><Property Name="Date" Value="Saturday, October 09, 2010">
+</Property><Property Name="Time" Value="14:34 PM">
+</Property><Property Name="Solution" Value="WiiBoxing">
+</Property><Property Name="Solution File" Value="D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\WiiBoxing.sln">
+</Property><Property Name="Date" Value="Saturday, October 09, 2010">
+</Property><Property Name="Time" Value="14:34:50 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="WiiBoxing.sln" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\WiiBoxing.sln">
+</Event><Event ErrorLevel="0" Project="" Source="WiiBoxing.suo" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\WiiBoxing.suo">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="WiiBoxing3D.csproj" Description="Upgraded XNA Game Studio project to XNA Framework 4.0.">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="WiiBoxing3D.csproj" Description="Project file successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\WiiBoxing3D.csproj">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="WiiBoxing3D.csproj.user" Description="Project user file successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\WiiBoxing3D.csproj.user">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="GameObject.cs" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\GameObject.cs">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="GamePlay.cs" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\GamePlay.cs">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="GameScreen.cs" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\GameScreen.cs">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="KeyboardManager.cs" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\KeyboardManager.cs">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="Program.cs" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\Program.cs">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="Game1.cs" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\Game1.cs">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="WiiMoteManager.cs" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\WiiMoteManager.cs">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="Game.ico" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\Game.ico">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="GameThumbnail.png" Description="File successfully backed up as D:\LeongSS\Work\NUS\Programme\CS 3249\Assignments\Implementation Team\WiiBoxing\Backup\GameThumbnail.png">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="WiiBoxing3D.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="WiiBoxing3D" Source="WiiBoxing3D.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="WiiBoxing.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="WiiBoxing.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="WiiBoxing3D.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="WiiBoxing3D" Source="WiiBoxing3D.csproj" Description="Upgraded XNA Framework references to XNA Framework 4.0.">
+</Event><Event ErrorLevel="0" Project="Content.contentproj" Source="Times New Roman.spritefont" Description="Copied XNA Game Studio Content Project content to backup location.">
+</Event><Event ErrorLevel="0" Project="Content.contentproj" Source="BOX.FBX" Description="Copied XNA Game Studio Content Project content to backup location.">
+</Event><Event ErrorLevel="0" Project="Content.contentproj" Source="punching_bag.fbx" Description="Copied XNA Game Studio Content Project content to backup location.">
+</Event><Event ErrorLevel="0" Project="Content.contentproj" Source="Content.contentproj" Description="Copied XNA Game Studio Content Project content to backup location.">
+</Event><Event ErrorLevel="0" Project="WiiBoxingContent" Source="Content\WiiBoxingContent.contentproj" Description="Upgraded XNA Game Studio nested content projects to XNA Framework 4.0 and promoted to sibling project.">
+</Event></UpgradeLog>
