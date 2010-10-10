@@ -30,7 +30,7 @@ namespace WiiBoxing3D
         GamePlay gamePlay;
         KeyboardManager keyboardManager;
         WiimoteManager wiimoteManager;
-
+        PunchingBagGenerator punchingBagGenerator;
 
         /// <summary>
         /// Constructor
@@ -41,7 +41,7 @@ namespace WiiBoxing3D
             gamePlay = new GamePlay(this);
             keyboardManager = new KeyboardManager(this);
             wiimoteManager = new WiimoteManager(this);
-
+            punchingBagGenerator = new PunchingBagGenerator(this);
             Content.RootDirectory = "Content";
         }
 
@@ -74,6 +74,8 @@ namespace WiiBoxing3D
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             Window.Title = "Wii Boxing 3D";
+
+            punchingBagGenerator.Generate();
 
             screenState = ScreenState.GAME_PLAY;
 
