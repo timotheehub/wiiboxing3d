@@ -90,15 +90,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameObject.cs" />
-    <Compile Include="GamePlay.cs" />
-    <Compile Include="GameScreen.cs" />
-    <Compile Include="KeyboardManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CustomGame.cs" />
+    <Compile Include="GameComponent\BlackPunchingBag.cs" />
+    <Compile Include="GameComponent\BluePunchingBag.cs" />
+    <Compile Include="GameComponent\GameObject.cs" />
+    <Compile Include="GameComponent\Glove.cs" />
+    <Compile Include="GameComponent\IGameObject.cs" />
+    <Compile Include="GameComponent\LeftGlove.cs" />
+    <Compile Include="GameComponent\MetalPunchingBag.cs" />
+    <Compile Include="GameComponent\Player.cs" />
+    <Compile Include="GameComponent\PunchingBag.cs" />
+    <Compile Include="Tools\PunchingBagGenerator.cs" />
+    <Compile Include="GameComponent\RedPunchingBag.cs" />
+    <Compile Include="GameComponent\RightGlove.cs" />
+    <Compile Include="GameComponent\WoodPunchingBag.cs" />
+    <Compile Include="Input\KeyboardManager.cs" />
+    <Compile Include="Input\Manager.cs" />
+    <Compile Include="Input\WiiMoteManager.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Game1.cs" />
-    <Compile Include="PunchingBagGenerator.cs" />
-    <Compile Include="WiiMoteManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screen\GamePlayScreen.cs" />
+    <Compile Include="Screen\GameScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
