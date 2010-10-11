@@ -7,19 +7,21 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using WiiBoxing3D.GameComponent;
+
 //if there are some parts that require changes, please tell me eg. its not random enough. haha...
 //calls the function under game1, initialize()
-namespace WiiBoxing3D
+namespace WiiBoxing3D.Tools
 {
     //Generates punching bags positions
-    class PunchingBagGenerator
+    public class PunchingBagGenerator
     {
         //Game
-        Game1 game1;
+        CustomGame game1;
         
 
         //Constructor
-        public PunchingBagGenerator(Game1 aGame1)
+        public PunchingBagGenerator(CustomGame aGame1)
         {
             game1 = aGame1;
             
@@ -43,10 +45,7 @@ namespace WiiBoxing3D
             {
 
                 //Initialising the object
-                GameObject aRandomGameObject = new GameObject();
-                aRandomGameObject.model = game1.Content.Load<Model>("Models\\punching_bag");
-                aRandomGameObject.rotation = new Vector3(1.57f, 0, 0f);
-                aRandomGameObject.scale = 0.01f;
+                GameObject aRandomGameObject = new BluePunchingBag(game1);
 
                 //random left or right lane; random the x position of the object
                 int randomLeftRight = random.Next(100);
