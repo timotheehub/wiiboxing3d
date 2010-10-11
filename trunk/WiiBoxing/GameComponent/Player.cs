@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace WiiBoxing3D.GameComponent {
 
@@ -9,6 +10,8 @@ namespace WiiBoxing3D.GameComponent {
 
 		public Player ( CustomGame game, double speed ) : base ( game )
         {
+            model = game.Content.Load<Model>("Models\\box");
+            scale = new Vector3(0.1f);
             position.Z = -20.0f;
             this.speed = speed;
         }
@@ -19,8 +22,8 @@ namespace WiiBoxing3D.GameComponent {
             KeyboardState keyboardState = Keyboard.GetState();
             float moveDistance = 0.1f;
 
-            if (keyboardState.IsKeyDown(Keys.Left)) position.X += moveDistance;
-            if (keyboardState.IsKeyDown(Keys.Right)) position.X -= moveDistance;
+            if (keyboardState.IsKeyDown(Keys.Left)) position.X += moveDistance * 2;
+            if (keyboardState.IsKeyDown(Keys.Right)) position.X -= moveDistance * 2;
             if (keyboardState.IsKeyDown(Keys.Up)) position.Z += moveDistance;
             if (keyboardState.IsKeyDown(Keys.Down)) position.Z -= moveDistance;
 

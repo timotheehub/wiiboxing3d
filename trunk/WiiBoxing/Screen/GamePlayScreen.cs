@@ -25,8 +25,10 @@ namespace WiiBoxing3D.Screen {
 		Matrix				cameraProjectionMatrix;
 		Matrix				cameraViewMatrix;
 
-		// Head position
+		// Objects
 		Player				player;
+        LeftGlove           leftGlove;
+        RightGlove          rightGlove;
 
 		// Initialization			:
 		// ==========================
@@ -37,8 +39,6 @@ namespace WiiBoxing3D.Screen {
         {
             speed = 5.0f;
             timeSpent = 0.0f;
-
-            player = new Player(game, speed);
         }
 
 		// XNA Game Methods			:
@@ -48,9 +48,17 @@ namespace WiiBoxing3D.Screen {
 		/// </summary>
 		public override	void LoadContent	() {
 			#region TEST_DRAW
+                player = new Player(game, speed);
+                leftGlove = new LeftGlove(game);
+                rightGlove = new RightGlove(game);
+
 				UpdateCamera ();
 
                 gameObjectCollection = game.punchingBagGenerator.Generate();
+                gameObjectCollection.Add(player);
+                gameObjectCollection.Add(leftGlove);
+                gameObjectCollection.Add(rightGlove);
+
 			#endregion
 		}
 
@@ -61,7 +69,9 @@ namespace WiiBoxing3D.Screen {
             timeSpent += gameTime.ElapsedRealTime.TotalSeconds;
 
             UpdateCamera ( );
-            player.Update ( gameTime );
+
+            foreach (GameObject gameObject in gameObjectCollection)
+                gameObject.Update ( gameTime );
 		}
 
 		/// <summary>
@@ -72,6 +82,7 @@ namespace WiiBoxing3D.Screen {
 
 			foreach ( GameObject gameObject in gameObjectCollection )
 				gameObject.Draw ( cameraProjectionMatrix , cameraViewMatrix );
+
 		}
 
 		// Public Methods			:
@@ -93,26 +104,30 @@ namespace WiiBoxing3D.Screen {
 			// Camera
             Vector3 headPosition = player.position;
 			cameraViewMatrix		= Matrix.CreateLookAt (	
-										headPosition , 
+										new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z + 3 ),
 										new Vector3 ( headPosition.X , headPosition.Y , (float)timeSpent*(float)speed ) , 
 										Vector3.UnitY 
 									);
 
-			cameraProjectionMatrix = Matrix.CreatePerspectiveFieldOfView (
+			/*cameraProjectionMatrix = Matrix.CreatePerspectiveFieldOfView (
 										MathHelper.ToRadians ( 45.0f ) , 
 										game.GraphicsDevice.Viewport.AspectRatio ,
 										1.0f , 
 										10000.0f 
-									);
+									);*/
 
-			/*float aspectRatio = game1.graphics.GraphicsDevice.Viewport.AspectRatio;
+            // Head tracking :)
+            headPosition.Z -= (float)timeSpent * (float)speed;
+            headPosition /= 100;
+            headPosition.Z = -headPosition.Z;
+			float aspectRatio = game.graphics.GraphicsDevice.Viewport.AspectRatio;
 			float nearestPoint = 0.05f;
 			cameraProjectionMatrix = Matrix.CreatePerspectiveOffCenter(
 											 nearestPoint * (-.5f * aspectRatio + headPosition.X) / headPosition.Z,
 											 nearestPoint * (.5f * aspectRatio + headPosition.Y) / headPosition.Z,
 											 nearestPoint * (-.5f - headPosition.X) / headPosition.Z,
 											 nearestPoint * (.5f - headPosition.Y) / headPosition.Z,
-											 nearestPoint, 1000.0f);*/
+											 nearestPoint, 1000.0f);
 
 		}
 
