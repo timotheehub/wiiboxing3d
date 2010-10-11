@@ -2,7 +2,12 @@
 
 	public abstract class Glove : GameObject {
 
-		public Glove ( CustomGame game ) : base ( game ) { }
+        bool isPunching;
+
+		public Glove ( CustomGame game ) : base ( game )
+        {
+            isPunching = false;
+        }
 
 	}
 
