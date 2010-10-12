@@ -17,31 +17,31 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class BlackPunchingBag : PunchingBag {
 
-		public BlackPunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.BLACK	) { }
+		public BlackPunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.BLACK, ""	) { }
 
 	}
 
 	public class BluePunchingBag : PunchingBag {
 
-		public BluePunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.BLUE	) { }
+		public BluePunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.BLUE, ""	) { }
 
 	}
 
 	public class MetalPunchingBag : PunchingBag {
 
-		public MetalPunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.METAL	) { }
+		public MetalPunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.METAL, ""	) { }
 
 	}
 
 	public class RedPunchingBag : PunchingBag {
 
-		public RedPunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.RED		) { }
+		public RedPunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.RED, ""		) { }
 
 	}
 
 	public class WoodPunchingBag : PunchingBag {
 
-		public WoodPunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.WOOD	) { }
+		public WoodPunchingBag	( CustomGame Game ) : base ( Game , PunchingBagType.WOOD, ""	) { }
 
 	}
 

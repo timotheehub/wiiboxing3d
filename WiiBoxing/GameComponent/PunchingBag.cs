@@ -27,7 +27,7 @@ namespace WiiBoxing3D.GameComponent {
 
 		// Initialization			:
 		// ==========================
-		protected	PunchingBag			( CustomGame Game , PunchingBagType type , string ImpactSFXAsset = "" ) : base ( Game , ImpactSFXAsset ) {
+		protected	PunchingBag			( CustomGame Game , PunchingBagType type , string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset ) {
 			Type = type;
 		}
 
