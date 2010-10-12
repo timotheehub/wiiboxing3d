@@ -12,8 +12,8 @@ namespace WiiBoxing3D.Input {
 
 		// Private Properties		:
 		// ==========================
-		KeyboardState	oldState;
-		KeyboardState	currentState;
+		KeyboardState	OldState;
+		KeyboardState	CurrentState;
 
 		// Initialization			:
 		// ==========================
@@ -21,34 +21,30 @@ namespace WiiBoxing3D.Input {
 		/// Constructor.
 		/// </summary>
 		/// <param name="game"></param>
-		public	KeyboardManager		( CustomGame game ) : base ( game ) {
-			oldState = new KeyboardState ();
+		public				KeyboardManager		( CustomGame game ) : base ( game ) {
+			OldState		= new KeyboardState ();
+			CurrentState	= new KeyboardState ();
 
 			Console.WriteLine	( "Keyboard Manager initialized!\n" );
 		}
 
+		// Public Methods			:
+		// ==========================
 		/// <summary>
 		/// Updates the keyboard state.
 		/// </summary>
 		/// <param name="gameTime">Time passed since the last call to Update.</param>
-		public	void	Update		( GameTime gameTime ) {
+		public	override	void	Update		( GameTime gameTime ) {
 
-			currentState	= Keyboard.GetState ();
+			OldState		= CurrentState;	// the old currentstate
+			CurrentState	= Keyboard.GetState ();
 
-			checkKey ( Keys.Left , "Left"	);
-			checkKey ( Keys.Right , "Right"	);
-			checkKey ( Keys.Up , "Up"	);
-			checkKey ( Keys.Down , "Down"	);
-			checkKey ( Keys.Enter , "Enter"	);
-
+			// System level keys to check for
+				 checkKey ( Keys.Enter			);
 			if ( checkKey ( Keys.Escape , "Bye" ) )
-				game.Exit ();
-
-			oldState		= currentState;
+				Game.Exit ();
 		}
 
-		// Private Methods			:
-		// ==========================
 		/// <summary>
 		/// Checks if the given key was recently pressed and released.
 		/// </summary>
@@ -57,16 +53,49 @@ namespace WiiBoxing3D.Input {
 		/// The message to display if key matches required state. 
 		/// If empty string is used, the key name is used as the message.</param>
 		/// <returns></returns>
-		private	bool	checkKey	( Keys key , string feedbackMessage ) {
-			if ( currentState.IsKeyDown ( key ) && oldState.IsKeyUp ( key ) ) {
+		public				bool	checkKey	( Keys key , string feedbackMessage = "" ) {
+			return checkKey ( key , KeyboardEvent.KEY_PRESS_AND_RELEASE , feedbackMessage );
+		}
+
+		public				bool	checkKey	( Keys key , KeyboardEvent keyEvent , string feedbackMessage = "" ) {
+
+			bool state;
+
+			switch ( keyEvent ) {
+
+				case KeyboardEvent.KEY_PRESS_AND_RELEASE	: 
+					state = CurrentState.IsKeyDown	( key ) && OldState.IsKeyUp ( key );
+					break;
+
+				case KeyboardEvent.KEY_DOWN					: 
+					state = CurrentState.IsKeyDown	( key );
+					break;
+
+				case KeyboardEvent.KEY_UP					: 
+					state = CurrentState.IsKeyUp		( key );
+					break;
+
+
+				default : throw new InvalidKeyboardEventException ();
+
+			}
+
+			// display only if keyevent is true
+			if ( state )
 				Console.WriteLine ( feedbackMessage == "" ? key.ToString () : feedbackMessage );
 
-				return true;
-			}
-			else
-				return false;
+			return state;
+
 		}
 
 	}
+
+	public enum KeyboardEvent {
+		KEY_DOWN				,
+		KEY_UP					,
+		KEY_PRESS_AND_RELEASE	,
+	}
+
+	public class InvalidKeyboardEventException : Exception { }
 
 }

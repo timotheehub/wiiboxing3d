@@ -1,4 +1,4 @@
-#define XNA_4_0		// comment if using XNA Game Studio 3.1
+//#define XNA_4_0		// comment if using XNA Game Studio 3.1
 //#define XBOX360		// comment if not building for Xbox 360
 
 #region using ...
@@ -19,7 +19,6 @@ using Microsoft.Xna.Framework.Graphics;
 //using Microsoft.Xna.Framework.Storage;
 
 // Game
-using WiiBoxing3D.Tools;
 using WiiBoxing3D.Input;
 using WiiBoxing3D.Screen;
 
@@ -40,23 +39,15 @@ namespace WiiBoxing3D {
 
 		// Graphics 
 		public	GraphicsDeviceManager	graphics;
-				//GraphicsDevice			device;		// <-- is this just for a shorter name to be used? cos Game already has this property defined, making this redundant
-		public	SpriteBatch				spriteBatch;
-		public	SpriteFont				fontTimesNewRoman;
-
-		// Screens
-		public enum ScreenState { 
-			MENU		,
-			GAME_PLAY	,
-		};
+				SpriteBatch				spriteBatch;
+				SpriteFont				fontTimesNewRoman;
 		
 		public	ScreenState				screenState;
-		public  GameScreen				gameScreen;
-        public  PunchingBagGenerator    punchingBagGenerator;
+		public	GameScreen				gameScreen;
 
 		// Managers
-	    public  KeyboardManager			keyboardManager;
-		public  WiimoteManager			wiimoteManager;
+		public 	KeyboardManager			keyboardManager;
+		public 	WiimoteManager			wiimoteManager;
 		
 		// Initialization			:
 		// ==========================
@@ -68,7 +59,6 @@ namespace WiiBoxing3D {
 			gameScreen		= new GamePlayScreen		( this );
 			keyboardManager	= new KeyboardManager		( this );
 			wiimoteManager	= new WiimoteManager		( this );
-            punchingBagGenerator = new PunchingBagGenerator(this);
 			
 			Content.RootDirectory = contentLocation;
 		}
@@ -107,7 +97,7 @@ namespace WiiBoxing3D {
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch			= new SpriteBatch ( GraphicsDevice );
 
-			fontTimesNewRoman	= Content.Load < SpriteFont > ( "Fonts\\Times New Roman" );
+			fontTimesNewRoman	= Content.Load < SpriteFont > ( @"Fonts\Times New Roman" );
 
 			gameScreen.LoadContent ();
 		}
@@ -117,7 +107,7 @@ namespace WiiBoxing3D {
 		/// all content.
 		/// </summary>
 		protected override	void UnloadContent	() {
-			// TODO: Unload any non ContentManager content here
+			// TODO : Unload any non ContentManager content here
 		}
 
 		/// <summary>
@@ -126,7 +116,7 @@ namespace WiiBoxing3D {
 		/// </summary>
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override	void Update			( GameTime gameTime ) {
-
+			
 			#if XBOX360
 				// Allows the game to exit (if you want to play with the XBox 360 :D)
 				if ( GamePad.GetState ( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed )
@@ -146,10 +136,16 @@ namespace WiiBoxing3D {
 		protected override	void Draw			( GameTime gameTime ) {
 			GraphicsDevice.Clear ( Color.CornflowerBlue );
 
-			GraphicsDevice.RenderState.DepthBufferEnable		= true; 
-			GraphicsDevice.RenderState.DepthBufferWriteEnable	= true; 
+			#if XNA_4_0
+				GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-			spriteBatch.Begin ( SpriteBlendMode.AlphaBlend );
+				spriteBatch.Begin ( SpriteSortMode.Deferred , BlendState.AlphaBlend );
+			#else
+				GraphicsDevice.RenderState.DepthBufferEnable		= true; 
+				GraphicsDevice.RenderState.DepthBufferWriteEnable	= true; 
+
+				spriteBatch.Begin ( SpriteBlendMode.AlphaBlend );
+			#endif
 
 			if ( screenState == ScreenState.GAME_PLAY )
 				gameScreen.Draw ( gameTime );
@@ -173,5 +169,14 @@ namespace WiiBoxing3D {
 		}
 
 	}
+
+	/// <summary>
+	/// Specifies the possible screen states that the Game may be in
+	/// at a particular point of time.
+	/// </summary>
+	public enum ScreenState { 
+		MENU		,
+		GAME_PLAY	,
+	};
 
 }

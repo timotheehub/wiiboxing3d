@@ -1,34 +1,72 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿// XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+// Game
+using WiiBoxing3D.Input;
 
 namespace WiiBoxing3D.GameComponent {
 
-	public class Player : GameObject {
+	public class Player : AudioCollidable {
 
-        double speed;
+		const uint	MAX_HEALTH		= 100;
+		const uint	DAMAGE_TAKEN	= 20;
+		const float MOVE_DISTANCE	= 1f;
 
-		public Player ( CustomGame game, double speed ) : base ( game )
-        {
-            model = game.Content.Load<Model>("Models\\box");
-            scale = new Vector3(0.1f);
-            position.Z = -20.0f;
-            this.speed = speed;
-        }
+		new 
+		public	Vector3	Position		{ get { return base.Position;						} }
+		public	float 	DistanceMoved	{ get { return ( float ) ( Speed * GameplayTime );	} }
 
-        public override void Update ( GameTime gameTime )
-        {
-            // Keyboard test
-            KeyboardState keyboardState = Keyboard.GetState();
-            float moveDistance = 0.1f;
+				uint	Health;
+				double	Speed;
 
-            if (keyboardState.IsKeyDown(Keys.Left)) position.X += moveDistance * 2;
-            if (keyboardState.IsKeyDown(Keys.Right)) position.X -= moveDistance * 2;
-            if (keyboardState.IsKeyDown(Keys.Up)) position.Z += moveDistance;
-            if (keyboardState.IsKeyDown(Keys.Down)) position.Z -= moveDistance;
+		LeftGlove		LeftGlove;
+		RightGlove		RightGlove;
 
-            position.Z += (float)speed * (float)gameTime.ElapsedRealTime.TotalSeconds;
-        }
+		double			GameplayTime;
+
+		public				Player					( CustomGame Game , double Speed ) : base ( Game , "" ) {
+			base.Position.Z	= -20f;
+
+			Health			= MAX_HEALTH;
+			this.Speed		= Speed;
+
+			LeftGlove		= new LeftGlove	 ( Game );
+			RightGlove		= new RightGlove ( Game );
+
+			GameplayTime	= 0;
+		}
+
+		public	override	void Update				( GameTime GameTime ) {
+			GameplayTime = GameTime.ElapsedGameTime.TotalSeconds;
+
+			if ( Health <= 0 )
+				endGame ();
+
+			if ( Game.keyboardManager.checkKey ( Keys.Left	, KeyboardEvent.KEY_DOWN ) ) base.Position.X += MOVE_DISTANCE;
+			if ( Game.keyboardManager.checkKey ( Keys.Right , KeyboardEvent.KEY_DOWN ) ) base.Position.X -= MOVE_DISTANCE;
+			if ( Game.keyboardManager.checkKey ( Keys.Up	, KeyboardEvent.KEY_DOWN ) ) base.Position.Z += MOVE_DISTANCE;
+			if ( Game.keyboardManager.checkKey ( Keys.Down	, KeyboardEvent.KEY_DOWN ) ) base.Position.Z -= MOVE_DISTANCE;
+
+			base.Position.Z += DistanceMoved;
+			
+			base.Update ( GameTime );
+		}
+
+		/// <summary>
+		/// No model is loaded for Player, hence, the method is overriden to do nothing.
+		/// </summary>
+		/// <param name="CameraProjectionMatrix"></param>
+		/// <param name="CameraViewMatrix"></param>
+		public	override	void Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix ) { }
+
+		public				void hitByPunchingBag	() {
+			Health -= DAMAGE_TAKEN;
+		}
+
+		private				void endGame			() {
+			// TODO : end the bloody !@#%$!@# game
+		}
 
 	}
 

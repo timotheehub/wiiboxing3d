@@ -13,20 +13,40 @@ namespace WiiBoxing3D.Screen {
 
 		// Protected Properties		:
 		// ==========================
-	    protected CustomGame			game { get; set; }
-		protected List < GameObject >	gameObjectCollection;
+		new protected CustomGame			Game { get; set; }
+			protected List < IGameObject >	GameObjectCollection;
 
 		// Initialization			:
 		// ==========================
 		public			GameScreen			( CustomGame game ) : base ( game ) { 
-			this.game				= game;
-			gameObjectCollection	= new List < GameObject > ();
+			Game					= game;
+			GameObjectCollection	= new List < IGameObject > ();
+
+			Initialize ();
 		}
 
 		// Public Methods			:
 		// ==========================
+		/// <summary>
+		/// Called when graphics resources need to be loaded. 
+		/// Override this method to load any component-specific graphics resources.
+		/// </summary>
 		new
-		public virtual	void	LoadContent	() { }
+		public virtual	void LoadContent	() { 
+
+			foreach ( IGameObject GameObject in GameObjectCollection )
+				GameObject.LoadContent ();
+		
+		}
+
+		public override void Update			( GameTime GameTime ) {
+
+			foreach ( IGameObject GameObject in GameObjectCollection )
+				GameObject.Update ( GameTime );
+
+		}
+
+		public override void Draw			( GameTime gameTime ) { }
 
 	}
 
