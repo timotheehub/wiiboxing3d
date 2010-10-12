@@ -2,7 +2,7 @@
 
 	public class LeftGlove : Glove {
 
-		public LeftGlove ( CustomGame Game ) : base ( Game ) { }
+		public LeftGlove ( CustomGame Game ) : base ( Game, "" ) { }
 
 	}
 

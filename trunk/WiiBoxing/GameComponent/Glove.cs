@@ -8,7 +8,7 @@
 		public float speed;
 		bool IsPunching;
 
-		public Glove ( CustomGame Game , string ImpactSFXAsset = "" ) : base ( Game , ImpactSFXAsset ) { }
+		public Glove ( CustomGame Game , string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset ) { }
 
 		public override void Initialize () {
 			IsPunching = false;

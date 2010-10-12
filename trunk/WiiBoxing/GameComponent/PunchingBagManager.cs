@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 // Game
 using WiiBoxing3D.GameComponent;
 using WiiBoxing3D.Screen;
+using WiiBoxing3D.Input;
 
 namespace WiiBoxing3D.GameComponent {
 	/// <summary>
@@ -59,7 +60,7 @@ namespace WiiBoxing3D.GameComponent {
 
 		}
 
-		public	void	Update				( GameTime GameTime ) {
+		public	override void	Update				( GameTime GameTime ) {
 			IsUpdating = true;
 
 			if ( IsRunning ) {
@@ -109,7 +110,7 @@ namespace WiiBoxing3D.GameComponent {
 		/// <param name="minValue">The inclusive lower bound of the random number returned.</param>
 		/// <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
 		/// <returns></returns>
-		private	float	random				( float	minValue = 0.0f	, float	maxValue = 1.0f	) {
+		private	float	random				( float	minValue /*= 0.0f*/	, float	maxValue /*= 1.0f*/	) {
 			double Range = maxValue - minValue;
 
 			if ( !IsUpdating )
@@ -118,7 +119,7 @@ namespace WiiBoxing3D.GameComponent {
 			return ( float ) ( Randomizer.NextDouble () * Range + ( double ) minValue );
 		}
 
-		private	int		random				( int	minValue = 0	, int	maxValue = 1	) {
+		private	int		random				( int	minValue /*= 0*/	, int	maxValue /*= 1*/	) {
 			return ( int ) random ( ( float ) minValue , ( float ) maxValue );
 		}
 

@@ -18,7 +18,7 @@ namespace WiiBoxing3D.GameComponent {
 
 		// Initialization			:
 		// ==========================
-		protected	AudioCollidable			( CustomGame Game , string ImpactSFXAsset = "" ) : base ( Game ) {
+		protected	AudioCollidable			( CustomGame Game , string ImpactSFXAsset ) : base ( Game ) {
 			ImpactSFX = ImpactSFXAsset == "" ? null : Game.Content.Load < SoundEffect > ( ImpactSFXAsset );
 		}
 		
