@@ -1,5 +1,3 @@
-using System;
-
 namespace WiiBoxing3D {
 
 	static class Program {

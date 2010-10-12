@@ -14,54 +14,51 @@ namespace WiiBoxing3D.GameComponent {
 
 		// Public Properties		:
 		// ==========================
-		/// <summary>
-		/// Raised when the GameObject collides with another GameObject.
-		/// </summary>
-		public event EventHandler Collided;
+		// Transformation Properties :
+		public	Vector3	Position	= Vector3.Zero;
+		public	Vector3	Rotation	= Vector3.Zero;
+		public	Vector3	Scale		= Vector3.One;
 
+		// Private Properties		:
+		// ==========================
 		/// <summary>
 		/// Model associated with the GameObject instance.
 		/// </summary>
-		public Model	model		= null;
-
-		// Transformation Properties :
-		public Vector3	position	= Vector3.Zero;
-		public Vector3	rotation	= Vector3.Zero;
-		public Vector3	scale		= Vector3.One;
+		private Model	Model		= null;
 
 		// Protected Properties		:
 		// ==========================
-		protected readonly CustomGame game;
+		protected readonly CustomGame Game;
 
 		// Initialization			:
 		// ==========================
-		public				GameObject				( CustomGame game ) {
-			this.game = game;
+		public				GameObject		( CustomGame Game ) {
+			this.Game = Game;
 
-			Collided += new EventHandler ( OnCollidedHandler );
+			Initialize ();
 		}
 
 		// Public Methods			:
 		// ==========================
-		/// <summary>
-		/// Update the object variables.
-		/// </summary>
-		public		virtual	void Update				( GameTime gameTime ) { }
+		public	virtual void Initialize		() { }
 
-		/// <summary>
-		/// Draw the object.
-		/// </summary>
-		public		virtual	void Draw				( Matrix cameraProjectionMatrix , Matrix cameraViewMatrix ) {
+		public	virtual void LoadContent	() { }
+
+		public	virtual void UnloadContent	() { }
+
+		public	virtual	void Update			( GameTime GameTime ) { }
+
+		public	virtual	void Draw			( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix ) {
 
 			// Return if model has not been loaded yet.
-			if ( model == null ) throw new ModelNotLoadedException ();
+			if ( Model == null ) throw new ModelNotLoadedException ();
 
 			// Copy any parent transforms.
-			Matrix [] transforms = new Matrix [ model.Bones.Count ];
-			model.CopyAbsoluteBoneTransformsTo ( transforms );
+			Matrix [] transforms = new Matrix [ Model.Bones.Count ];
+			Model.CopyAbsoluteBoneTransformsTo ( transforms );
 
 			// Draw the model. A model can have multiple meshes, so loop.
-			foreach ( ModelMesh mesh in model.Meshes ) {
+			foreach ( ModelMesh mesh in Model.Meshes ) {
 
 				// This is where the mesh orientation is set, as well 
 				// as our camera and projection.
@@ -69,11 +66,11 @@ namespace WiiBoxing3D.GameComponent {
 
 					effect.EnableDefaultLighting ();
 					effect.World		= transforms [ mesh.ParentBone.Index ] *
-											Matrix.CreateFromYawPitchRoll	( rotation.Y , rotation.X , rotation.Z ) *
-											Matrix.CreateScale				( scale ) * 
-											Matrix.CreateTranslation		( position );
-					effect.View			= cameraViewMatrix;
-					effect.Projection	= cameraProjectionMatrix;
+											Matrix.CreateFromYawPitchRoll	( Rotation.Y , Rotation.X , Rotation.Z ) *
+											Matrix.CreateScale				( Scale ) * 
+											Matrix.CreateTranslation		( Position );
+					effect.View			= CameraViewMatrix;
+					effect.Projection	= CameraProjectionMatrix;
 
 				}
 
@@ -85,32 +82,11 @@ namespace WiiBoxing3D.GameComponent {
 		}
 
 		/// <summary>
-		/// Informs the GameObject that it has collided with another GameObject.
+		/// Loads the specified model to be used as the mesh for the GameObject.
 		/// </summary>
-		public		virtual	void CollideWithObject	() {
-			OnCollided ();
-		}
-
-		// Protected Methods		:
-		// ==========================
-		/// <summary>
-		/// Raises the Collided event. Called when the GameObject collides with another GameObject.
-		/// </summary>
-		protected	virtual	void OnCollided			() {
-			EventHandler handler = Collided;
-
-			if ( handler != null )
-				handler ( this , EventArgs.Empty );
-		}
-
-		/// <summary>
-		/// Represents the method that will handle the WiiBoxing3D.GameComponent.GameObject.Collided event
-		/// of a WiiBoxing3D.GameComponent.GameObject.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">An System.EventArgs that contains no event data.</param>
-		protected	virtual	void OnCollidedHandler	( Object sender , EventArgs e ) {
-			Console.WriteLine ( "I'm hit!" );
+		/// <param name="AssetName">Name and location of the model to be loaded into the GameObject.</param>
+		public			void LoadModel		( string AssetName ) {
+			Model = Game.Content.Load < Model > ( AssetName );
 		}
 
 	}

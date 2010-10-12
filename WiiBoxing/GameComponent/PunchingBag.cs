@@ -1,52 +1,65 @@
 ﻿// XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace WiiBoxing3D.GameComponent {
 
-	public abstract class PunchingBag : GameObject {
+	public abstract class PunchingBag : AudioCollidable {
+
+		// Private Constants		:
+		// ==========================
+		private const string PunchingBagAsset		= @"Models\punching_bag";
+		private const string DeadPunchingBagAsset	= @"Models\punching_bag";
 
 		// Public Properties		:
 		// ==========================
-		public	static	PunchingBagType	Type			{
-			get { return _Type;			} 
-			set { if (	 _Type		== PunchingBagType.NOT_INIT	) _Type			= value; } 
-		}
-		public	static	SoundEffect		ImpactSFX		{ 
-			get { return _ImpactSFX;	} 
-			set { if (	 _ImpactSFX	== null						) _ImpactSFX	= value; } 
+		public	static	PunchingBagType	Type {
+			get { return _Type;	} 
+			set { if (	 _Type	== PunchingBagType.NOT_INIT	) _Type	= value; } 
 		}
 
-		//public			float			speed			{ get; set; } // punching bags do not move!
+		public			float			speed			{ get; set; }
 		public			int				punchesNeeded	{ get; set; }
+		public			bool			isDead			{ get { return punchesNeeded == 0; } }
 
 		// Private Properties		:
 		// ==========================
-		private static	PunchingBagType	_Type		= PunchingBagType.NOT_INIT;
-		private static	SoundEffect		_ImpactSFX	= null;
+		private static	PunchingBagType	_Type = PunchingBagType.NOT_INIT;
 
 		// Initialization			:
 		// ==========================
-		protected	PunchingBag				( CustomGame game , PunchingBagType type , string ImpactSFXAsset ) : base ( game ) {
-			Type		= type;
-			ImpactSFX	= ImpactSFXAsset == "" ? null : game.Content.Load < SoundEffect > ( ImpactSFXAsset );
-            model = game.Content.Load<Model>("Models\\punching_bag");
-            scale = new Vector3(0.004f);
+		protected	PunchingBag			( CustomGame Game , PunchingBagType type , string ImpactSFXAsset = "" ) : base ( Game , ImpactSFXAsset ) {
+			Type = type;
 		}
-		
-		/// <summary>
-		/// Plays the sound effect when the PunchingBag collides with
-		/// another GameObject. Called when the Collided event is raised.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">An System.EventArgs that contains no event data.</param>
-		override
-		protected	void OnCollidedHandler	( object sender , System.EventArgs e ) {
-			if ( ImpactSFX != null ) ImpactSFX.Play ();
 
-			base.OnCollidedHandler ( sender , e );
+		override
+		public		void Initialize		() {
+			LoadContent		();
+
+			base.Initialize	();
+		}
+
+		override
+		public		void LoadContent	() {
+			LoadModel ( PunchingBagAsset );
+			
+			base.LoadContent ();
+		}
+
+		override
+		public		void Update			( GameTime GameTime ) {
+			Position.Z -= speed;
+
+			if ( isDead ) {
+				speed = 0.0f;
+
+				LoadModel ( DeadPunchingBagAsset );
+			}
+
+			base.Update ( GameTime );
+		}
+
+		public		void hitByPlayer	() {
+			punchesNeeded--;
 		}
 
 	}

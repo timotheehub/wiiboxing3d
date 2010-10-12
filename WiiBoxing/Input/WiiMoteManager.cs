@@ -20,9 +20,9 @@ namespace WiiBoxing3D.Input {
 
 		// Public Properties		:
 		// ==========================
-		public	Vector3				wiimoteAccel	{ get; set; }
-		public	Vector3				nunchukAccel	{ get; set; }
-		public	Vector2				nunchukJoystick	{ get; set; }
+		public	Vector3				WiimoteAccel	{ get; set; }
+		public	Vector3				NunchukAccel	{ get; set; }
+		public	Vector2				NunchukJoystick	{ get; set; }
 		public	Vector2 []			IRPositions		{ get; set; }
 
 		// Private Properties		:
@@ -42,9 +42,9 @@ namespace WiiBoxing3D.Input {
 			WiimoteMap		= new Dictionary < Guid , Wiimote > ();
 			Wiimotes		= new WiimoteCollection ();
 
-			wiimoteAccel	= Vector3.Zero;
-			nunchukAccel	= Vector3.Zero;
-			nunchukJoystick	= Vector2.Zero;
+			WiimoteAccel	= Vector3.Zero;
+			NunchukAccel	= Vector3.Zero;
+			NunchukJoystick	= Vector2.Zero;
 			IRPositions		= new Vector2 [ MAX_IR_SENSORS ] {	Vector2.Zero ,
 																Vector2.Zero ,
 																Vector2.Zero ,
@@ -113,16 +113,18 @@ namespace WiiBoxing3D.Input {
 
 			// IR Sensors
 			for ( int i = 0 ; i < MAX_IR_SENSORS ; i++ )
-				IRPositions [ i ] = pt_to_vect ( ws.IRState.IRSensors [ i ].Position );
+				IRPositions [ i ] = ws.IRState.IRSensors [ i ].Found ?
+										pt_to_vect	( ws.IRState.IRSensors [ i ].Position ) :
+										new Vector2	( -1.0f );
 
 			// Wiimote Acceleration
-			wiimoteAccel = pt_to_vect ( ws.AccelState.Values );
+			WiimoteAccel = pt_to_vect ( ws.AccelState.Values );
 
 			// Nunchuk Acceleration & Joystick
 			switch ( ws.ExtensionType ) {
 				case ExtensionType.Nunchuk:
-					nunchukAccel			= pt_to_vect ( ws.NunchukState.AccelState.Values	);
-					nunchukJoystick	= pt_to_vect ( ws.NunchukState.Joystick				);
+					NunchukAccel			= pt_to_vect ( ws.NunchukState.AccelState.Values	);
+					NunchukJoystick	= pt_to_vect ( ws.NunchukState.Joystick				);
 
 					break;
 			}

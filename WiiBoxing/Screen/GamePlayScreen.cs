@@ -1,7 +1,5 @@
 ﻿// XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 // Game
 using WiiBoxing3D.GameComponent;
@@ -14,75 +12,54 @@ namespace WiiBoxing3D.Screen {
 	/// </summary>
 	public sealed class GamePlayScreen : GameScreen {
 
+		const double PlayerSpeed = 5;
+
 		// Private Properties		:
 		// ==========================
 
-        // Time variables
-        double timeSpent;
-        double speed;
-
 		// Camera variables
-		Matrix				cameraProjectionMatrix;
-		Matrix				cameraViewMatrix;
+		// Vector3 cameraPosition = new Vector3(0.0f, -50.0f, 20.0f);
+		// Vector3 cameraLookAt = new Vector3(0.0f, 0.0f, 0.0f);
+		Matrix	CameraProjectionMatrix;
+		Matrix	CameraViewMatrix;
 
-		// Objects
-		Player				player;
-        LeftGlove           leftGlove;
-        RightGlove          rightGlove;
+		Player	Player;
 
 		// Initialization			:
 		// ==========================
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public			GamePlayScreen		( CustomGame game ) : base ( game )
-        {
-            speed = 5.0f;
-            timeSpent = 0.0f;
-        }
+		public			GamePlayScreen		( CustomGame game ) : base ( game ) { }
 
 		// XNA Game Methods			:
 		// ==========================
-		/// <summary>
-		/// Load content for the gameplay.
-		/// </summary>
+		public override	void Initialize		() {
+			Player = new Player ( Game , PlayerSpeed );
+		}
+
 		public override	void LoadContent	() {
-			#region TEST_DRAW
-                player = new Player(game, speed);
-                leftGlove = new LeftGlove(game);
-                rightGlove = new RightGlove(game);
+			GameObjectCollection.Add ( Player );
+			GameObjectCollection.Add ( new PunchingBagManager ( Game , Player ) );
 
-				UpdateCamera ();
-
-                gameObjectCollection = game.punchingBagGenerator.Generate();
-                gameObjectCollection.Add(player);
-                gameObjectCollection.Add(leftGlove);
-                gameObjectCollection.Add(rightGlove);
-
-			#endregion
+			base.LoadContent	();
+			UpdateCamera		();
 		}
 
-		/// <summary>
-		/// Update the logic part.
-		/// </summary>
-		public override	void Update			( GameTime gameTime ) {
-            timeSpent += gameTime.ElapsedRealTime.TotalSeconds;
+		public override	void Update			( GameTime GameTime ) {
+			UpdateCamera	();
 
-            UpdateCamera ( );
-
-            foreach (GameObject gameObject in gameObjectCollection)
-                gameObject.Update ( gameTime );
+			base.Update		( GameTime );
 		}
 
-		/// <summary>
-		/// Draw the 3D scene.
-		/// </summary>
-		public override	void Draw			( GameTime gameTime ) {
-			game.DrawText ( new Vector2 ( 150 , 10 ) , "This is how you can draw some text." , Color.Black );
+		public override	void Draw			( GameTime GameTime ) {
+			// text sample
+			//Game.DrawText ( new Vector2 ( 150 , 10 ) , "This is how you can draw some text." , Color.Black );
 
-			foreach ( GameObject gameObject in gameObjectCollection )
-				gameObject.Draw ( cameraProjectionMatrix , cameraViewMatrix );
+			foreach ( IGameObject GameObject in GameObjectCollection )
+				GameObject.Draw ( CameraProjectionMatrix , CameraViewMatrix );
 
+			base.Draw ( GameTime );
 		}
 
 		// Public Methods			:
@@ -93,6 +70,11 @@ namespace WiiBoxing3D.Screen {
 		/// Update the data according to the detected collisions.
 		/// </summary>
 		public			void CheckCollision	() {
+			/* check collision between gloves and player, and all bags
+			 * 
+			 * call respective objects collision method if hit
+			 * 
+			 */
 		}
 
 		// Private Methods			:
@@ -100,34 +82,36 @@ namespace WiiBoxing3D.Screen {
 		/// <summary>
 		/// Update the camera.
 		/// </summary>
-		private			void UpdateCamera	( ) {
+		private			void UpdateCamera	() {
 			// Camera
-            Vector3 headPosition = player.position;
-			cameraViewMatrix		= Matrix.CreateLookAt (	
-										new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z + 3 ),
-										new Vector3 ( headPosition.X , headPosition.Y , (float)timeSpent*(float)speed ) , 
+			CameraViewMatrix		= Matrix.CreateLookAt (	
+										Player.Position , 
+										new Vector3 ( Player.Position.X , Player.Position.Y , Player.DistanceMoved ) , 
 										Vector3.UnitY 
 									);
 
-			/*cameraProjectionMatrix = Matrix.CreatePerspectiveFieldOfView (
-										MathHelper.ToRadians ( 45.0f ) , 
-										game.GraphicsDevice.Viewport.AspectRatio ,
-										1.0f , 
-										10000.0f 
-									);*/
+			#if ! HEAD_TRACKING // define in Global Defines in Properties
+				CameraProjectionMatrix	= Matrix.CreatePerspectiveFieldOfView (
+											MathHelper.ToRadians ( 45.0f ) , 
+											Game.GraphicsDevice.Viewport.AspectRatio ,
+											1.0f , 
+											10000.0f 
+										);
+			#else // HEAD_TRACKING
+				Vector3 headPosition	= Player.Position / 100;
+						headPosition.Z	= - headPosition.Z;
+				float aspectRatio		= Game.graphics.GraphicsDevice.Viewport.AspectRatio;
+				float nearestPoint		= 0.05f;
 
-            // Head tracking :)
-            headPosition.Z -= (float)timeSpent * (float)speed;
-            headPosition /= 100;
-            headPosition.Z = -headPosition.Z;
-			float aspectRatio = game.graphics.GraphicsDevice.Viewport.AspectRatio;
-			float nearestPoint = 0.05f;
-			cameraProjectionMatrix = Matrix.CreatePerspectiveOffCenter(
-											 nearestPoint * (-.5f * aspectRatio + headPosition.X) / headPosition.Z,
-											 nearestPoint * (.5f * aspectRatio + headPosition.Y) / headPosition.Z,
-											 nearestPoint * (-.5f - headPosition.X) / headPosition.Z,
-											 nearestPoint * (.5f - headPosition.Y) / headPosition.Z,
-											 nearestPoint, 1000.0f);
+				CameraProjectionMatrix	= Matrix.CreatePerspectiveOffCenter (
+											nearestPoint * ( -0.5f * aspectRatio + headPosition.X ) / headPosition.Z ,
+											nearestPoint * (  0.5f * aspectRatio + headPosition.Y ) / headPosition.Z ,
+											nearestPoint * ( -0.5f				 - headPosition.X ) / headPosition.Z ,
+											nearestPoint * (  0.5f				 - headPosition.Y ) / headPosition.Z ,
+											nearestPoint ,
+											1000.0f
+										);
+			#endif
 
 		}
 
