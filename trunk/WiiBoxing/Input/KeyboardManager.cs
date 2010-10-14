@@ -34,7 +34,7 @@ namespace WiiBoxing3D.Input {
 		/// Updates the keyboard state.
 		/// </summary>
 		/// <param name="gameTime">Time passed since the last call to Update.</param>
-		public override void	Update		( GameTime gameTime ) {
+		public	override	void	Update		( GameTime gameTime ) {
 
 			OldState		= CurrentState;	// the old currentstate
 			CurrentState	= Keyboard.GetState ();
@@ -53,28 +53,37 @@ namespace WiiBoxing3D.Input {
 		/// The message to display if key matches required state. 
 		/// If empty string is used, the key name is used as the message.</param>
 		/// <returns></returns>
-        public              bool    checkKey    ( Keys key )  { return checkKey ( key, "" ); }
 		public				bool	checkKey	( Keys key , string feedbackMessage ) {
 			return checkKey ( key , KeyboardEvent.KEY_PRESS_AND_RELEASE , feedbackMessage );
 		}
 
-        public bool checkKey(Keys key, KeyboardEvent keyEvent) { return checkKey(key, keyEvent, ""); }
+		public				bool	checkKey	( Keys key ) {
+			return checkKey ( key , "" );
+		}
+
+		public				bool	checkKey	( Keys key , KeyboardEvent keyEvent ) {
+			return checkKey ( key , keyEvent , "" );
+		}
+
 		public				bool	checkKey	( Keys key , KeyboardEvent keyEvent , string feedbackMessage ) {
 
-			bool state;
+			bool oldKeyState = true;
+			bool currentKeyState;
 
 			switch ( keyEvent ) {
 
 				case KeyboardEvent.KEY_PRESS_AND_RELEASE	: 
-					state = CurrentState.IsKeyDown	( key ) && OldState.IsKeyUp ( key );
+					currentKeyState = CurrentState	.IsKeyDown	( key ) && OldState.IsKeyUp ( key );
 					break;
 
-				case KeyboardEvent.KEY_DOWN					: 
-					state = CurrentState.IsKeyDown	( key );
+				case KeyboardEvent.KEY_DOWN					:
+					oldKeyState		= OldState		.IsKeyDown	( key );
+					currentKeyState = CurrentState	.IsKeyDown	( key );
 					break;
 
-				case KeyboardEvent.KEY_UP					: 
-					state = CurrentState.IsKeyUp		( key );
+				case KeyboardEvent.KEY_UP					:
+					oldKeyState		= OldState		.IsKeyUp	( key );
+					currentKeyState = CurrentState	.IsKeyUp	( key );
 					break;
 
 
@@ -83,10 +92,10 @@ namespace WiiBoxing3D.Input {
 			}
 
 			// display only if keyevent is true
-			if ( state )
+			if ( currentKeyState && ! oldKeyState )
 				Console.WriteLine ( feedbackMessage == "" ? key.ToString () : feedbackMessage );
 
-			return state;
+			return currentKeyState;
 
 		}
 

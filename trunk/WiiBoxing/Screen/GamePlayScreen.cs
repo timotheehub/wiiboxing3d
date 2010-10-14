@@ -18,12 +18,13 @@ namespace WiiBoxing3D.Screen {
 		// ==========================
 
 		// Camera variables
-		// Vector3 cameraPosition = new Vector3(0.0f, -50.0f, 20.0f);
-		// Vector3 cameraLookAt = new Vector3(0.0f, 0.0f, 0.0f);
-		Matrix	CameraProjectionMatrix;
-		Matrix	CameraViewMatrix;
+		Matrix				CameraProjectionMatrix;
+		Matrix				CameraViewMatrix;
 
-		Player	Player;
+		Player				Player;
+		PunchingBagManager	PunchingBagManager;
+		LeftGlove			LeftGlove;
+		RightGlove			RightGlove;
 
 		// Initialization			:
 		// ==========================
@@ -35,12 +36,17 @@ namespace WiiBoxing3D.Screen {
 		// XNA Game Methods			:
 		// ==========================
 		public override	void Initialize		() {
-			Player = new Player ( Game , PlayerSpeed );
+			Player				= new Player			 ( Game , PlayerSpeed );
+			PunchingBagManager	= new PunchingBagManager ( Game , Player );
+			LeftGlove			= new LeftGlove			 ( Game );
+			RightGlove			= new RightGlove		 ( Game );
 		}
 
 		public override	void LoadContent	() {
-			GameObjectCollection.Add ( Player );
-			GameObjectCollection.Add ( new PunchingBagManager ( Game , Player ) );
+			GameObjectCollection.Add ( Player				);
+			GameObjectCollection.Add ( PunchingBagManager );
+			GameObjectCollection.Add ( LeftGlove );
+			GameObjectCollection.Add ( RightGlove );
 
 			base.LoadContent	();
 			UpdateCamera		();
@@ -48,6 +54,10 @@ namespace WiiBoxing3D.Screen {
 
 		public override	void Update			( GameTime GameTime ) {
 			UpdateCamera	();
+			CheckCollision	();
+
+			if ( Game.keyboardManager.checkKey ( Microsoft.Xna.Framework.Input.Keys.Space ) )
+				PunchingBagManager.getBag ( 0 ).hitByGlove ();
 
 			base.Update		( GameTime );
 		}
@@ -70,11 +80,7 @@ namespace WiiBoxing3D.Screen {
 		/// Update the data according to the detected collisions.
 		/// </summary>
 		public			void CheckCollision	() {
-			/* check collision between gloves and player, and all bags
-			 * 
-			 * call respective objects collision method if hit
-			 * 
-			 */
+			PunchingBagManager.CheckCollision ( Player , LeftGlove , RightGlove );
 		}
 
 		// Private Methods			:
@@ -83,14 +89,17 @@ namespace WiiBoxing3D.Screen {
 		/// Update the camera.
 		/// </summary>
 		private			void UpdateCamera	() {
-			// Camera
-			CameraViewMatrix		= Matrix.CreateLookAt (	
-										Player.Position , 
-										new Vector3 ( Player.Position.X , Player.Position.Y , Player.DistanceMoved ) , 
-										Vector3.UnitY 
-									);
+			Vector3 headPosition = Player.Position;
 
-			#if ! HEAD_TRACKING // define in Global Defines in Properties
+			// Camera
+
+			#if ! HEAD_TRACKING // define in Global Defines in Properties, or just toggle the ! here
+				CameraViewMatrix		= Matrix.CreateLookAt (	
+											headPosition , 
+											new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z+20 ) , 
+											Vector3.UnitY 
+										);
+
 				CameraProjectionMatrix	= Matrix.CreatePerspectiveFieldOfView (
 											MathHelper.ToRadians ( 45.0f ) , 
 											Game.GraphicsDevice.Viewport.AspectRatio ,
@@ -98,8 +107,13 @@ namespace WiiBoxing3D.Screen {
 											10000.0f 
 										);
 			#else // HEAD_TRACKING
-				Vector3 headPosition	= Player.Position / 100;
-						headPosition.Z	= - headPosition.Z;
+				CameraViewMatrix		= Matrix.CreateLookAt (	
+											new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z + 3 ) , 
+											new Vector3 ( headPosition.X , headPosition.Y , Player.DistanceMoved ) , 
+											Vector3.UnitY 
+										);
+
+						headPosition	= - Player.Position / 100;
 				float aspectRatio		= Game.graphics.GraphicsDevice.Viewport.AspectRatio;
 				float nearestPoint		= 0.05f;
 
