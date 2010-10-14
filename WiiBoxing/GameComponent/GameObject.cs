@@ -15,9 +15,18 @@ namespace WiiBoxing3D.GameComponent {
 		// Public Properties		:
 		// ==========================
 		// Transformation Properties :
-		public	Vector3	Position	= Vector3.Zero;
-		public	Vector3	Rotation	= Vector3.Zero;
-		public	Vector3	Scale		= Vector3.One;
+		public	Vector3		Position	= Vector3.Zero;
+		public	Vector3		Rotation	= Vector3.Zero;
+		public	Vector3		Scale		= Vector3.One;
+
+		public	ModelMesh	Mesh		{ 
+			get {
+				if ( Model == null )
+					throw new ModelNotLoadedException ();
+
+				return Model.Meshes [ 0 ]; 
+			} 
+		}
 
 		// Private Properties		:
 		// ==========================

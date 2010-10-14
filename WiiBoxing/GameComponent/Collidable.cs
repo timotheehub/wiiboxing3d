@@ -1,6 +1,9 @@
 ﻿// .NET
 using System;
 
+// XNA
+using Microsoft.Xna.Framework;
+
 namespace WiiBoxing3D.GameComponent {
 
 	/// <summary>
@@ -10,15 +13,17 @@ namespace WiiBoxing3D.GameComponent {
 
 		// Public Properties		:
 		// ==========================
+		public delegate void OnCollidedEventHandler ( Object sender , CollidedEventArgs e );
+
 		/// <summary>
 		/// Raised when the GameObject collides with another GameObject.
 		/// </summary>
-		public event EventHandler Collided;
+		public event OnCollidedEventHandler Collided;
 
 		// Initialization			:
 		// ==========================
 		public				Collidable				( CustomGame Game ) : base ( Game ) {
-			Collided += new EventHandler ( OnCollidedHandler );
+			Collided += new OnCollidedEventHandler ( OnCollidedHandler );
 		}
 
 		// Public Methods			:
@@ -26,8 +31,29 @@ namespace WiiBoxing3D.GameComponent {
 		/// <summary>
 		/// Informs the GameObject that it has collided with another GameObject.
 		/// </summary>
-		public		virtual	void CollideWithObject	() {
-			OnCollided ();
+		public				void CollideWithObject	( Collidable CollidableObject ) {
+			OnCollided ( CollidableObject );
+		}
+
+		public		virtual bool IsCollidingWith	( Collidable CollidableObject ) {
+
+			BoundingSphere	currentModelBounds			= Mesh.BoundingSphere;
+							currentModelBounds.Center	= Position;
+							currentModelBounds.Radius	= 3f;//Scale.LengthSquared () / 3;
+
+			BoundingSphere	checkModelBounds			= CollidableObject.Mesh.BoundingSphere;
+							checkModelBounds.Center		= CollidableObject.Position;
+							checkModelBounds.Radius		= CollidableObject.Scale.LengthSquared () / 3;
+
+			if ( currentModelBounds.Intersects ( checkModelBounds ) ) {
+				this			.CollideWithObject ( CollidableObject	);
+				CollidableObject.CollideWithObject ( this				);
+
+				return true;
+			}
+			else
+				return false;
+
 		}
 
 		// Protected Methods		:
@@ -35,11 +61,11 @@ namespace WiiBoxing3D.GameComponent {
 		/// <summary>
 		/// Raises the Collided event. Called when the GameObject collides with another GameObject.
 		/// </summary>
-		protected	virtual	void OnCollided			() {
-			EventHandler handler = Collided;
+		protected	virtual	void OnCollided			( Collidable CollidableObject ) {
+			OnCollidedEventHandler handler = Collided;
 
 			if ( handler != null )
-				handler ( this , EventArgs.Empty );
+				handler ( this , new CollidedEventArgs ( CollidableObject ) );
 		}
 
 		/// <summary>
@@ -48,8 +74,20 @@ namespace WiiBoxing3D.GameComponent {
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">An System.EventArgs that contains no event data.</param>
-		protected	virtual	void OnCollidedHandler	( Object sender , EventArgs e ) {
-			Console.WriteLine ( "I'm hit!" );
+		protected	virtual	void OnCollidedHandler	( Object sender , CollidedEventArgs e ) {
+			Console.WriteLine ( this + " is hit by " + e.ObjectCollidedWith + "!" );
+		}
+
+	}
+
+	public class CollidedEventArgs : EventArgs {
+
+		public Collidable ObjectCollidedWith { get { return CollidableObject; } }
+
+		private Collidable CollidableObject;
+
+		public CollidedEventArgs ( Collidable CollidableObject ) {
+			this.CollidableObject = CollidableObject;
 		}
 
 	}

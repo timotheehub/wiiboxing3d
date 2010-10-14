@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 // Game
 using WiiBoxing3D.GameComponent;
 using WiiBoxing3D.Screen;
-using WiiBoxing3D.Input;
 
 namespace WiiBoxing3D.GameComponent {
 	/// <summary>
@@ -16,18 +15,19 @@ namespace WiiBoxing3D.GameComponent {
 	/// </summary>
 	sealed class PunchingBagManager : Manager , IGameObject {
 
-		static readonly Vector2	SPEED_RANGE		= new Vector2 ( 0.15f , 0.4f );
+		//static readonly Vector2	SPEED_RANGE		= new Vector2 ( 0.15f , 0.4f );
 
 		const uint		MAX_PUNCHBAGS			= 5;
 		const uint		DISTANCE_FROM_CENTER	= 10;
-		const uint		CREATION_DEPTH			= 125;
+		const float		MIN_DEPTH				= 20;
+		const float		MAX_DEPTH				= 2000;
 
 		List < PunchingBag >	PunchingBags;
 		List < PunchingBag >	BagsToRemove;
 		Random					Randomizer;
-		bool					IsRunning;
-		bool					IsUpdating;
-		int						TimeBeforeNext;
+		//bool					IsRunning;
+		//bool					IsUpdating;
+		//int						TimeBeforeNext;
 
 		Player					Player;
 
@@ -44,14 +44,33 @@ namespace WiiBoxing3D.GameComponent {
 		public	void	Initialize			() {
 			PunchingBags	= new List < PunchingBag > ();
 			BagsToRemove	= new List < PunchingBag > ();
-			Randomizer		= new Random ( DateTime.Now.Millisecond );
+			//Randomizer		= new Random ( DateTime.Now.Millisecond );
 
-			IsRunning		= false;
-			IsUpdating		= false;
-			TimeBeforeNext	= 0;
+			//IsRunning		= false;
+			//IsUpdating		= false;
+			//TimeBeforeNext	= 0;
 		}
 
-		public	void	LoadContent			() { }
+		public	void	LoadContent			() {
+			Randomizer		= new Random ( DateTime.Now.Millisecond );
+
+			double depth	= MIN_DEPTH;
+			double xOffset	= Randomizer.NextDouble () * 15.0 + 6.0;
+
+			while ( depth <= MAX_DEPTH ) {
+
+				// if value is even, punching bag is on the left lane
+				// else punching bag is on the right lane
+				if ( Randomizer.Next ( 100 ) % 2 == 0 )	xOffset *= -1;
+				//else									xOffset *=  1;
+
+				createPunchingBag ( ( float ) xOffset , ( float ) depth );
+
+				// depth increments by random 5.0-10.0 in the z-axis
+				depth  += Randomizer.NextDouble () * 50.0 + 40.0;
+				xOffset	= Randomizer.NextDouble () * 15.0 +  6.0;
+			}
+		}
 
 		public	void	UnloadContent		() {
 
@@ -60,37 +79,26 @@ namespace WiiBoxing3D.GameComponent {
 
 		}
 
-		public	override void	Update				( GameTime GameTime ) {
-			IsUpdating = true;
+		override
+		public	void	Update				( GameTime GameTime ) {
 
-			if ( IsRunning ) {
-				// create bags within max count
-				while ( PunchingBags.Count < MAX_PUNCHBAGS && TimeBeforeNext <= 0 )
-					createPunchingBag ();
+			// update punching bag properties
+			foreach ( PunchingBag PunchingBag in PunchingBags ) {
+				PunchingBag.Update ( GameTime );
 
-				// update punching bag properties
-				foreach ( PunchingBag PunchingBag in PunchingBags ) {
-					PunchingBag.Update ( GameTime );
-
-					// check if out of view, and add to recycle bin
-					if ( PunchingBag.Position.Z <= Player.Position.Z )
-						BagsToRemove.Add ( PunchingBag );
-
-					//Console.WriteLine ( punchingBag.position );
-				}
-
-				// remove out of view bags from display list
-				foreach ( PunchingBag punchingBag in BagsToRemove )
-					PunchingBags.Remove ( punchingBag );
-
-				BagsToRemove.Clear ();
-
-				TimeBeforeNext--;
+				// check if dead bag, and add to recycle bin
+				if ( PunchingBag.isDead )
+					BagsToRemove.Add ( PunchingBag );
 			}
-			else
-				Run ();
 
-			IsUpdating = false;
+			// remove out of view bags from display list
+			foreach ( PunchingBag PunchingBag in BagsToRemove )
+				PunchingBags.Remove ( PunchingBag );
+
+			BagsToRemove.Clear ();
+
+			//TimeBeforeNext--;
+
 		}
 
 		public	void	Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix ) {
@@ -100,40 +108,50 @@ namespace WiiBoxing3D.GameComponent {
 
 		}
 
-		public	void	Run					() {
-			IsRunning = true;
+		public	void	CheckCollision		( params Collidable [] Collidables ) {
+
+			foreach ( Collidable Collidable in Collidables )
+				foreach ( PunchingBag PunchingBag in PunchingBags )
+					PunchingBag.IsCollidingWith ( Collidable );
+
 		}
 
-		/// <summary>
-		/// Returns a random number within a specified range.
-		/// </summary>
-		/// <param name="minValue">The inclusive lower bound of the random number returned.</param>
-		/// <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
-		/// <returns></returns>
-		private	float	random				( float	minValue /*= 0.0f*/	, float	maxValue /*= 1.0f*/	) {
-			double Range = maxValue - minValue;
+#if DEBUG
+		public PunchingBag getBag ( int BagID ) {
+			return PunchingBags [ BagID ];
+		}
+#endif
 
-			if ( !IsUpdating )
-				Randomizer = new Random ( DateTime.Now.Millisecond );
+		///// <summary>
+		///// Returns a random number within a specified range.
+		///// </summary>
+		///// <param name="minValue">The inclusive lower bound of the random number returned.</param>
+		///// <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
+		///// <returns></returns>
+		//private	float	random				( float	minValue = 0.0f	, float	maxValue = 1.0f	) {
+		//    double Range = maxValue - minValue;
+
+		//    if ( !IsUpdating )
+		//        Randomizer = new Random ( DateTime.Now.Millisecond );
 			
-			return ( float ) ( Randomizer.NextDouble () * Range + ( double ) minValue );
-		}
+		//    return ( float ) ( Randomizer.NextDouble () * Range + ( double ) minValue );
+		//}
 
-		private	int		random				( int	minValue /*= 0*/	, int	maxValue /*= 1*/	) {
-			return ( int ) random ( ( float ) minValue , ( float ) maxValue );
-		}
+		//private	int		random				( int	minValue = 0	, int	maxValue = 1	) {
+		//    return ( int ) random ( ( float ) minValue , ( float ) maxValue );
+		//}
 
-		private	void	createPunchingBag	() {
+		private	void	createPunchingBag	( float xOffset , float depth ) {
 			PunchingBag bag		= new BlackPunchingBag ( Game );
 
-			bag.Position		= new Vector3	( DISTANCE_FROM_CENTER * ( random ( -10 , 10 ) >= 0 ? 1 : -1 ) , 0f , CREATION_DEPTH );
+			bag.Position		= new Vector3	( xOffset , 0f , depth );
 			bag.Scale			= new Vector3	( 0.01f );
-			bag.speed			= random		( SPEED_RANGE.X , SPEED_RANGE.Y );
+			//bag.speed			= random		( SPEED_RANGE.X , SPEED_RANGE.Y );
 			bag.punchesNeeded	= 5;
 
 			PunchingBags.Add ( bag );
 
-			TimeBeforeNext		= random ( 100 , 200 );
+			//TimeBeforeNext		= random ( 100 , 200 );
 		}
 
 	}

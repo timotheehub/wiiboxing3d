@@ -9,38 +9,44 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class Player : AudioCollidable {
 
-		const uint	MAX_HEALTH		= 100;
-		const uint	DAMAGE_TAKEN	= 20;
-		const float MOVE_DISTANCE	= 1f;
+		const string	PlayerAsset		= @"Models\BOX";
+		const uint		MAX_HEALTH		= 100;
+		const uint		DAMAGE_TAKEN	= 20;
+		const float		MOVE_DISTANCE	= 1f;
 
 		new 
 		public	Vector3	Position		{ get { return base.Position;						} }
 		public	float 	DistanceMoved	{ get { return ( float ) ( Speed * GameplayTime );	} }
+		public	bool	IsDead			{ get { return Health <= 0;							} }
 
 				uint	Health;
 				double	Speed;
 
-		LeftGlove		LeftGlove;
-		RightGlove		RightGlove;
-
 		double			GameplayTime;
 
-		public				Player					( CustomGame Game , double Speed ) : base ( Game , "" ) {
+		public					Player						( CustomGame Game , double Speed ) : base ( Game , "" ) {
 			base.Position.Z	= -20f;
 
 			Health			= MAX_HEALTH;
 			this.Speed		= Speed;
 
-			LeftGlove		= new LeftGlove	 ( Game );
-			RightGlove		= new RightGlove ( Game );
-
 			GameplayTime	= 0;
 		}
 
-		public	override	void Update				( GameTime GameTime ) {
+		public		override	string	ToString			() {
+			return "The Player";
+		}
+
+		public		override	void	LoadContent			() {
+			LoadModel ( PlayerAsset );
+
+			base.LoadContent ();
+		}
+
+		public		override	void	Update				( GameTime GameTime ) {
 			GameplayTime = GameTime.ElapsedGameTime.TotalSeconds;
 
-			if ( Health <= 0 )
+			if ( IsDead && Speed > 0 )	// speed check to see if endGame has been processed
 				endGame ();
 
 			if ( Game.keyboardManager.checkKey ( Keys.Left	, KeyboardEvent.KEY_DOWN ) ) base.Position.X += MOVE_DISTANCE;
@@ -53,19 +59,22 @@ namespace WiiBoxing3D.GameComponent {
 			base.Update ( GameTime );
 		}
 
-		/// <summary>
-		/// No model is loaded for Player, hence, the method is overriden to do nothing.
-		/// </summary>
-		/// <param name="CameraProjectionMatrix"></param>
-		/// <param name="CameraViewMatrix"></param>
-		public	override	void Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix ) { }
+		public		override	void	Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix ) { }
 
-		public				void hitByPunchingBag	() {
+		public					void	hitByPunchingBag	() {
 			Health -= DAMAGE_TAKEN;
 		}
 
-		private				void endGame			() {
+		protected	override	void	OnCollidedHandler	( object sender , CollidedEventArgs e ) {
+			hitByPunchingBag ();
+
+			base.OnCollidedHandler ( sender , e );
+		}
+
+		private					void endGame			() {
 			// TODO : end the bloody !@#%$!@# game
+			System.Console.WriteLine ( this + " has died!" );
+			Speed = 0;
 		}
 
 	}
