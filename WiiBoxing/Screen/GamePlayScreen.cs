@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 // Game
 using WiiBoxing3D.GameComponent;
 using WiiBoxing3D.Screen;
+using Microsoft.Xna.Framework.Input;
 
 namespace WiiBoxing3D.Screen {
 
@@ -12,7 +13,7 @@ namespace WiiBoxing3D.Screen {
 	/// </summary>
 	public sealed class GamePlayScreen : GameScreen {
 
-		const double PlayerSpeed = 5;
+		const double PlayerSpeed = 2;
 
 		// Private Properties		:
 		// ==========================
@@ -56,7 +57,7 @@ namespace WiiBoxing3D.Screen {
 			UpdateCamera	();
 			CheckCollision	();
 
-			if ( Game.keyboardManager.checkKey ( Microsoft.Xna.Framework.Input.Keys.Space ) )
+			if ( Game.keyboardManager.checkKey ( Keys.Space ) )
 				PunchingBagManager.getBag ( 0 ).hitByGlove ();
 
 			base.Update		( GameTime );
@@ -93,10 +94,10 @@ namespace WiiBoxing3D.Screen {
 
 			// Camera
 
-			#if ! HEAD_TRACKING // define in Global Defines in Properties, or just toggle the ! here
+			#if HEAD_TRACKING // define in Global Defines in Properties, or just toggle the ! here
 				CameraViewMatrix		= Matrix.CreateLookAt (	
 											headPosition , 
-											new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z+20 ) , 
+											new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z + 20 ) , 
 											Vector3.UnitY 
 										);
 
@@ -108,20 +109,23 @@ namespace WiiBoxing3D.Screen {
 										);
 			#else // HEAD_TRACKING
 				CameraViewMatrix		= Matrix.CreateLookAt (	
-											new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z + 3 ) , 
+											new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z ) , 
 											new Vector3 ( headPosition.X , headPosition.Y , Player.DistanceMoved ) , 
 											Vector3.UnitY 
 										);
 
-						headPosition	= - Player.Position / 100;
+
+                        headPosition.Z  -= Player.DistanceMoved;
+                        headPosition    /= 100;
+                        headPosition.Z *= -100;
 				float aspectRatio		= Game.graphics.GraphicsDevice.Viewport.AspectRatio;
 				float nearestPoint		= 0.05f;
 
 				CameraProjectionMatrix	= Matrix.CreatePerspectiveOffCenter (
-											nearestPoint * ( -0.5f * aspectRatio + headPosition.X ) / headPosition.Z ,
-											nearestPoint * (  0.5f * aspectRatio + headPosition.Y ) / headPosition.Z ,
-											nearestPoint * ( -0.5f				 - headPosition.X ) / headPosition.Z ,
-											nearestPoint * (  0.5f				 - headPosition.Y ) / headPosition.Z ,
+											2.0f * nearestPoint * ( -0.5f * aspectRatio + headPosition.X ) / headPosition.Z ,
+											2.0f * nearestPoint * (  0.5f * aspectRatio + headPosition.X ) / headPosition.Z ,
+											2.0f * nearestPoint * ( -0.5f				 - headPosition.Y ) / headPosition.Z ,
+											2.0f * nearestPoint * (  0.5f				 - headPosition.Y ) / headPosition.Z ,
 											nearestPoint ,
 											1000.0f
 										);

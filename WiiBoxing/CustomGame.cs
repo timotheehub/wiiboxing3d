@@ -72,8 +72,8 @@ namespace WiiBoxing3D {
 		/// and initialize them as well.
 		/// </summary>
 		protected override	void Initialize		() {
-			graphics.PreferredBackBufferWidth	= 800;
-			graphics.PreferredBackBufferHeight	= 600;
+			graphics.PreferredBackBufferWidth	= 1024;
+			graphics.PreferredBackBufferHeight	= 768;
 			graphics.IsFullScreen				= false;
 			graphics.PreferMultiSampling		= true;
 

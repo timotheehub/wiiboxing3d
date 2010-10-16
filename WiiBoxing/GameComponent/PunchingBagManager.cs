@@ -18,9 +18,9 @@ namespace WiiBoxing3D.GameComponent {
 		//static readonly Vector2	SPEED_RANGE		= new Vector2 ( 0.15f , 0.4f );
 
 		const uint		MAX_PUNCHBAGS			= 5;
-		const uint		DISTANCE_FROM_CENTER	= 10;
+		const uint		DISTANCE_FROM_CENTER	= 5;
 		const float		MIN_DEPTH				= 20;
-		const float		MAX_DEPTH				= 2000;
+		const float		MAX_DEPTH				= 200;
 
 		List < PunchingBag >	PunchingBags;
 		List < PunchingBag >	BagsToRemove;
@@ -55,7 +55,7 @@ namespace WiiBoxing3D.GameComponent {
 			Randomizer		= new Random ( DateTime.Now.Millisecond );
 
 			double depth	= MIN_DEPTH;
-			double xOffset	= Randomizer.NextDouble () * 15.0 + 6.0;
+            double xOffset  = Randomizer.NextDouble() * 3.0 + 1.0;
 
 			while ( depth <= MAX_DEPTH ) {
 
@@ -67,8 +67,8 @@ namespace WiiBoxing3D.GameComponent {
 				createPunchingBag ( ( float ) xOffset , ( float ) depth );
 
 				// depth increments by random 5.0-10.0 in the z-axis
-				depth  += Randomizer.NextDouble () * 50.0 + 40.0;
-				xOffset	= Randomizer.NextDouble () * 15.0 +  6.0;
+				depth  += Randomizer.NextDouble () * 4.0 + 3.0;
+				xOffset	= Randomizer.NextDouble () * 3.0 + 1.0;
 			}
 		}
 
@@ -145,7 +145,7 @@ namespace WiiBoxing3D.GameComponent {
 			PunchingBag bag		= new BlackPunchingBag ( Game );
 
 			bag.Position		= new Vector3	( xOffset , 0f , depth );
-			bag.Scale			= new Vector3	( 0.01f );
+			bag.Scale			= new Vector3	( 0.001f );
 			//bag.speed			= random		( SPEED_RANGE.X , SPEED_RANGE.Y );
 			bag.punchesNeeded	= 5;
 

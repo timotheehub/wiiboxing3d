@@ -1,4 +1,6 @@
-﻿namespace WiiBoxing3D.GameComponent {
+﻿using Microsoft.Xna.Framework;
+
+namespace WiiBoxing3D.GameComponent {
 
 	public abstract class Glove : AudioCollidable {
 
@@ -13,6 +15,7 @@
 		public Glove ( CustomGame Game , Player player, string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset )
         {
             this.player = player;
+            base.Scale = new Vector3(0.001f);
         }
 
 		public override string	ToString	() {

@@ -12,7 +12,7 @@ namespace WiiBoxing3D.GameComponent {
 		const string	PlayerAsset		= @"Models\BOX";
 		const uint		MAX_HEALTH		= 100;
 		const uint		DAMAGE_TAKEN	= 20;
-		const float		MOVE_DISTANCE	= 1f;
+		const float		MOVE_DISTANCE	= 0.2f;
 
 		new 
 		public	Vector3	Position		{ get { return base.Position;						} }
@@ -25,7 +25,8 @@ namespace WiiBoxing3D.GameComponent {
 		double			GameplayTime;
 
 		public					Player						( CustomGame Game , double Speed ) : base ( Game , "" ) {
-			base.Position.Z	= -20f;
+			base.Position.Z	= -5f;
+            base.Scale      = new Vector3(0.1f);
 
 			Health			= MAX_HEALTH;
 			this.Speed		= Speed;
@@ -44,7 +45,7 @@ namespace WiiBoxing3D.GameComponent {
 		}
 
 		public		override	void	Update				( GameTime GameTime ) {
-			GameplayTime = GameTime.ElapsedGameTime.TotalSeconds;
+			GameplayTime += GameTime.ElapsedRealTime.TotalSeconds;
 
 			if ( IsDead && Speed > 0 )	// speed check to see if endGame has been processed
 				endGame ();
@@ -54,12 +55,17 @@ namespace WiiBoxing3D.GameComponent {
 			if ( Game.keyboardManager.checkKey ( Keys.Up	, KeyboardEvent.KEY_DOWN ) ) base.Position.Z += MOVE_DISTANCE;
 			if ( Game.keyboardManager.checkKey ( Keys.Down	, KeyboardEvent.KEY_DOWN ) ) base.Position.Z -= MOVE_DISTANCE;
 
-			base.Position.Z += DistanceMoved;
+            base.Position.Z += (float)(Speed * GameTime.ElapsedRealTime.TotalSeconds);
 			
 			base.Update ( GameTime );
 		}
 
-		public		override	void	Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix ) { }
+		public		override	void	Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix )
+        {
+            base.Position.Z -= 3;
+            base.Draw(CameraProjectionMatrix, CameraViewMatrix);
+            base.Position.Z += 3;
+        }
 
 		public					void	hitByPunchingBag	() {
 			Health -= DAMAGE_TAKEN;
@@ -74,7 +80,7 @@ namespace WiiBoxing3D.GameComponent {
 		private					void endGame			() {
 			// TODO : end the bloody !@#%$!@# game
 			System.Console.WriteLine ( this + " has died!" );
-			Speed = 0;
+			//Speed = 0; Not for the prototype
 		}
 
 	}
