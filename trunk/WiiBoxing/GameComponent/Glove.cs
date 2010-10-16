@@ -8,7 +8,12 @@
 		public float speed;
 		public bool IsPunching;
 
-		public Glove ( CustomGame Game , string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset ) { }
+        protected Player player;
+
+		public Glove ( CustomGame Game , Player player, string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset )
+        {
+            this.player = player;
+        }
 
 		public override string	ToString	() {
 			return "Glove";
@@ -24,10 +29,6 @@
 			LoadModel ( GloveAsset );
 
 			base.LoadContent ();
-		}
-
-		public override void Draw ( Microsoft.Xna.Framework.Matrix CameraProjectionMatrix , Microsoft.Xna.Framework.Matrix CameraViewMatrix ) {
-			
 		}
 
 	}
