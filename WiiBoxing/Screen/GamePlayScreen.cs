@@ -38,8 +38,8 @@ namespace WiiBoxing3D.Screen {
 		public override	void Initialize		() {
 			Player				= new Player			 ( Game , PlayerSpeed );
 			PunchingBagManager	= new PunchingBagManager ( Game , Player );
-			LeftGlove			= new LeftGlove			 ( Game );
-			RightGlove			= new RightGlove		 ( Game );
+			LeftGlove			= new LeftGlove			 ( Game , Player );
+			RightGlove			= new RightGlove		 ( Game , Player );
 		}
 
 		public override	void LoadContent	() {

@@ -2,7 +2,7 @@
 
 	public class RightGlove : Glove {
 
-		public RightGlove ( CustomGame Game ) : base ( Game, "" ) { }
+        public RightGlove(CustomGame game, Player player) : base(game, player, "") { }
 
 	}
 
