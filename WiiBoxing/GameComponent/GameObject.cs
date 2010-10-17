@@ -80,6 +80,7 @@ namespace WiiBoxing3D.GameComponent {
 											Matrix.CreateTranslation		( Position );
 					effect.View			= CameraViewMatrix;
 					effect.Projection	= CameraProjectionMatrix;
+                    // TODO : effect.Texture =
 
 				}
 
