@@ -4,7 +4,7 @@ namespace WiiBoxing3D.GameComponent {
 
 	public abstract class Glove : AudioCollidable {
 
-		const string GloveAsset = @"Models\BOX";
+		const string GloveAsset = @"Models\gloves";
 		public const float MAX_RANGE = 5.0f;
 
 		public float speed;
@@ -15,7 +15,8 @@ namespace WiiBoxing3D.GameComponent {
 		public Glove ( CustomGame Game , Player player, string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset )
         {
             this.player = player;
-            base.Scale = new Vector3(0.001f);
+            base.Scale = new Vector3(0.01f);
+            base.Rotation = new Vector3(-1.0f, 0.5f, 0.5f);
         }
 
 		public override string	ToString	() {
