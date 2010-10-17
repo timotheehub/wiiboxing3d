@@ -7,13 +7,15 @@ namespace WiiBoxing3D.Input {
 
 		// Protected Properties		:
 		// ==========================
-		protected CustomGame Game { get; set; }
+		protected CustomGame game { get; set; }
 
 		// Initialization			:
 		// ==========================
 		protected Manager ( CustomGame game ) {
-			Game = game;
+			this.game = game;
 		}
+
+        public virtual void Update(GameTime gameTime) { }
 
 	}
 

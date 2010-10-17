@@ -57,7 +57,7 @@ namespace WiiBoxing3D.Input {
 		/// The message to display if key matches required state. 
 		/// If empty string is used, the key name is used as the message.</param>
 		/// <returns></returns>
-		private	bool	checkKey	( Keys key , string feedbackMessage = "" ) {
+		private	bool	checkKey	( Keys key , string feedbackMessage ) {
 			if ( currentState.IsKeyDown ( key ) && oldState.IsKeyUp ( key ) ) {
 				Console.WriteLine ( feedbackMessage == "" ? key.ToString () : feedbackMessage );
 

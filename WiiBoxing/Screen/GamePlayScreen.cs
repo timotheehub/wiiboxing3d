@@ -13,7 +13,7 @@ namespace WiiBoxing3D.Screen {
 	/// </summary>
 	public sealed class GamePlayScreen : GameScreen {
 
-		const double PlayerSpeed = 2;
+		const double PlayerSpeed = 3;
 
 		// Private Properties		:
 		// ==========================
@@ -94,10 +94,10 @@ namespace WiiBoxing3D.Screen {
 
 			// Camera
 
-			#if HEAD_TRACKING // define in Global Defines in Properties, or just toggle the ! here
+			#if ! HEAD_TRACKING // define in Global Defines in Properties, or just toggle the ! here
 				CameraViewMatrix		= Matrix.CreateLookAt (	
 											headPosition , 
-											new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z + 20 ) , 
+											new Vector3 ( headPosition.X * 0.8f, headPosition.Y * 0.8f, headPosition.Z + 20 ) , 
 											Vector3.UnitY 
 										);
 
