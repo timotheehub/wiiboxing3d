@@ -44,10 +44,10 @@ namespace WiiBoxing3D.Screen {
 		}
 
 		public override	void LoadContent	() {
-			GameObjectCollection.Add ( Player				);
 			GameObjectCollection.Add ( PunchingBagManager );
 			GameObjectCollection.Add ( LeftGlove );
 			GameObjectCollection.Add ( RightGlove );
+            GameObjectCollection.Add ( Player );
 
 			base.LoadContent	();
 			UpdateCamera		();
@@ -97,7 +97,7 @@ namespace WiiBoxing3D.Screen {
 			#if ! HEAD_TRACKING // define in Global Defines in Properties, or just toggle the ! here
 				CameraViewMatrix		= Matrix.CreateLookAt (	
 											headPosition , 
-											new Vector3 ( headPosition.X * 0.8f, headPosition.Y * 0.8f, headPosition.Z + 20 ) , 
+											new Vector3 ( headPosition.X, headPosition.Y, headPosition.Z + 20 ) , 
 											Vector3.UnitY 
 										);
 
