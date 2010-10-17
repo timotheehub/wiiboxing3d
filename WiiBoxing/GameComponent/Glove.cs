@@ -15,8 +15,7 @@ namespace WiiBoxing3D.GameComponent {
 		public Glove ( CustomGame Game , Player player, string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset )
         {
             this.player = player;
-            base.Scale = new Vector3(0.01f);
-            base.Rotation = new Vector3(-1.0f, 0.5f, 0.5f);
+            base.Scale = new Vector3(0.005f);
         }
 
 		public override string	ToString	() {
