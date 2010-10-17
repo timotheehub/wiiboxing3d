@@ -92,8 +92,8 @@ namespace WiiBoxing3D.Input {
 			}
 
 			// display only if keyevent is true
-			if ( currentKeyState && ! oldKeyState )
-				Console.WriteLine ( feedbackMessage == "" ? key.ToString () : feedbackMessage );
+			if (( currentKeyState && ! oldKeyState ) && ( feedbackMessage != "" ))
+				Console.WriteLine ( feedbackMessage );
 
 			return currentKeyState;
 

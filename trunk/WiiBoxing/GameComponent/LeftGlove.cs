@@ -21,7 +21,7 @@ namespace WiiBoxing3D.GameComponent {
         {
             Vector3 player_position = new Vector3(0, 0, 0);
             player_position = player.Position;
-            /*
+
             if (Game.keyboardManager.checkKey(Keys.Q, KeyboardEvent.KEY_DOWN))
             {
                 if (relative_offset.X + speed <= MAX_RANGE) relative_offset.X += speed;
@@ -56,7 +56,7 @@ namespace WiiBoxing3D.GameComponent {
                 if (relative_offset.Z < 0) relative_offset.Z += speed;
                 IsPunching = false;
             }
-            */
+
             this.Position = player_position + OFF_SET + relative_offset;
         }
 

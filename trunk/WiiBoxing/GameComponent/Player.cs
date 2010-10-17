@@ -50,10 +50,10 @@ namespace WiiBoxing3D.GameComponent {
 			if ( IsDead && Speed > 0 )	// speed check to see if endGame has been processed
 				endGame ();
 
-			if ( Game.keyboardManager.checkKey ( Keys.Left	, KeyboardEvent.KEY_DOWN ) ) base.Position.X += MOVE_DISTANCE;
-			if ( Game.keyboardManager.checkKey ( Keys.Right , KeyboardEvent.KEY_DOWN ) ) base.Position.X -= MOVE_DISTANCE;
-			if ( Game.keyboardManager.checkKey ( Keys.Up	, KeyboardEvent.KEY_DOWN ) ) base.Position.Z += MOVE_DISTANCE;
-			if ( Game.keyboardManager.checkKey ( Keys.Down	, KeyboardEvent.KEY_DOWN ) ) base.Position.Z -= MOVE_DISTANCE;
+			if ( Game.keyboardManager.checkKey ( Keys.Left	, KeyboardEvent.KEY_DOWN , "Left" ) ) base.Position.X += MOVE_DISTANCE;
+			if ( Game.keyboardManager.checkKey ( Keys.Right , KeyboardEvent.KEY_DOWN , "Right" ) ) base.Position.X -= MOVE_DISTANCE;
+			if ( Game.keyboardManager.checkKey ( Keys.Up	, KeyboardEvent.KEY_DOWN , "Up" ) ) base.Position.Z += MOVE_DISTANCE;
+			if ( Game.keyboardManager.checkKey ( Keys.Down	, KeyboardEvent.KEY_DOWN , "Down" ) ) base.Position.Z -= MOVE_DISTANCE;
 
             base.Position.Z += (float)(Speed * GameTime.ElapsedRealTime.TotalSeconds);
 			
