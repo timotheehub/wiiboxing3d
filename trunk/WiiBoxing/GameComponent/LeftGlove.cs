@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Input;
 using WiiBoxing3D.Input;
 
+using System;
+
 namespace WiiBoxing3D.GameComponent {
 
 	public class LeftGlove : Glove {
@@ -21,6 +23,11 @@ namespace WiiBoxing3D.GameComponent {
         {
             Vector3 player_position = new Vector3(0, 0, 0);
             player_position = player.Position;
+            if (Math.Abs(Game.wiimoteManager.WiimoteAccel.Z) > 4.5)
+            {
+                if (relative_offset.Z + speed*5 <= MAX_RANGE) relative_offset.Z += speed*5;
+                IsPunching = true;
+            }
 
             if (Game.keyboardManager.checkKey(Keys.A, KeyboardEvent.KEY_DOWN))
             {

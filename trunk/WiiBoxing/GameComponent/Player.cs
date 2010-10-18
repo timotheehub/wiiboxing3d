@@ -57,9 +57,9 @@ namespace WiiBoxing3D.GameComponent {
             if (Game.keyboardManager.checkKey(Keys.Up, KeyboardEvent.KEY_DOWN, "Up")) Offset.Z += MOVE_DISTANCE;
             if (Game.keyboardManager.checkKey(Keys.Down, KeyboardEvent.KEY_DOWN, "Down")) Offset.Z -= MOVE_DISTANCE;
             
-            base.Position.X = Game.wiimoteManager.headX * 2;
-            base.Position.Y = Game.wiimoteManager.headY * 2;
-            base.Position.Z = -Game.wiimoteManager.headDist * 2;
+            base.Position.X = Game.wiimoteManager.headX * 5;
+            base.Position.Y = Game.wiimoteManager.headY * 5;
+            base.Position.Z = -Game.wiimoteManager.headDist * 5;
 
             base.Position.Z += (float)(Speed * GameplayTime);
 
