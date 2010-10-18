@@ -42,13 +42,13 @@ namespace WiiBoxing3D.Input {
         float screenAspect = 0;
         float cameraVerticaleAngle = 0; //begins assuming the camera is point straight forward
         float relativeVerticalAngle = 0; //current head position view angle
-        bool cameraIsAboveScreen = false;//has no affect until zeroing and then is set automatically.
+        //bool cameraIsAboveScreen = true;//has no affect until zeroing and then is set automatically.
 
 
         //headposition
         public float headX = 0;
         public float headY = 0;
-        public float headDist = 2;
+        public float headDist = 1;
         public Player player;
 
 		// Initialization			:
@@ -169,6 +169,7 @@ namespace WiiBoxing3D.Input {
                 firstPoint.Y = ws.IRState.IRSensors[0].RawPosition.Y;
                 secondPoint.X = ws.IRState.IRSensors[1].RawPosition.X;
                 secondPoint.Y = ws.IRState.IRSensors[1].RawPosition.Y;
+                numvisible = 2;
                 
             }
             if (numvisible == 2)
@@ -191,10 +192,7 @@ namespace WiiBoxing3D.Input {
 
                 relativeVerticalAngle = (avgY - 384) * radiansPerPixel;//relative angle to camera axis
 
-                if (cameraIsAboveScreen)
-                    headY = .5f + (float)(movementScaling * Math.Sin(relativeVerticalAngle + cameraVerticaleAngle) * headDist);
-                else
-                    headY = -.5f + (float)(movementScaling * Math.Sin(relativeVerticalAngle + cameraVerticaleAngle) * headDist);
+                headY = 0.0f + (float)(movementScaling * Math.Sin(relativeVerticalAngle + cameraVerticaleAngle) * headDist);
             }
 
         }
