@@ -41,6 +41,7 @@ namespace WiiBoxing3D.Screen {
 			PunchingBagManager	= new PunchingBagManager ( Game , Player );
 			LeftGlove			= new LeftGlove			 ( Game , Player );
 			RightGlove			= new RightGlove		 ( Game , Player );
+            Game.wiimoteManager.player = Player;
 		}
 
 		public override	void LoadContent	() {
