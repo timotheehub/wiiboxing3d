@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 
 // WiiMote
 using WiimoteLib;
+using WiiBoxing3D.GameComponent;
 
 namespace WiiBoxing3D.Input {
 
@@ -45,9 +46,10 @@ namespace WiiBoxing3D.Input {
 
 
         //headposition
-        float headX = 0;
-        float headY = 0;
-        float headDist = 2;
+        public float headX = 0;
+        public float headY = 0;
+        public float headDist = 2;
+        public Player player;
 
 		// Initialization			:
 		// ==========================
@@ -60,7 +62,7 @@ namespace WiiBoxing3D.Input {
             {
                 WiimoteMap = new Dictionary<Guid, Wiimote>();
                 Wiimotes = new WiimoteCollection();
-
+                player = new Player(game, 5);
                 WiimoteAccel = Vector3.Zero;
                 NunchukAccel = Vector3.Zero;
                 NunchukJoystick = Vector2.Zero;
