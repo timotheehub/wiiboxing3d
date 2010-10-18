@@ -211,7 +211,7 @@ namespace WiiBoxing3D.Input {
 			// Wiimote Acceleration
 			WiimoteAccel = pt_to_vect ( ws.AccelState.Values );
 
-            if (Math.Abs(WiimoteAccel.Z) > 4.5)
+            if (Math.Abs(WiimoteAccel.Z) > 3)
             {
                 Console.WriteLine("Wiimote Punch");
             }
