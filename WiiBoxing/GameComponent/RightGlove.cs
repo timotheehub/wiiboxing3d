@@ -28,7 +28,7 @@ namespace WiiBoxing3D.GameComponent
             {
                 if (relative_offset.X + speed <= MAX_RANGE) relative_offset.X += speed;
             }
-            if (Game.keyboardManager.checkKey(Keys.M, KeyboardEvent.KEY_DOWN))
+            if (Game.keyboardManager.checkKey(Keys.OemSemicolon, KeyboardEvent.KEY_DOWN))
             {
                 if (relative_offset.X - speed >= (-1) * MAX_RANGE) relative_offset.X -= speed;
             }
@@ -45,7 +45,7 @@ namespace WiiBoxing3D.GameComponent
 
             //if no keys are pressed
             if (!((Game.keyboardManager.checkKey(Keys.K, KeyboardEvent.KEY_DOWN)) ||
-               (Game.keyboardManager.checkKey(Keys.M, KeyboardEvent.KEY_DOWN)) ||
+               (Game.keyboardManager.checkKey(Keys.OemSemicolon, KeyboardEvent.KEY_DOWN)) ||
                (Game.keyboardManager.checkKey(Keys.O, KeyboardEvent.KEY_DOWN)) ||
                (Game.keyboardManager.checkKey(Keys.L, KeyboardEvent.KEY_DOWN))))
             {

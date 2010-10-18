@@ -22,7 +22,7 @@ namespace WiiBoxing3D.GameComponent {
             Vector3 player_position = new Vector3(0, 0, 0);
             player_position = player.Position;
 
-            if (Game.keyboardManager.checkKey(Keys.Q, KeyboardEvent.KEY_DOWN))
+            if (Game.keyboardManager.checkKey(Keys.A, KeyboardEvent.KEY_DOWN))
             {
                 if (relative_offset.X + speed <= MAX_RANGE) relative_offset.X += speed;
             }
@@ -30,7 +30,7 @@ namespace WiiBoxing3D.GameComponent {
             {
                 if (relative_offset.X - speed >= (-1) * MAX_RANGE) relative_offset.X -= speed;
             }
-            if (Game.keyboardManager.checkKey(Keys.Z, KeyboardEvent.KEY_DOWN))
+            if (Game.keyboardManager.checkKey(Keys.W, KeyboardEvent.KEY_DOWN))
             {
                 if (relative_offset.Z + speed <= MAX_RANGE) relative_offset.Z += speed;
                 IsPunching = true;
@@ -43,9 +43,9 @@ namespace WiiBoxing3D.GameComponent {
 
 
             //if no keys are pressed
-            if (!((Game.keyboardManager.checkKey(Keys.Q, KeyboardEvent.KEY_DOWN)) ||
+            if (!((Game.keyboardManager.checkKey(Keys.A, KeyboardEvent.KEY_DOWN)) ||
                (Game.keyboardManager.checkKey(Keys.D, KeyboardEvent.KEY_DOWN)) ||
-               (Game.keyboardManager.checkKey(Keys.Z, KeyboardEvent.KEY_DOWN)) ||
+               (Game.keyboardManager.checkKey(Keys.W, KeyboardEvent.KEY_DOWN)) ||
                (Game.keyboardManager.checkKey(Keys.S, KeyboardEvent.KEY_DOWN))))
             {
                 if (relative_offset.X > 0) relative_offset.X -= speed;
