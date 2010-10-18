@@ -62,11 +62,10 @@ namespace WiiBoxing3D.GameComponent {
 		/// Raises the Collided event. Called when the GameObject collides with another GameObject.
 		/// </summary>
 		protected	virtual	void OnCollided			( Collidable CollidableObject ) {
-			/*OnCollidedEventHandler handler = Collided;
+			OnCollidedEventHandler handler = Collided;
 
 			if ( handler != null )
-				handler ( this , new CollidedEventArgs ( CollidableObject ) );*/ // Not for the presentation
-            Console.WriteLine(this + " is hit by " + CollidableObject + "!");
+				handler ( this , new CollidedEventArgs ( CollidableObject ) );
 		}
 
 		/// <summary>
