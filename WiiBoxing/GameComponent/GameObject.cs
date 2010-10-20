@@ -28,16 +28,18 @@ namespace WiiBoxing3D.GameComponent {
 			} 
 		}
 
+        // Protected Properties		:
+        // ==========================
+        protected CustomGame Game;
+
 		// Private Properties		:
 		// ==========================
 		/// <summary>
 		/// Model associated with the GameObject instance.
 		/// </summary>
 		private Model	Model		= null;
+        private Texture2D texture = null;
 
-		// Protected Properties		:
-		// ==========================
-		protected readonly CustomGame Game;
 
 		// Initialization			:
 		// ==========================
@@ -80,8 +82,8 @@ namespace WiiBoxing3D.GameComponent {
 											Matrix.CreateTranslation		( Position );
 					effect.View			= CameraViewMatrix;
 					effect.Projection	= CameraProjectionMatrix;
-                    // TODO : effect.Texture =
-
+                    effect.Texture = texture;
+                    effect.TextureEnabled = true;
 				}
 
 				// Draw the mesh, using the effects set above.
