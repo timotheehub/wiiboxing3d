@@ -25,6 +25,17 @@ namespace WiiBoxing3D.Input {
 		public	Vector3				NunchukAccel	{ get; set; }
 		public	Vector2				NunchukJoystick	{ get; set; }
 		public	Vector2 []			IRPositions		{ get; set; }
+        public  bool                isWiimote;
+
+
+        //headposition
+        public float headX = 0;
+        public float headY = 0;
+        public float headDist = 1;
+        public Player player;
+
+        public Vector3 WiimoteSpeed;
+        public Vector3 NunchukSpeed;
 
 		// Private Properties		:
 		// ==========================
@@ -39,17 +50,13 @@ namespace WiiBoxing3D.Input {
         float radiansPerPixel = (float)(Math.PI / 4) / 1024.0f; //45 degree field of view with a 1024x768 camera
         float movementScaling = 1.0f;
 
-        float screenAspect = 0;
         float cameraVerticaleAngle = 0; //begins assuming the camera is point straight forward
         float relativeVerticalAngle = 0; //current head position view angle
         //bool cameraIsAboveScreen = true;//has no affect until zeroing and then is set automatically.
 
+        const float WIIMOTE_ACCELERATION_SCALING = 20;
 
-        //headposition
-        public float headX = 0;
-        public float headY = 0;
-        public float headDist = 1;
-        public Player player;
+
 
 		// Initialization			:
 		// ==========================
@@ -66,6 +73,9 @@ namespace WiiBoxing3D.Input {
                 WiimoteAccel = Vector3.Zero;
                 NunchukAccel = Vector3.Zero;
                 NunchukJoystick = Vector2.Zero;
+                WiimoteSpeed = Vector3.Zero;
+                NunchukSpeed = Vector3.Zero;
+                isWiimote = false;
                 IRPositions = new Vector2[MAX_IR_SENSORS] {	Vector2.Zero ,
 																Vector2.Zero ,
 																Vector2.Zero ,
@@ -84,6 +94,34 @@ namespace WiiBoxing3D.Input {
 			
 		}
 
+        /// <summary>
+        /// Called when the Manager needs to be updated. 
+        /// Override this method with manager-specific update code.
+        /// </summary>
+        /// <param name="game"></param>
+        public override void Update(GameTime gameTime)
+        {
+            // Update Wiimote speed
+            if (WiimoteAccel.Length() >= 2)
+            {
+                WiimoteSpeed += WiimoteAccel * gameTime.ElapsedRealTime.Seconds * WIIMOTE_ACCELERATION_SCALING;
+            }
+            else
+            {
+                WiimoteSpeed = Vector3.Zero;
+            }
+
+            // Update Nunchuk speed
+            if (NunchukAccel.Length() >= 2)
+            {
+                NunchukSpeed += NunchukAccel * gameTime.ElapsedRealTime.Seconds * WIIMOTE_ACCELERATION_SCALING;
+            }
+            else
+            {
+                NunchukSpeed = Vector3.Zero;
+            }
+        }
+
 		// Private Methods			:
 		// ==========================
 		
@@ -97,15 +135,19 @@ namespace WiiBoxing3D.Input {
 
 			try {
 				Wiimotes.FindAllWiimotes ();
+                isWiimote = true;
 			}
 			catch ( WiimoteNotFoundException ex	) {
 				Console.WriteLine ( "Wiimote not found error: " + ex.Message );
+                isWiimote = false;
 			}
 			catch ( WiimoteException ex			) {
 				Console.WriteLine ( "Wiimote error: " + ex.Message );
+                isWiimote = false;
 			}
 			catch ( Exception ex				) {
 				Console.WriteLine ( "Unknown error: " + ex.Message );
+                isWiimote = false;
 			}
             bool isFirstRemote = true;
 			foreach ( Wiimote Wiimote in Wiimotes ) {
