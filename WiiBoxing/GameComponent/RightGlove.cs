@@ -24,36 +24,63 @@ namespace WiiBoxing3D.GameComponent
         {
             Vector3 player_position = new Vector3(0, 0, 0);
             player_position = player.Position;
-            if (Math.Abs(Game.wiimoteManager.NunchukAccel.Z) > 2.3)
+            /*if (Math.Abs(Game.wiimoteManager.NunchukAccel.Z) > 2.3)
             {
                 if (relative_offset.Z + speed * 5 <= MAX_RANGE) relative_offset.Z += speed * 5;
                 IsPunching = true;
-            }
+            }*/
 
+            // Wiimote speed
+            relative_offset += Game.wiimoteManager.NunchukSpeed * GameTime.ElapsedGameTime.Seconds;
+
+            // Keyboard speed
             if (Game.keyboardManager.checkKey(Keys.K, KeyboardEvent.KEY_DOWN))
             {
-                if (relative_offset.X + speed <= MAX_RANGE) relative_offset.X += speed;
+                relative_offset.X += speed;
             }
             if (Game.keyboardManager.checkKey(Keys.OemSemicolon, KeyboardEvent.KEY_DOWN))
             {
-                if (relative_offset.X - speed >= (-1) * MAX_RANGE) relative_offset.X -= speed;
+                relative_offset.X -= speed;
             }
             if (Game.keyboardManager.checkKey(Keys.O, KeyboardEvent.KEY_DOWN))
             {
-                if (relative_offset.Z + speed <= MAX_RANGE) relative_offset.Z += speed;
+                relative_offset.Z += speed;
                 IsPunching = true;
             }
             if (Game.keyboardManager.checkKey(Keys.L, KeyboardEvent.KEY_DOWN))
             {
-                if (relative_offset.Z - speed >= MAX_RANGE) relative_offset.Z -= speed;
+                relative_offset.Z -= speed;
                 IsPunching = false;
             }
 
-            //if no keys are pressed
-            if (!((Game.keyboardManager.checkKey(Keys.K, KeyboardEvent.KEY_DOWN)) ||
-               (Game.keyboardManager.checkKey(Keys.OemSemicolon, KeyboardEvent.KEY_DOWN)) ||
-               (Game.keyboardManager.checkKey(Keys.O, KeyboardEvent.KEY_DOWN)) ||
-               (Game.keyboardManager.checkKey(Keys.L, KeyboardEvent.KEY_DOWN))))
+            // Check the length is greater than the max_range.
+            if (relative_offset.Length() > MAX_RANGE)
+            {
+                relative_offset *= MAX_RANGE / relative_offset.Length();
+            }
+
+            if (Game.wiimoteManager.isWiimote)
+            {
+                // Nunchuk no movement
+                if ((Game.wiimoteManager.isWiimote) && (Game.wiimoteManager.NunchukSpeed.Length() < 0.1))
+                {
+                    IsPunching = false;
+                }
+            }
+            else
+            {
+                // Keyboard no movement
+                if (!((Game.keyboardManager.checkKey(Keys.K, KeyboardEvent.KEY_DOWN)) ||
+                   (Game.keyboardManager.checkKey(Keys.OemSemicolon, KeyboardEvent.KEY_DOWN)) ||
+                   (Game.keyboardManager.checkKey(Keys.O, KeyboardEvent.KEY_DOWN)) ||
+                   (Game.keyboardManager.checkKey(Keys.L, KeyboardEvent.KEY_DOWN))))
+                {
+                    IsPunching = false;
+                }
+            }
+
+            // If no movement, then comes back to the original position.
+            if (IsPunching == false)
             {
                 if (relative_offset.X > 0) relative_offset.X -= speed;
                 if (relative_offset.X < 0) relative_offset.X += speed;
@@ -61,7 +88,6 @@ namespace WiiBoxing3D.GameComponent
                 if (relative_offset.Y < 0) relative_offset.Y += speed;
                 if (relative_offset.Z > 0) relative_offset.Z -= speed;
                 if (relative_offset.Z < 0) relative_offset.Z += speed;
-                IsPunching = false;
             }
              
             this.Position = player_position + OFF_SET + relative_offset;

@@ -124,6 +124,7 @@ namespace WiiBoxing3D {
 			#endif
 
 			keyboardManager	.Update ( gameTime );
+            wiimoteManager  .Update ( gameTime );
 			gameScreen		.Update ( gameTime );
 
 			base			.Update ( gameTime );
