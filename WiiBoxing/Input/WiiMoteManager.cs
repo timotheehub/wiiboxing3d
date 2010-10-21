@@ -37,6 +37,10 @@ namespace WiiBoxing3D.Input {
         public Vector3 WiimoteSpeed;
         public Vector3 NunchukSpeed;
 
+        private Queue<Vector3> wiiMoteQ;
+        private Queue<Vector3> nunchukQ;
+        
+
 		// Private Properties		:
 		// ==========================
 		private	Dictionary < Guid , Wiimote > 
@@ -67,6 +71,8 @@ namespace WiiBoxing3D.Input {
 		public	WiimoteManager							( CustomGame game ) : base ( game ) {
             try
             {
+                wiiMoteQ= new Queue<Vector3>(30);
+                nunchukQ = new Queue<Vector3>(30);
                 WiimoteMap = new Dictionary<Guid, Wiimote>();
                 Wiimotes = new WiimoteCollection();
                 player = new Player(game, 5);
@@ -93,7 +99,14 @@ namespace WiiBoxing3D.Input {
             }
 			
 		}
-
+        public Queue<Vector3> getWiiMoteQ()
+        {
+            return wiiMoteQ;
+        }
+        public Queue<Vector3> getNunchukQ()
+        {
+            return nunchukQ;
+        }
         /// <summary>
         /// Called when the Manager needs to be updated. 
         /// Override this method with manager-specific update code.
@@ -101,6 +114,25 @@ namespace WiiBoxing3D.Input {
         /// <param name="game"></param>
         public override void Update(GameTime gameTime)
         {
+            if (wiiMoteQ.Count <= 30)
+            {
+                wiiMoteQ.Enqueue(WiimoteAccel);
+            }
+            else
+            {
+                wiiMoteQ.Enqueue(WiimoteAccel);
+                wiiMoteQ.Dequeue();
+            }
+            if (wiiMoteQ.Count <= 30) 
+            { 
+                nunchukQ.Enqueue(NunchukAccel);
+            }
+            else
+            {
+                nunchukQ.Enqueue(NunchukAccel);
+                nunchukQ.Dequeue();
+            }
+
             // Update Wiimote speed
             if (WiimoteAccel.Length() >= 2)
             {
