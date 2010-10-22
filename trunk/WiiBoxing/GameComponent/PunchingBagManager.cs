@@ -182,25 +182,6 @@ namespace WiiBoxing3D.GameComponent {
 		}
 #endif
 
-		///// <summary>
-		///// Returns a random number within a specified range.
-		///// </summary>
-		///// <param name="minValue">The inclusive lower bound of the random number returned.</param>
-		///// <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
-		///// <returns></returns>
-		//private	float	random				( float	minValue = 0.0f	, float	maxValue = 1.0f	) {
-		//    double Range = maxValue - minValue;
-
-		//    if ( !IsUpdating )
-		//        Randomizer = new Random ( DateTime.Now.Millisecond );
-			
-		//    return ( float ) ( Randomizer.NextDouble () * Range + ( double ) minValue );
-		//}
-
-		//private	int		random				( int	minValue = 0	, int	maxValue = 1	) {
-		//    return ( int ) random ( ( float ) minValue , ( float ) maxValue );
-		//}
-
 		private	void	createPunchingBag	(float xOffset , float depth ) {
 
             

@@ -15,11 +15,8 @@ namespace WiiBoxing3D.Screen
 
         public override void Initialize()
         {
-            Player = new Player(Game, PlayerSpeed);
+            base.Initialize();
             PunchingBagManager = new PunchingBagManager(4, Game, Player); //*** changed constructor
-            LeftGlove = new LeftGlove(Game, Player);
-            RightGlove = new RightGlove(Game, Player);
-            Game.wiimoteManager.player = Player;
         }
 
     }

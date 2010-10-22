@@ -114,6 +114,7 @@ namespace WiiBoxing3D.Input {
         /// <param name="game"></param>
         public override void Update(GameTime gameTime)
         {
+            // Update queue of acceleration
             if (wiiMoteQ.Count <= 30)
             {
                 wiiMoteQ.Enqueue(WiimoteAccel);
@@ -123,7 +124,7 @@ namespace WiiBoxing3D.Input {
                 wiiMoteQ.Enqueue(WiimoteAccel);
                 wiiMoteQ.Dequeue();
             }
-            if (wiiMoteQ.Count <= 30) 
+            if (nunchukQ.Count <= 30) 
             { 
                 nunchukQ.Enqueue(NunchukAccel);
             }
@@ -152,6 +153,29 @@ namespace WiiBoxing3D.Input {
             {
                 NunchukSpeed = Vector3.Zero;
             }
+        }
+
+
+        public void RecognizeWiimoteGesture()
+        {
+            //TODO: From the queue of 30 vector, get the abs value of them and vector length them.
+            //TODO: If above the length is > 2 a move is recognize
+            //TODO: Check if it's a Hook
+            //TODO: Else check if it's a Upper cut
+            //TODO: Move will have to be Jab/Punch
+            //TODO: Draw the recognized move in the console (temporary solution)
+
+        }
+
+        public void RecognizeNunchukGesture()
+        {
+            //TODO: From the queue of 30 vector, get the abs value of them and vector length them.
+            //TODO: If above the length is > 2 a move is recognize
+            //TODO: Check if it's a Hook
+            //TODO: Else check if it's a Upper cut
+            //TODO: Move will have to be Jab/Punch
+            //TODO: Draw the recognized move in the console (temporary solution)
+
         }
 
 		// Private Methods			:
@@ -221,6 +245,7 @@ namespace WiiBoxing3D.Input {
 		/// Disconnect all currently connected Wiimotes.
 		/// </summary>
 		private	void	DisconnectWiimotes				() {
+            isWiimote = false;
 			foreach ( Wiimote Wiimote in Wiimotes )
 				Wiimote.Disconnect ();
 		}
