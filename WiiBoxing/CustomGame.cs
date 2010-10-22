@@ -58,7 +58,7 @@ namespace WiiBoxing3D {
 			graphics		= new GraphicsDeviceManager	( this );
 			keyboardManager	= new KeyboardManager		( this );
             wiimoteManager = new WiimoteManager(this);
-            gameScreen = new GamePlayScreen(this);
+            gameScreen     = new GamePlayScreen(this);
 			
 			Content.RootDirectory = contentLocation;
 		}

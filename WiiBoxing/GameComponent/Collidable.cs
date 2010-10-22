@@ -45,45 +45,16 @@ namespace WiiBoxing3D.GameComponent {
 			BoundingSphere	checkModelBounds			= CollidableObject.Mesh.BoundingSphere;
 							checkModelBounds.Center		= CollidableObject.Position;
 							checkModelBounds.Radius		= CollidableObject.Scale.LengthSquared () / 3;
+            
+            // Detect a collision only if the gloves are punching.
+			if ( ( currentModelBounds.Intersects ( checkModelBounds ) )
+            && !( ( CollidableObject.GetType() == typeof(LeftGlove) )
+            && ( ((LeftGlove)CollidableObject).IsPunching == false ) )
+            && !( ( CollidableObject.GetType() == typeof(RightGlove) )
+            && ( ((RightGlove)CollidableObject).IsPunching == false ) ) ) {
 
-			if ( currentModelBounds.Intersects ( checkModelBounds ) ) {
 				this			.CollideWithObject ( CollidableObject	);
 				CollidableObject.CollideWithObject ( this				);
-
-                //If collision from Left Glove
-                if (CollidableObject.GetType() == typeof(LeftGlove) && ((LeftGlove)CollidableObject).IsPunching) 
-                {
-                    //Do gesture recognition for left glove
-                    //Let's do it for the wiimote, then we do the Nunchuk.
-                    //if user is a righty (Assume user is a righty)
-                    Queue<Vector3> nunchukQ = Game.wiimoteManager.getNunchukQ();
-                    //if user is a lefty
-                    //Queue<Vector3> wiiMoteQ = Game.wiimoteManager.getWiiMoteQ();
-
-                }
-                //If collision from Right Glove
-                else if (CollidableObject.GetType() == typeof(RightGlove) && ((RightGlove)CollidableObject).IsPunching)
-                {
-                    //Do gesture recognition for right glove
-                    //if user is a righty
-                    Queue<Vector3> wiiMoteQ = Game.wiimoteManager.getWiiMoteQ();
-
-                    //TODO: From the queue of 30 vector, get the abs value of them and vector length them.
-                    //TODO: If above the length is > 2 a move is recognize
-                    //TODO: Check if it's a Hook
-                    //TODO: Else check if it's a Upper cut
-                    //TODO: Move will have to be Jab/Punch
-                    //TODO: Return the recognized move (Timothee: How/Where do I return the recognize move to?)
-
-
-                    //foreach (Vector3 vector in wiiMoteQ)
-                    //{
-                    //    //Math.Abs(vector.X);
-                    //}
-                    //if user is a lefty
-                    //Queue<Vector3> nunchukQ = Game.wiimoteManager.getNunchukQ();
-                    
-                }
                 
 				return true;
 			}

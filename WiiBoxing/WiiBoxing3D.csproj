@@ -111,6 +111,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screen\GamePlayScreen.cs" />
     <Compile Include="Screen\GameScreen.cs" />
+    <Compile Include="Screen\Level1Screen.cs" />
+    <Compile Include="Screen\Level2Screen.cs" />
+    <Compile Include="Screen\Level3Screen.cs" />
+    <Compile Include="Screen\Tutorial1Screen.cs" />
+    <Compile Include="Screen\Tutorial2Screen.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
