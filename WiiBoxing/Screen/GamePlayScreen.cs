@@ -11,21 +11,21 @@ namespace WiiBoxing3D.Screen {
 	/// <summary>
 	/// This is the gameplay.
 	/// </summary>
-	public sealed class GamePlayScreen : GameScreen {
+	public class GamePlayScreen : GameScreen {
 
-		const double PlayerSpeed = 2;
+		protected const double PlayerSpeed = 2;
 
-		// Private Properties		:
+		// Protected Properties		:
 		// ==========================
 
 		// Camera variables
-		Matrix				CameraProjectionMatrix;
-		Matrix				CameraViewMatrix;
+        protected Matrix CameraProjectionMatrix;
+        protected Matrix CameraViewMatrix;
 
-		Player				Player;
-		PunchingBagManager	PunchingBagManager;
-		LeftGlove			LeftGlove;
-		RightGlove			RightGlove;
+        protected Player Player;
+        protected PunchingBagManager PunchingBagManager;
+        protected LeftGlove LeftGlove;
+        protected RightGlove RightGlove;
 
 		// Initialization			:
 		// ==========================
@@ -38,7 +38,7 @@ namespace WiiBoxing3D.Screen {
 		// ==========================
 		public override	void Initialize		() {
 			Player				= new Player			 ( Game , PlayerSpeed );
-			PunchingBagManager	= new PunchingBagManager ( Game , Player );
+			PunchingBagManager	= new PunchingBagManager ( 1, Game , Player ); //*** changed constructor
 			LeftGlove			= new LeftGlove			 ( Game , Player );
 			RightGlove			= new RightGlove		 ( Game , Player );
             Game.wiimoteManager.player = Player;
@@ -85,12 +85,13 @@ namespace WiiBoxing3D.Screen {
 			PunchingBagManager.CheckCollision ( Player , LeftGlove , RightGlove );
 		}
 
-		// Private Methods			:
+		// Protected Methods			:
 		// ==========================
 		/// <summary>
 		/// Update the camera.
 		/// </summary>
-		private			void UpdateCamera	() {
+        protected void UpdateCamera()
+        {
 			Vector3 headPosition = Player.Position;
 
 			// Camera
