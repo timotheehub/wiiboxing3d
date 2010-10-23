@@ -153,7 +153,10 @@ namespace WiiBoxing3D {
 
                             //this function need to pass in player instance for its Score
            // if ( screenState == ScreenState.GAME_OVER )
-           //   GameOverScreen.Draw (player);                 
+           //   GameOverScreen.Draw (player);           
+      
+           // if ( screenState == ScreenState.GAME_CLEAR )
+           //   GameClearScreen.Draw(player);
 
 			spriteBatch.End ();
 
@@ -183,6 +186,7 @@ namespace WiiBoxing3D {
 		MENU		,
 		GAME_PLAY	,
         GAME_OVER   ,
+        GAME_CLEAR  ,
 	};
 
 }
