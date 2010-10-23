@@ -159,18 +159,16 @@ namespace WiiBoxing3D.Input {
         public void RecognizeWiimoteGesture()
         {
             Vector3[] vectorArrayAbs = new Vector3[30];
-            Vector3[] vectorArray = new Vector3[30];
+            Vector3[] vectorArray = wiiMoteQ.ToArray();
 
-            float highestX = 0.0F;
-            float highestY = 0.0F;
-            float highestZ = 0.0F;
-            float lowestX = -9;
-            float lowestY = -9;
-            float lowestZ = -9;
-
+            float highestX = -99;
+            float highestY = -99;
+            float highestZ = -99;
+            float lowestX = 99;
+            float lowestY = 99;
+            float lowestZ = 99;
 
             for(int i = 0; i<30;i++){
-                vectorArray[i] = wiiMoteQ.Dequeue();
                 vectorArrayAbs[i] = vectorArray[i];
                 if(vectorArray[i].X > highestX){
                     highestX = vectorArray[i].X;
