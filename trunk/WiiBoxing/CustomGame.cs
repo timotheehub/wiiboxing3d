@@ -151,6 +151,10 @@ namespace WiiBoxing3D {
 			if ( screenState == ScreenState.GAME_PLAY )
 				gameScreen.Draw ( gameTime );
 
+                            //this function need to pass in player instance for its Score
+           // if ( screenState == ScreenState.GAME_OVER )
+           //   GameOverScreen.Draw (player);                 
+
 			spriteBatch.End ();
 
 			base.Draw ( gameTime );
@@ -178,6 +182,7 @@ namespace WiiBoxing3D {
 	public enum ScreenState { 
 		MENU		,
 		GAME_PLAY	,
+        GAME_OVER   ,
 	};
 
 }
