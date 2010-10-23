@@ -158,14 +158,71 @@ namespace WiiBoxing3D.Input {
 
         public void RecognizeWiimoteGesture()
         {
-            //TODO: From the queue of 30 vector, get the abs value of them and vector length them.
-            //TODO: If above the length is > 2 a move is recognize
-            //TODO: Check if it's a Hook
-            //TODO: Else check if it's a Upper cut
-            //TODO: Move will have to be Jab/Punch
-            //TODO: Draw the recognized move in the console (temporary solution)
+            Vector3[] vectorArrayAbs = new Vector3[30];
+            Vector3[] vectorArray = new Vector3[30];
 
-        }
+            float highestX = 0.0F;
+            float highestY = 0.0F;
+            float highestZ = 0.0F;
+            float lowestX = -9;
+            float lowestY = -9;
+            float lowestZ = -9;
+
+
+            for(int i = 0; i<30;i++){
+                vectorArray[i] = wiiMoteQ.Dequeue();
+                vectorArrayAbs[i] = vectorArray[i];
+                if(vectorArray[i].X > highestX){
+                    highestX = vectorArray[i].X;
+                }
+                if(vectorArray[i].Y > highestY){
+                    highestY = vectorArray[i].Y;
+                }
+                if(vectorArray[i].Z > highestZ){
+                    highestZ = vectorArray[i].Z;
+                }
+                if(vectorArray[i].X < lowestX){
+                    lowestX = vectorArray[i].X;
+                }
+                if(vectorArray[i].Y < lowestY){
+                    lowestY = vectorArray[i].Y;
+                }
+                if(vectorArray[i].Z < lowestZ){
+                    lowestZ = vectorArray[i].Z;
+                }
+                vectorArrayAbs[i].X = Math.Abs(vectorArray[i].X);
+                vectorArrayAbs[i].Y = Math.Abs(vectorArray[i].Y);
+                vectorArrayAbs[i].Z = Math.Abs(vectorArray[i].Z);
+            }
+            float totalX = 0.0F;
+            float totalY = 0.0F;
+            float totalZ = 0.0F;
+            
+            for (int i = 0; i < 30; i++)
+            {
+                totalX += vectorArrayAbs[i].X;
+                totalY += vectorArrayAbs[i].Y;
+                totalZ += vectorArrayAbs[i].Z;
+            }
+
+            Vector3 averageVector = new Vector3();
+            averageVector.X = totalX / 30;
+            averageVector.Y = totalY / 30;
+            averageVector.Z = totalZ / 30;
+
+            if (averageVector.Length() >= 2)
+            {
+                if(highestZ>=4 && lowestZ>-2){      //Recognize a hook
+                    Console.WriteLine("Wiimote Hook");
+                }
+                else if (highestZ>=3 && lowestX<-3) //Recognize a Punch
+                {
+                    Console.WriteLine("Wiimote Punch");
+                }else{                              //Recognize a Uppercut
+                    Console.WriteLine("Wiimote Uppercut");
+                }
+             }
+            }
 
         public void RecognizeNunchukGesture()
         {
