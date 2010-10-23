@@ -8,8 +8,8 @@ namespace WiiBoxing3D.GameComponent {
 		// Private Constants		:
 		// ==========================
 		private const string PunchingBagAsset		= @"Models\punching_bag";
-		private const string HitPunchingBagAsset	= @"Models\punching_bag";
-		private const string DeadPunchingBagAsset	= @"Models\punching_bag";
+		//private const string HitPunchingBagAsset	= @"Models\punching_bag";
+		//private const string DeadPunchingBagAsset	= @"Models\punching_bag";
 
 		private const int	 HitTime				= 50;	// in game frames
 
@@ -20,7 +20,6 @@ namespace WiiBoxing3D.GameComponent {
 			set { if (	 _Type	== PunchingBagType.NOT_INIT	) _Type	= value; } 
 		}
 
-		//public			float			speed			{ get; set; }
 		public			int				punchesNeeded	{ get; set; }
 		public			bool			isDead			{ get { return punchesNeeded == 0; } }
 
@@ -29,11 +28,13 @@ namespace WiiBoxing3D.GameComponent {
 		// Private Properties		:
 		// ==========================
 		private static	PunchingBagType	_Type = PunchingBagType.NOT_INIT;
+        private Player player;
 
 		// Initialization			:
 		// ==========================
-		protected	PunchingBag			( CustomGame Game , PunchingBagType type , string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset ) {
+		protected	PunchingBag			( CustomGame Game , Player player, PunchingBagType type , string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset ) {
 			Type = type;
+            this.player = player;
 		}
 
 		override
@@ -57,16 +58,7 @@ namespace WiiBoxing3D.GameComponent {
 
 		override
 		public		void	Update				( GameTime GameTime ) {
-			//Position.Z -= speed;
-
-			if ( isDead ) {
-				//speed = 0.0f;
-
-				LoadModel ( DeadPunchingBagAsset );
-			}
-			else if ( CurrentHitTime > 0 ) {
-				LoadModel ( HitPunchingBagAsset );
-
+			if ( CurrentHitTime > 0 ) {
 				CurrentHitTime--;
 			}
 
@@ -79,8 +71,11 @@ namespace WiiBoxing3D.GameComponent {
 		public		void	hitByGlove			() {
 			punchesNeeded--;
 			CurrentHitTime = HitTime;
-            //player.Score += player.BASIC_SCORE;
-            //if (punchesNeeded ==0 ) player.Score += player.DESTROY_SCORE;
+            player.Score += Player.BASIC_SCORE;
+            if (punchesNeeded == 0)
+            {
+                player.Score += Player.DESTROY_SCORE;
+            }
 		}
 
 		override

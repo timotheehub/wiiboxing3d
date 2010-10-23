@@ -99,6 +99,7 @@ namespace WiiBoxing3D.GameComponent {
 		/// <param name="AssetName">Name and location of the model to be loaded into the GameObject.</param>
 		public			void LoadModel		( string AssetName ) {
 			Model = Game.Content.Load < Model > ( AssetName );
+            Console.WriteLine("Loading model " + AssetName + "...");
 		}
 
 	}

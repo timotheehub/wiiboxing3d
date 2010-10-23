@@ -10,21 +10,25 @@ using WiiBoxing3D.GameComponent;
 namespace WiiBoxing3D.Screen
 {
 
-    public static class GameClearScreen : GameScreen
+    public class GameClearScreen : GameScreen
     {
 
         // Protected Properties		:
         // ==========================
-        new protected Player Player { get; set; }
+        protected uint score;
 
         // Initialization			:
         // ==========================
-
-
-        public override void Draw(Player player)
+        public GameClearScreen(CustomGame game, uint score)
+            : base(game) 
         {
+            this.score = score;
+        }
 
 
+        public override void Draw(GameTime GameTime)
+        {
+            base.Draw(GameTime);
         }
 
 

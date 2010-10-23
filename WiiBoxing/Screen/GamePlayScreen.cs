@@ -38,7 +38,7 @@ namespace WiiBoxing3D.Screen {
 		// ==========================
 		public override	void Initialize		() {
 			Player				= new Player			 ( Game , PlayerSpeed );
-			PunchingBagManager	= new PunchingBagManager ( 1, Game , Player ); //*** changed constructor
+			PunchingBagManager	= new PunchingBagManager ( 1, Game , Player );
 			LeftGlove			= new LeftGlove			 ( Game , Player );
 			RightGlove			= new RightGlove		 ( Game , Player );
             Game.wiimoteManager.player = Player;

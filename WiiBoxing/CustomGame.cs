@@ -39,8 +39,8 @@ namespace WiiBoxing3D {
 
 		// Graphics 
 		public	GraphicsDeviceManager	graphics;
-				SpriteBatch				spriteBatch;
-				SpriteFont				fontTimesNewRoman;
+		public	SpriteBatch				spriteBatch;
+		public	SpriteFont				fontTimesNewRoman;
 		
 		public	ScreenState				screenState;
 		public	GameScreen				gameScreen;
@@ -148,15 +148,8 @@ namespace WiiBoxing3D {
 				spriteBatch.Begin ( SpriteBlendMode.AlphaBlend );
 			#endif
 
-			if ( screenState == ScreenState.GAME_PLAY )
-				gameScreen.Draw ( gameTime );
-
-                            //this function need to pass in player instance for its Score
-           // if ( screenState == ScreenState.GAME_OVER )
-           //   GameOverScreen.Draw (player);           
-      
-           // if ( screenState == ScreenState.GAME_CLEAR )
-           //   GameClearScreen.Draw(player);
+			//if ( screenState == ScreenState.GAME_PLAY )
+			gameScreen.Draw ( gameTime );
 
 			spriteBatch.End ();
 
