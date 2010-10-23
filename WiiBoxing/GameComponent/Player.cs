@@ -69,6 +69,8 @@ namespace WiiBoxing3D.GameComponent {
 
             base.Position += Offset;
 			
+            //if (base.Position.Z > 2000) game.screenState = ScreenState.GAME_CLEAR;
+
 			base.Update ( GameTime );
 		}
 
