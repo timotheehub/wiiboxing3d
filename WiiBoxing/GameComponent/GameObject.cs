@@ -38,7 +38,6 @@ namespace WiiBoxing3D.GameComponent {
 		/// Model associated with the GameObject instance.
 		/// </summary>
 		private Model	Model		= null;
-        private Texture2D texture = null;
 
 
 		// Initialization			:
@@ -82,7 +81,6 @@ namespace WiiBoxing3D.GameComponent {
 											Matrix.CreateTranslation		( Position );
 					effect.View			= CameraViewMatrix;
 					effect.Projection	= CameraProjectionMatrix;
-                    effect.Texture = texture;
                     effect.TextureEnabled = true;
 				}
 
@@ -101,7 +99,6 @@ namespace WiiBoxing3D.GameComponent {
 			Model = Game.Content.Load < Model > ( AssetName );
             Console.WriteLine("Loading model " + AssetName + "...");
 		}
-
 	}
 
 	/// <summary>

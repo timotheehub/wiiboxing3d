@@ -17,7 +17,7 @@ namespace WiiBoxing3D.GameComponent
             speed = 1.0f;                                      //speed for glove movement per frame
             IsPunching = false;
             relative_offset = new Vector3(0, 0, 0);
-            base.Rotation = new Vector3(-1.2f, 0.0f, 0.5f);
+            base.Rotation = new Vector3(0.0f, 2.0f, 0.5f);
         }
 
         public override void Update(GameTime GameTime)
