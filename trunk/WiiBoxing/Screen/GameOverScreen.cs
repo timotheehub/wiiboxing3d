@@ -8,73 +8,41 @@ using Microsoft.Xna.Framework.Input;
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
 namespace WiiBoxing3D.Screen{
     public class GameOverScreen : GameScreen{
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        GraphicsDevice device;
-
         Texture2D backgroundTexture;
+        uint score;
 
-        int screenWidth;
-        int screenHeight;
-
-        public GameOverScreen(CustomGame game) : base(game) 
+        public GameOverScreen(CustomGame game, uint score) : base(game) 
         {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            this.score = score;
+            LoadContent();
         }
 
-        protected override void Initialize()
+        public override void LoadContent()
         {
-            graphics.PreferredBackBufferWidth = 500;
-            graphics.PreferredBackBufferHeight = 500;
-            graphics.IsFullScreen = false;
-            graphics.ApplyChanges();
-
-            base.Initialize();
+            backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\gameover");
+            base.LoadContent();
         }
 
-        protected override void LoadContent()
+        public override void Update(GameTime gameTime)
         {
-            device = graphics.GraphicsDevice;
-            spriteBatch = new SpriteBatch(device);
-
-
-            backgroundTexture = Content.Load<Texture2D>("gameover");
-            screenWidth = device.PresentationParameters.BackBufferWidth;
-            screenHeight = device.PresentationParameters.BackBufferHeight;
-
+            base.Update(gameTime);
         }
 
-        protected override void UnloadContent()
+        public override void Draw(GameTime gameTime)
         {
-        }
-
-        protected override void Update()
-        {
-
-        }
-
-        protected override void Draw(Player player)
-        {
-            
-            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin();
-            spriteBatch.End();
-
-            string score = "" + player.Score + "";
-            Game.DrawText(new Vector2(150, 10), score,Color.Black);
+            Rectangle screenRectangle = new Rectangle(0, 0, Game.graphics.PreferredBackBufferWidth, Game.graphics.PreferredBackBufferHeight);
+            Game.spriteBatch.Draw(backgroundTexture, screenRectangle, Color.White);
+            Game.DrawText(new Vector2(150, 10), score.ToString(), Color.White);
+            base.Draw(gameTime);
         }
 
     }

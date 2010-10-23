@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 
 // Game
 using WiiBoxing3D.Input;
+using Microsoft.Xna.Framework.Graphics;
+using WiiBoxing3D.Screen;
 
 namespace WiiBoxing3D.GameComponent {
 
@@ -13,8 +15,8 @@ namespace WiiBoxing3D.GameComponent {
 		const uint		MAX_HEALTH		= 100;
 		const uint		DAMAGE_TAKEN	= 20;
 		const float		MOVE_DISTANCE	= 0.2f;
-        const uint      BASIC_SCORE     = 10;           // score of one successful punch
-        const uint      DESTROY_SCORE   = 20;           // score of destroying one punchbag
+        public const uint      BASIC_SCORE     = 10;           // score of one successful punch
+        public const uint      DESTROY_SCORE   = 20;           // score of destroying one punchbag
 
 		new 
 		public	Vector3	Position		{ get { return base.Position;						} }
@@ -76,15 +78,21 @@ namespace WiiBoxing3D.GameComponent {
 
 		public		override	void	Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix )
         {
+            Game.DrawText(new Vector2(Game.graphics.PreferredBackBufferWidth * 0.9f, 30), "SCORE: " + Score.ToString(), Color.Beige);
             base.Position.Z -= 3;
             base.Draw(CameraProjectionMatrix, CameraViewMatrix);
             base.Position.Z += 3;
         }
 
-        //need to pass in CustomGame instance
 		public					void	hitByPunchingBag	() {
 			Health -= DAMAGE_TAKEN;
-            //if (Health<=0) game.screenState = ScreenState.GAME_OVER;
+
+            // End of game
+            if (Health <= 0)
+            {
+                Game.screenState = ScreenState.GAME_OVER;
+                Game.gameScreen = new GameOverScreen(Game, Score);
+            }
 		}
 
 		protected	override	void	OnCollidedHandler	( object sender , CollidedEventArgs e ) {
@@ -94,9 +102,9 @@ namespace WiiBoxing3D.GameComponent {
 		}
 
 		private					void endGame			() {
-			// TODO : end the bloody !@#%$!@# game
+			// TODO : end the game
 			System.Console.WriteLine ( this + " has died!" );
-			//Speed = 0; Not for the prototype
+			Speed = 0;
 		}
 
 	}

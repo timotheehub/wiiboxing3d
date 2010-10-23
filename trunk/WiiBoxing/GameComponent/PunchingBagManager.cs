@@ -15,8 +15,6 @@ namespace WiiBoxing3D.GameComponent {
 	/// </summary>
 	public sealed class PunchingBagManager : Manager , IGameObject {
 
-		//static readonly Vector2	SPEED_RANGE		= new Vector2 ( 0.15f , 0.4f );
-
 		const uint		MAX_PUNCHBAGS			= 5;
 		const uint		DISTANCE_FROM_CENTER	= 5;
 		const float		MIN_DEPTH				= 20;
@@ -36,9 +34,6 @@ namespace WiiBoxing3D.GameComponent {
 		List < PunchingBag >	PunchingBags;
 		List < PunchingBag >	BagsToRemove;
 		Random					Randomizer;
-		//bool					IsRunning;
-		//bool					IsUpdating;
-		//int						TimeBeforeNext;
 
 		Player					Player;
 
@@ -46,7 +41,7 @@ namespace WiiBoxing3D.GameComponent {
 		/// Constructor.
 		/// </summary>
 		/// <param name="Game"></param>
-		public	PunchingBagManager			(int level, CustomGame Game , Player Player ) : base ( Game ) {
+		public	PunchingBagManager			( int level, CustomGame Game , Player Player ) : base ( Game ) {
 			this.Player = Player;
             gameLevel = level; //***take in level according to screen
 
@@ -56,11 +51,6 @@ namespace WiiBoxing3D.GameComponent {
 		public	void	Initialize			() {
 			PunchingBags	= new List < PunchingBag > ();
 			BagsToRemove	= new List < PunchingBag > ();
-			//Randomizer		= new Random ( DateTime.Now.Millisecond );
-
-			//IsRunning		= false;
-			//IsUpdating		= false;
-			//TimeBeforeNext	= 0;
 		}
 
 		public	void	LoadContent			() {
@@ -217,52 +207,47 @@ namespace WiiBoxing3D.GameComponent {
             //***using the random number to do the adding of types of bags
                 if (random == 1)
                 {
-                    bag = new BluePunchingBag(Game);
+                    bag = new BluePunchingBag(Game, Player);
                     bag.punchesNeeded = 1;
                     bag.Position = new Vector3(xOffset, 0f, depth);
                     bag.Scale = new Vector3(0.001f);
-                    //bag.speed			= random		( SPEED_RANGE.X , SPEED_RANGE.Y );
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added BLUE");
                 }
                 else if (random == 2)
                 {
-                    bag = new RedPunchingBag(Game);
+                    bag = new RedPunchingBag(Game, Player);
                     bag.punchesNeeded = 2;
                     bag.Position = new Vector3(xOffset, 0f, depth);
                     bag.Scale = new Vector3(0.001f);
-                    //bag.speed			= random		( SPEED_RANGE.X , SPEED_RANGE.Y );
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added RED");
                 }
 
                 else if (random == 3)
                 {
-                    bag = new BlackPunchingBag(Game);
+                    bag = new BlackPunchingBag(Game, Player);
                     bag.punchesNeeded = 3;
                     bag.Position = new Vector3(xOffset, 0f, depth);
                     bag.Scale = new Vector3(0.001f);
-                    //bag.speed			= random		( SPEED_RANGE.X , SPEED_RANGE.Y );
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added BLACK");
                 }
                 else if (random == 4)
                 {
-                    bag = new WoodPunchingBag(Game);
+                    bag = new WoodPunchingBag(Game, Player);
                     bag.punchesNeeded = 4;
                     bag.Position = new Vector3(xOffset, 0f, depth);
                     bag.Scale = new Vector3(0.001f);
-                    //bag.speed			= random		( SPEED_RANGE.X , SPEED_RANGE.Y );
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added WOOD");
                 }
                 else
                 {
-                    bag = new MetalPunchingBag(Game);
+                    bag = new MetalPunchingBag(Game, Player);
                     bag.punchesNeeded = 5;
                     bag.Position = new Vector3(xOffset, 0f, depth);
                     bag.Scale = new Vector3(0.001f);
-                    //bag.speed			= random		( SPEED_RANGE.X , SPEED_RANGE.Y );
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added METAL");
                 }		

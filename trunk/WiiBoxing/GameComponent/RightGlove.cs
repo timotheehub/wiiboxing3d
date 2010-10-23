@@ -100,6 +100,7 @@ namespace WiiBoxing3D.GameComponent
             {
                 Game.wiimoteManager.RecognizeNunchukGesture();
             }
+            base.OnCollidedHandler(sender, e);
         }
     }
 }
