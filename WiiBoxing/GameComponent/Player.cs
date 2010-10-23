@@ -13,6 +13,8 @@ namespace WiiBoxing3D.GameComponent {
 		const uint		MAX_HEALTH		= 100;
 		const uint		DAMAGE_TAKEN	= 20;
 		const float		MOVE_DISTANCE	= 0.2f;
+        const uint      BASIC_SCORE     = 10;           // score of one successful punch
+        const uint      DESTROY_SCORE   = 20;           // score of destroying one punchbag
 
 		new 
 		public	Vector3	Position		{ get { return base.Position;						} }
@@ -21,6 +23,7 @@ namespace WiiBoxing3D.GameComponent {
 
 				uint	Health;
 				double	Speed;
+        public  uint    Score;
 
         Vector3 Offset;
 
@@ -34,6 +37,7 @@ namespace WiiBoxing3D.GameComponent {
 			this.Speed		= Speed;
 
 			GameplayTime	= 0;
+            Score = 0;
 		}
 
 		public		override	string	ToString			() {
@@ -75,8 +79,10 @@ namespace WiiBoxing3D.GameComponent {
             base.Position.Z += 3;
         }
 
+        //need to pass in CustomGame instance
 		public					void	hitByPunchingBag	() {
 			Health -= DAMAGE_TAKEN;
+            //if (Health<=0) game.screenState = ScreenState.GAME_OVER;
 		}
 
 		protected	override	void	OnCollidedHandler	( object sender , CollidedEventArgs e ) {

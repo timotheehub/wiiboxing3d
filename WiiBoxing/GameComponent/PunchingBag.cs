@@ -75,9 +75,12 @@ namespace WiiBoxing3D.GameComponent {
 			base.Update ( GameTime );
 		}
 
+        //for this function, it needs Player parameter
 		public		void	hitByGlove			() {
 			punchesNeeded--;
 			CurrentHitTime = HitTime;
+            //player.Score += player.BASIC_SCORE;
+            //if (punchesNeeded ==0 ) player.Score += player.DESTROY_SCORE;
 		}
 
 		override
