@@ -7,7 +7,7 @@ namespace WiiBoxing3D.GameComponent {
 
 		// Private Constants		:
 		// ==========================
-		private const string PunchingBagAsset		= @"Models\punching_bag";
+		private const string PunchingBagAsset		= @"Models\punching bag blue 1";
 		//private const string HitPunchingBagAsset	= @"Models\punching_bag";
 		//private const string DeadPunchingBagAsset	= @"Models\punching_bag";
 
@@ -35,6 +35,7 @@ namespace WiiBoxing3D.GameComponent {
 		protected	PunchingBag			( CustomGame Game , Player player, PunchingBagType type , string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset ) {
 			Type = type;
             this.player = player;
+            Rotation = new Vector3(0, 3.14f, 0);
 		}
 
 		override

@@ -19,6 +19,7 @@ namespace WiiBoxing3D.GameComponent {
 		const uint		DISTANCE_FROM_CENTER	= 5;
 		const float		MIN_DEPTH				= 20;
 		const float		MAX_DEPTH				= 200;
+        const float     HEIGHT_PUNCHBAGS        = -2;
 
         //global variables
         //***level used for the different screens
@@ -209,8 +210,8 @@ namespace WiiBoxing3D.GameComponent {
                 {
                     bag = new BluePunchingBag(Game, Player);
                     bag.punchesNeeded = 1;
-                    bag.Position = new Vector3(xOffset, 0f, depth);
-                    bag.Scale = new Vector3(0.001f);
+                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                    bag.Scale = new Vector3(0.008f);
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added BLUE");
                 }
@@ -218,8 +219,8 @@ namespace WiiBoxing3D.GameComponent {
                 {
                     bag = new RedPunchingBag(Game, Player);
                     bag.punchesNeeded = 2;
-                    bag.Position = new Vector3(xOffset, 0f, depth);
-                    bag.Scale = new Vector3(0.001f);
+                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                    bag.Scale = new Vector3(0.008f);
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added RED");
                 }
@@ -228,8 +229,8 @@ namespace WiiBoxing3D.GameComponent {
                 {
                     bag = new BlackPunchingBag(Game, Player);
                     bag.punchesNeeded = 3;
-                    bag.Position = new Vector3(xOffset, 0f, depth);
-                    bag.Scale = new Vector3(0.001f);
+                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                    bag.Scale = new Vector3(0.008f);
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added BLACK");
                 }
@@ -237,8 +238,8 @@ namespace WiiBoxing3D.GameComponent {
                 {
                     bag = new WoodPunchingBag(Game, Player);
                     bag.punchesNeeded = 4;
-                    bag.Position = new Vector3(xOffset, 0f, depth);
-                    bag.Scale = new Vector3(0.001f);
+                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                    bag.Scale = new Vector3(0.008f);
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added WOOD");
                 }
@@ -246,8 +247,8 @@ namespace WiiBoxing3D.GameComponent {
                 {
                     bag = new MetalPunchingBag(Game, Player);
                     bag.punchesNeeded = 5;
-                    bag.Position = new Vector3(xOffset, 0f, depth);
-                    bag.Scale = new Vector3(0.001f);
+                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                    bag.Scale = new Vector3(0.008f);
                     PunchingBags.Add(bag);
                     //Console.WriteLine("added METAL");
                 }		
