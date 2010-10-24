@@ -33,7 +33,7 @@ namespace WiiBoxing3D.GameComponent {
 
 		public					Player						( CustomGame Game , double Speed ) : base ( Game , "" ) {
             Offset          = new Vector3(0);
-            base.Scale      = new Vector3(0.1f);
+            base.Scale      = new Vector3(0.008f);
 
 			Health			= MAX_HEALTH;
 			this.Speed		= Speed;

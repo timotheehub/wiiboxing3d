@@ -38,13 +38,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BOX.FBX">
-      <Name>BOX</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Fonts\Times New Roman.spritefont">
       <Name>Times New Roman</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -75,6 +68,11 @@
   <ItemGroup>
     <Compile Include="Models\punching bag blue 1.FBX">
       <Name>punching bag blue 1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\BOX.fbx">
+      <Name>BOX</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
