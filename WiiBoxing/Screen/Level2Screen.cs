@@ -10,7 +10,10 @@ namespace WiiBoxing3D.Screen
 {
     public class Level2Screen : GamePlayScreen
     {
-        public Level2Screen(CustomGame game) : base(game) { }
+        public Level2Screen(CustomGame game) : base(game)
+        {
+            PlayerSpeed = 3;
+        }
 
 
         public override void Initialize()

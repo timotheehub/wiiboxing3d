@@ -92,16 +92,6 @@ namespace WiiBoxing3D.GameComponent
              
             this.Position = player_position + OFF_SET + relative_offset;
         }
-
-        protected override void OnCollidedHandler(object sender, CollidedEventArgs e)
-        {
-            Console.WriteLine("Collision right glove");
-            if (Game.wiimoteManager.isWiimote)
-            {
-                Game.wiimoteManager.RecognizeNunchukGesture();
-            }
-            base.OnCollidedHandler(sender, e);
-        }
     }
 }
 
