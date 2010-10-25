@@ -155,8 +155,19 @@ namespace WiiBoxing3D.Input {
             }
         }
 
+        public void RecognizeLeftHandGesture()
+        {
+            RecognizeWiimoteGesture();
+        }
 
-        public void RecognizeWiimoteGesture()
+        public void RecognizeRightHandGesture()
+        {
+            RecognizeNunchukGesture();
+        }
+
+		// Private Methods			:
+		// ==========================
+        private void RecognizeWiimoteGesture()
         {
             Vector3[] vectorArrayAbs = new Vector3[30];
             Vector3[] vectorArray = wiiMoteQ.ToArray();
@@ -168,24 +179,31 @@ namespace WiiBoxing3D.Input {
             float lowestY = 99;
             float lowestZ = 99;
 
-            for(int i = 0; i<30;i++){
+            for (int i = 0; i < 30; i++)
+            {
                 vectorArrayAbs[i] = vectorArray[i];
-                if(vectorArray[i].X > highestX){
+                if (vectorArray[i].X > highestX)
+                {
                     highestX = vectorArray[i].X;
                 }
-                if(vectorArray[i].Y > highestY){
+                if (vectorArray[i].Y > highestY)
+                {
                     highestY = vectorArray[i].Y;
                 }
-                if(vectorArray[i].Z > highestZ){
+                if (vectorArray[i].Z > highestZ)
+                {
                     highestZ = vectorArray[i].Z;
                 }
-                if(vectorArray[i].X < lowestX){
+                if (vectorArray[i].X < lowestX)
+                {
                     lowestX = vectorArray[i].X;
                 }
-                if(vectorArray[i].Y < lowestY){
+                if (vectorArray[i].Y < lowestY)
+                {
                     lowestY = vectorArray[i].Y;
                 }
-                if(vectorArray[i].Z < lowestZ){
+                if (vectorArray[i].Z < lowestZ)
+                {
                     lowestZ = vectorArray[i].Z;
                 }
                 vectorArrayAbs[i].X = Math.Abs(vectorArray[i].X);
@@ -195,7 +213,7 @@ namespace WiiBoxing3D.Input {
             float totalX = 0.0F;
             float totalY = 0.0F;
             float totalZ = 0.0F;
-            
+
             for (int i = 0; i < 30; i++)
             {
                 totalX += vectorArrayAbs[i].X;
@@ -210,19 +228,22 @@ namespace WiiBoxing3D.Input {
 
             if (averageVector.Length() >= 2)
             {
-                if(highestZ>=4 && lowestZ>-2){      //Recognize a hook
+                if (highestZ >= 4 && lowestZ > -2)
+                {      //Recognize a hook
                     Console.WriteLine("Wiimote Hook");
                 }
-                else if (highestZ>=3 && lowestX<-3) //Recognize a Punch
+                else if (highestZ >= 3 && lowestX < -3) //Recognize a Punch
                 {
                     Console.WriteLine("Wiimote Punch");
-                }else{                              //Recognize a Uppercut
+                }
+                else
+                {                              //Recognize a Uppercut
                     Console.WriteLine("Wiimote Uppercut");
                 }
-             }
             }
+        }
 
-        public void RecognizeNunchukGesture()
+        private void RecognizeNunchukGesture()
         {
             //TODO: From the queue of 30 vector, get the abs value of them and vector length them.
             //TODO: If above the length is > 2 a move is recognize
@@ -232,9 +253,6 @@ namespace WiiBoxing3D.Input {
             //TODO: Draw the recognized move in the console (temporary solution)
 
         }
-
-		// Private Methods			:
-		// ==========================
 		
 		// Connection-related Methods :
 		/// <summary>

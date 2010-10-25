@@ -13,7 +13,7 @@ namespace WiiBoxing3D.Screen {
 	/// </summary>
 	public class GamePlayScreen : GameScreen {
 
-		protected const double PlayerSpeed = 2;
+		protected double PlayerSpeed = 2;
 
 		// Protected Properties		:
 		// ==========================

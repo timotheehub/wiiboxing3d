@@ -1,4 +1,6 @@
-﻿// XNA
+﻿using System;
+
+// XNA
 using Microsoft.Xna.Framework;
 
 namespace WiiBoxing3D.GameComponent {
@@ -82,13 +84,33 @@ namespace WiiBoxing3D.GameComponent {
 
 		override
 		protected	void	OnCollidedHandler	( object sender , CollidedEventArgs e ) {
-			if ( e.ObjectCollidedWith.GetType () == typeof ( Player ) ) {
-				punchesNeeded = 0;
+            if (e.ObjectCollidedWith.GetType() == typeof(Player))
+            {
+                punchesNeeded = 0;
 
-				return;
-			}
-			else
-				hitByGlove ();
+                return;
+            }
+            else
+            {
+                if (e.ObjectCollidedWith.GetType() == typeof(LeftGlove))
+                {
+                    Console.WriteLine("Collision left glove");
+                    if (Game.wiimoteManager.isWiimote)
+                    {
+                        Game.wiimoteManager.RecognizeLeftHandGesture();
+                    }
+                }
+                else if (e.ObjectCollidedWith.GetType() == typeof(RightGlove))
+                {
+                    Console.WriteLine("Collision right glove");
+                    if (Game.wiimoteManager.isWiimote)
+                    {
+                        Game.wiimoteManager.RecognizeRightHandGesture();
+                    }
+                }
+
+                hitByGlove();
+            }
 
 			base.OnCollidedHandler ( sender , e );
 		}
