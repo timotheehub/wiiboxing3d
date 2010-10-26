@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="CustomGame.cs" />
     <Compile Include="GameComponent\AudioCollidable.cs" />
+    <Compile Include="GameComponent\Box.cs" />
     <Compile Include="GameComponent\Collidable.cs" />
     <Compile Include="GameComponent\GameObject.cs" />
     <Compile Include="GameComponent\Glove.cs" />

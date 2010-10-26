@@ -243,7 +243,7 @@ namespace WiiBoxing3D.GameComponent {
                     box = new Box(Game, Player, "");
                     box.punchesNeeded = 1;
                     box.Position = new Vector3(xOffset, HEIGHT_BOXES, depth);
-                    box.Scale = new Vector3(0.003f);
+                    box.Scale = new Vector3(0.008f);
                     Boxes.Add(box);
                     //Console.WriteLine("added BOX");
                 }
