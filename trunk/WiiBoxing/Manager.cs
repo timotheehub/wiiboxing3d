@@ -23,7 +23,7 @@ namespace WiiBoxing3D {
 		/// </summary>
 		/// <param name="GameTime">Time elapsed since the last call to Update.</param>
 		public virtual	void Update	( GameTime GameTime ) { }
-
+        public virtual void Draw(GameTime gameTime) { }
 	}
 
 }
