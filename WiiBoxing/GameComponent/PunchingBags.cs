@@ -17,7 +17,50 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class BlackPunchingBag : PunchingBag {
 
-        public BlackPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLACK, "") { }
+        public BlackPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLACK, "") {}
+
+        private const String PunchingBagBlack3Asset = @"Models\punching bag black3";
+        private const String PunchingBagBlack2Asset = @"Models\punching bag black2";
+        private const String PunchingBagBlack1Asset = @"Models\punching bag black1";
+
+        
+        override
+        public void hitByGlove()
+        {
+            punchesNeeded--;
+
+            switch (punchesNeeded)
+            {
+                case 1:
+                    LoadModel(PunchingBagBlack1Asset);
+                    break;
+                case 2:
+                    LoadModel(PunchingBagBlack2Asset);
+                    break;
+                default: 
+                // what shows when player has fulfilled all punches?
+                    break;
+            }
+
+
+            CurrentHitTime = HitTime;
+            player.Score += Player.BASIC_SCORE;
+            if (punchesNeeded == 0)
+            {
+                player.Score += Player.DESTROY_SCORE;
+            }
+        }
+
+        // is this method called by gameplayer to load the first model of the punching bag
+
+        override
+        public void LoadContent()
+        {
+            LoadModel(PunchingBagBlack3Asset);
+            Rotation.X = 0;
+
+            base.LoadContent();
+        }
 
 	}
 
