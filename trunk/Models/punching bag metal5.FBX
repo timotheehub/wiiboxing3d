@@ -5151,8 +5151,8 @@ Objects:  {
             Property: "AccessMode", "enum", "",0
         }
         UseMipMap: 0
-        Filename: "blue1.jpg"
-        RelativeFilename: "..\Textures\blue1.jpg"
+        Filename: "metal5.jpg"
+        RelativeFilename: "..\Textures\metal\metal5.jpg"
     }
     Video: "Video::Map #7_ncl1_1", "Clip" {
         Type: "Clip"
@@ -5197,8 +5197,8 @@ Objects:  {
             Property: "UVSet", "KString", "", "UVChannel_1"
         }
         Media: "Video::Map #6_ncl1_1"
-        FileName: "blue1.jpg"
-        RelativeFilename: "..\Textures\blue1.jpg"
+        FileName: "metal5.jpg"
+        RelativeFilename: "..\Textures\metal\metal5.jpg"
         ModelUVTranslation: 0,0
         ModelUVScaling: 1,1
         Texture_Alpha_Source: "None"
