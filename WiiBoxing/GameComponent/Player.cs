@@ -26,6 +26,7 @@ namespace WiiBoxing3D.GameComponent {
 				uint	Health;
 				double	Speed;
         public  uint    Score;
+        public Texture2D[] staminaTexture = new Texture2D[20];
 
         Vector3 Offset;
 
@@ -40,6 +41,7 @@ namespace WiiBoxing3D.GameComponent {
 
 			GameplayTime	= 0;
             Score = 0;
+
 		}
 
 		public		override	string	ToString			() {
@@ -49,6 +51,17 @@ namespace WiiBoxing3D.GameComponent {
 		public		override	void	LoadContent			() {
 			LoadModel ( PlayerAsset );
 
+            //load StaminaBar texture according to current health
+
+            string path = "StaminaBar\\SB";
+            string pathDefined;
+            for (int i = 1; i <= 18; i++)
+            {
+               
+                pathDefined = path + i;
+                staminaTexture[i] = Game.Content.Load<Texture2D>(pathDefined);
+                System.Console.WriteLine(pathDefined+" image loaded");
+            }
 			base.LoadContent ();
 		}
 
@@ -70,8 +83,12 @@ namespace WiiBoxing3D.GameComponent {
             base.Position.Z += (float)(Speed * GameplayTime);
 
             base.Position += Offset;
-			
-            //if (base.Position.Z > 2000) game.screenState = ScreenState.GAME_CLEAR;
+
+            if (base.Position.Z > 20)
+            {
+                Game.screenState = ScreenState.GAME_CLEAR;
+                Game.gameScreen = new GameClearScreen(Game, Score);
+            }
 
 			base.Update ( GameTime );
 		}
@@ -82,6 +99,12 @@ namespace WiiBoxing3D.GameComponent {
             base.Position.Z -= 3;
             base.Draw(CameraProjectionMatrix, CameraViewMatrix);
             base.Position.Z += 3;
+
+            Rectangle screenRectangle = new Rectangle(0, 0, 400, 50);
+            int picNo = (int)(((MAX_HEALTH*1.0f - Health*1.0f) / (MAX_HEALTH*1.0f) * 17) +1);
+            Game.spriteBatch.Draw(staminaTexture[picNo], screenRectangle, Color.White);
+            System.Console.WriteLine("hp= "+Health+" " + picNo + " loaded.position="+Position.Z +" "+Game.screenState);
+
         }
 
 		public					void	hitByPunchingBag	() {
