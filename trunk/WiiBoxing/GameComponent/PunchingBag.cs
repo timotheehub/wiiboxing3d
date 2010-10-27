@@ -72,7 +72,7 @@ namespace WiiBoxing3D.GameComponent {
 		}
 
         //for this function, it needs Player parameter
-		public		void	hitByGlove			() {
+		public	virtual	void	hitByGlove			() {
 			punchesNeeded--;
 			CurrentHitTime = HitTime;
             player.Score += Player.BASIC_SCORE;

@@ -19,15 +19,15 @@ namespace WiiBoxing3D.GameComponent {
 
         public BlackPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLACK, "") {}
 
-        private const String PunchingBagBlack3Asset = @"Models\punching bag black3";
-        private const String PunchingBagBlack2Asset = @"Models\punching bag black2";
-        private const String PunchingBagBlack1Asset = @"Models\punching bag black1";
+        private const string PunchingBagBlack3Asset = @"Models\punching bag black3";
+        private const string PunchingBagBlack2Asset = @"Models\punching bag black2";
+        private const string PunchingBagBlack1Asset = @"Models\punching bag black1";
 
         
         override
         public void hitByGlove()
         {
-            punchesNeeded--;
+            base.hitByGlove();
 
             switch (punchesNeeded)
             {
@@ -40,14 +40,6 @@ namespace WiiBoxing3D.GameComponent {
                 default: 
                 // what shows when player has fulfilled all punches?
                     break;
-            }
-
-
-            CurrentHitTime = HitTime;
-            player.Score += Player.BASIC_SCORE;
-            if (punchesNeeded == 0)
-            {
-                player.Score += Player.DESTROY_SCORE;
             }
         }
 
