@@ -9,11 +9,11 @@ namespace WiiBoxing3D.GameComponent {
 
 		// Private Constants		:
 		// ==========================
-		private const string PunchingBagAsset		= @"Models\punching bag blue 1";
+		private const string PunchingBagAsset		= @"Models\punching bag blue1";
 		//private const string HitPunchingBagAsset	= @"Models\punching_bag";
 		//private const string DeadPunchingBagAsset	= @"Models\punching_bag";
 
-		private const int	 HitTime				= 50;	// in game frames
+		private const int	 HitTime				= 20;	// in game frames
 
 		// Public Properties		:
 		// ==========================
@@ -25,7 +25,7 @@ namespace WiiBoxing3D.GameComponent {
 		public			int				punchesNeeded	{ get; set; }
 		public			bool			isDead			{ get { return punchesNeeded == 0; } }
 
-		private			int				CurrentHitTime;
+		protected		int				CurrentHitTime = 0;
 
 		// Private Properties		:
 		// ==========================
@@ -72,7 +72,7 @@ namespace WiiBoxing3D.GameComponent {
 		}
 
         //for this function, it needs Player parameter
-		public	virtual	void	hitByGlove			() {
+		protected	virtual	void	hitByGlove			() {
 			punchesNeeded--;
 			CurrentHitTime = HitTime;
             player.Score += Player.BASIC_SCORE;
@@ -84,35 +84,39 @@ namespace WiiBoxing3D.GameComponent {
 
 		override
 		protected	void	OnCollidedHandler	( object sender , CollidedEventArgs e ) {
-            if (e.ObjectCollidedWith.GetType() == typeof(Player))
+            Console.WriteLine("CurrentHitTime: " + CurrentHitTime);
+            if (CurrentHitTime <= 0)
             {
-                punchesNeeded = 0;
-
-                return;
-            }
-            else
-            {
-                if (e.ObjectCollidedWith.GetType() == typeof(LeftGlove))
+                if (e.ObjectCollidedWith.GetType() == typeof(Player))
                 {
-                    Console.WriteLine("Collision left glove");
-                    if (Game.wiimoteManager.isWiimote)
-                    {
-                        Game.wiimoteManager.RecognizeLeftHandGesture();
-                    }
+                    punchesNeeded = 0;
+
+                    return;
                 }
-                else if (e.ObjectCollidedWith.GetType() == typeof(RightGlove))
+                else
                 {
-                    Console.WriteLine("Collision right glove");
-                    if (Game.wiimoteManager.isWiimote)
+                    if (e.ObjectCollidedWith.GetType() == typeof(LeftGlove))
                     {
-                        Game.wiimoteManager.RecognizeRightHandGesture();
+                        Console.WriteLine("Collision left glove");
+                        if (Game.wiimoteManager.isWiimote)
+                        {
+                            Game.wiimoteManager.RecognizeLeftHandGesture();
+                        }
                     }
+                    else if (e.ObjectCollidedWith.GetType() == typeof(RightGlove))
+                    {
+                        Console.WriteLine("Collision right glove");
+                        if (Game.wiimoteManager.isWiimote)
+                        {
+                            Game.wiimoteManager.RecognizeRightHandGesture();
+                        }
+                    }
+
+                    hitByGlove();
                 }
 
-                hitByGlove();
+                base.OnCollidedHandler(sender, e);
             }
-
-			base.OnCollidedHandler ( sender , e );
 		}
 
 	}

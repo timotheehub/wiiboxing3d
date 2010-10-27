@@ -19,13 +19,13 @@ namespace WiiBoxing3D.GameComponent {
 
         public BlackPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLACK, "") {}
 
-        private const string PunchingBagBlack3Asset = @"Models\punching bag black3";
-        private const string PunchingBagBlack2Asset = @"Models\punching bag black2";
-        private const string PunchingBagBlack1Asset = @"Models\punching bag black1";
+        private const string PunchingBagBlack3Asset = @"Models\punching bag black 3";
+        private const string PunchingBagBlack2Asset = @"Models\punching bag black 2";
+        private const string PunchingBagBlack1Asset = @"Models\punching bag black 1";
 
         
         override
-        public void hitByGlove()
+        protected void hitByGlove()
         {
             base.hitByGlove();
 
@@ -48,10 +48,11 @@ namespace WiiBoxing3D.GameComponent {
         override
         public void LoadContent()
         {
+            base.LoadContent();
+
             LoadModel(PunchingBagBlack3Asset);
             Rotation.X = 0;
 
-            base.LoadContent();
         }
 
 	}

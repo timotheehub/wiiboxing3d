@@ -58,8 +58,8 @@ namespace WiiBoxing3D.Screen {
 			UpdateCamera	();
 			CheckCollision	();
 
-			if ( Game.keyboardManager.checkKey ( Keys.Space ) )
-				PunchingBagManager.getBag ( 0 ).hitByGlove ();
+			//if ( Game.keyboardManager.checkKey ( Keys.Space ) )
+			//	PunchingBagManager.getBag ( 0 ).hitByGlove ();
 
 			base.Update		( GameTime );
 		}

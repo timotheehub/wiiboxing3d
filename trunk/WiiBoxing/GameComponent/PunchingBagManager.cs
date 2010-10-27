@@ -143,7 +143,6 @@ namespace WiiBoxing3D.GameComponent {
 
 		override
 		public	void	Update				( GameTime GameTime ) {
-
 			// update punching bag properties
 			foreach ( PunchingBag PunchingBag in PunchingBags ) {
 				PunchingBag.Update ( GameTime );  
