@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 // XNA
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 
 // WiiMote
 using WiimoteLib;
@@ -34,11 +36,14 @@ namespace WiiBoxing3D.Input {
         public float headDist = 1;
         public Player player;
 
+
         public Vector3 WiimoteSpeed;
         public Vector3 NunchukSpeed;
 
         private Queue<Vector3> wiiMoteQ;
         private Queue<Vector3> nunchukQ;
+
+        public bool isRightHanded;
         
 
 		// Private Properties		:
@@ -107,6 +112,16 @@ namespace WiiBoxing3D.Input {
         {
             return nunchukQ;
         }
+
+
+        public string punchType = "";
+        public override void Draw(GameTime gameTime)
+        {
+            Rectangle screenRectangle = new Rectangle(0, 0, Game.graphics.PreferredBackBufferWidth, Game.graphics.PreferredBackBufferHeight);
+            Game.DrawText(new Vector2(150, 10), punchType, Color.White);
+            base.Draw(gameTime);
+        }
+
         /// <summary>
         /// Called when the Manager needs to be updated. 
         /// Override this method with manager-specific update code.
@@ -138,6 +153,7 @@ namespace WiiBoxing3D.Input {
             if (WiimoteAccel.Length() >= 2)
             {
                 WiimoteSpeed += WiimoteAccel * gameTime.ElapsedRealTime.Seconds * WIIMOTE_ACCELERATION_SCALING;
+                RecognizeWiimoteGesture();
             }
             else
             {
@@ -155,14 +171,30 @@ namespace WiiBoxing3D.Input {
             }
         }
 
+        
         public void RecognizeLeftHandGesture()
         {
-            RecognizeWiimoteGesture();
+            if (isRightHanded)
+            {
+                RecognizeWiimoteGesture();
+            }
+            else
+            {
+                RecognizeNunchukGesture();
+            }
+            
         }
 
         public void RecognizeRightHandGesture()
         {
-            RecognizeNunchukGesture();
+            if (isRightHanded)
+            {
+                RecognizeNunchukGesture(); 
+            }
+            else
+            {
+                RecognizeWiimoteGesture();
+            }
         }
 
 		// Private Methods			:
@@ -230,14 +262,17 @@ namespace WiiBoxing3D.Input {
             {
                 if (highestZ >= 4 && lowestZ > -2)
                 {      //Recognize a hook
+                    punchType = "Hook";
                     Console.WriteLine("Wiimote Hook");
                 }
-                else if (highestZ >= 3 && lowestX < -3) //Recognize a Punch
+                else if (highestZ >= 3 && lowestX < -3 && lowestY < -3) //Recognize a Punch
                 {
+                    punchType = "Jab";
                     Console.WriteLine("Wiimote Punch");
                 }
                 else
                 {                              //Recognize a Uppercut
+                    punchType = "Uppercut";
                     Console.WriteLine("Wiimote Uppercut");
                 }
             }
@@ -383,10 +418,7 @@ namespace WiiBoxing3D.Input {
 			// Wiimote Acceleration
 			WiimoteAccel = pt_to_vect ( ws.AccelState.Values );
 
-            if (Math.Abs(WiimoteAccel.Z) > 3)
-            {
-                Console.WriteLine("Wiimote Punch");
-            }
+      
 
            
             
