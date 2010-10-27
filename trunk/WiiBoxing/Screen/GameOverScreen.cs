@@ -41,7 +41,8 @@ namespace WiiBoxing3D.Screen{
         {
             Rectangle screenRectangle = new Rectangle(0, 0, Game.graphics.PreferredBackBufferWidth, Game.graphics.PreferredBackBufferHeight);
             Game.spriteBatch.Draw(backgroundTexture, screenRectangle, Color.White);
-            Game.DrawText(new Vector2(150, 10), score.ToString(), Color.White);
+            //Game.DrawText(new Vector2(150, 10), score.ToString(), Color.White);
+            Game.DrawText(new Vector2(Game.graphics.PreferredBackBufferWidth * 0.9f, 30), "SCORE: " + score.ToString(), Color.Beige);
             base.Draw(gameTime);
         }
 
