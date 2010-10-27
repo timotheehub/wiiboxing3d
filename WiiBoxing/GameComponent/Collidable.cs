@@ -40,7 +40,7 @@ namespace WiiBoxing3D.GameComponent {
 
 			BoundingSphere	currentModelBounds			= Mesh.BoundingSphere;
                             currentModelBounds.Center   = Position + 2 * Vector3.Up; // because of the new model of punching bag
-							currentModelBounds.Radius	= 1.4f;//Scale.LengthSquared () / 3;
+							currentModelBounds.Radius	= 2.0f;//Scale.LengthSquared () / 3;
 
 			BoundingSphere	checkModelBounds			= CollidableObject.Mesh.BoundingSphere;
 							checkModelBounds.Center		= CollidableObject.Position;
