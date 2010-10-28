@@ -13,7 +13,7 @@ namespace WiiBoxing3D.GameComponent {
 
 		const string	PlayerAsset		= @"Models\BOX";
 		const uint		MAX_HEALTH		= 100;
-		const uint		DAMAGE_TAKEN	= 20;
+		const uint		DAMAGE_TAKEN	= 5;
 		const float		MOVE_DISTANCE	= 0.2f;
         public const uint      BASIC_SCORE     = 10;           // score of one successful punch
         public const uint      DESTROY_SCORE   = 20;           // score of destroying one punchbag
@@ -53,7 +53,7 @@ namespace WiiBoxing3D.GameComponent {
 
             //load StaminaBar texture according to current health
 
-            string path = "StaminaBar\\SB";
+            string path = "StaminaBar\\SC";
             string pathDefined;
             for (int i = 1; i <= 18; i++)
             {
