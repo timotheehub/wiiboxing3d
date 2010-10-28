@@ -2,6 +2,7 @@
 
 // XNA
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 
 namespace WiiBoxing3D.GameComponent {
 
@@ -10,7 +11,7 @@ namespace WiiBoxing3D.GameComponent {
 		// Private Constants		:
 		// ==========================
 		private const string PunchingBagAsset		= @"Models\punching bag blue1";
-		//private const string HitPunchingBagAsset	= @"Models\punching_bag";
+		//private const string HitPunchingBagAsset	= @"Models\punching_bag"; 
 		//private const string DeadPunchingBagAsset	= @"Models\punching_bag";
 
 		private const int	 HitTime				= 20;	// in game frames
@@ -31,6 +32,7 @@ namespace WiiBoxing3D.GameComponent {
 		// ==========================
 		private static	PunchingBagType	_Type = PunchingBagType.NOT_INIT;
         private Player player;
+
 
 		// Initialization			:
 		// ==========================
