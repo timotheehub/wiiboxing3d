@@ -56,8 +56,8 @@ namespace WiiBoxing3D.GameComponent {
 
 		override
 		public		void	LoadContent			() {
-			LoadModel ( PunchingBagAsset );
-            Rotation.X = 0;
+			//LoadModel ( PunchingBagAsset );
+            //Rotation.X = 0;
 
 			base.LoadContent ();
 		}
