@@ -7,21 +7,12 @@ namespace WiiBoxing3D.GameComponent {
 
 		// Public Properties		:
 		// ==========================
-		public	static	SoundEffect	ImpactSFX	{ 
-			get { return _ImpactSFX;	} 
-			set { if (	 _ImpactSFX	== null	) _ImpactSFX = value; } 
-		}
-
-		// Private Properties		:
-		// ==========================
-        private static SoundEffect _ImpactSFX = @"Audio\punch";
-        // why do we need _ImpactSFX when we have ImpactSFX? Can't we just use SoundEffectInstance? - char
+		public	SoundEffect ImpactSFX = null;
 
 		// Initialization			:
 		// ==========================
 		protected	AudioCollidable			( CustomGame Game , string ImpactSFXAsset ) : base ( Game ) {
 			ImpactSFX = ImpactSFXAsset == "" ? null : Game.Content.Load < SoundEffect > ( ImpactSFXAsset ); 
-            // do we still need the above line??? - char
 		}
 		
 		/// <summary>
