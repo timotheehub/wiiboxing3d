@@ -30,7 +30,7 @@ namespace WiiBoxing3D.GameComponent
 
 		// Initialization			:
 		// ==========================
-		public	Box		( CustomGame Game , Player player, string ImpactSFXAsset ) : base ( Game , ImpactSFXAsset ) {
+		public	Box		( CustomGame Game , Player player, string ImpactSFXAsset ) : base ( Game , @"Audio\punch" ) {
             this.player = player;
             Rotation = new Vector3(0, 3.14f, 0);
 		}
