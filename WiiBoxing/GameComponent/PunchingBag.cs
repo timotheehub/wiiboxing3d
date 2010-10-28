@@ -104,6 +104,7 @@ namespace WiiBoxing3D.GameComponent {
                         {
                             Game.wiimoteManager.RecognizeLeftHandGesture();
                         }
+
                     }
                     else if (e.ObjectCollidedWith.GetType() == typeof(RightGlove))
                     {

@@ -17,7 +17,7 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class BlackPunchingBag : PunchingBag {
 
-        public BlackPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLACK, "") {}
+        public BlackPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLACK, @"Audio\punch") {}
 
         private const string PunchingBagBlack3Asset = @"Models\punching bag black 3";
         private const string PunchingBagBlack2Asset = @"Models\punching bag black 2";
@@ -38,7 +38,6 @@ namespace WiiBoxing3D.GameComponent {
                     LoadModel(PunchingBagBlack2Asset);
                     break;
                 default: 
-                // what shows when player has fulfilled all punches?
                     break;
             }
         }
@@ -59,7 +58,7 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class BluePunchingBag : PunchingBag {
 
-        public BluePunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLUE, "") {}
+        public BluePunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLUE, @"Audio\punch") { }
         
         private const string PunchingBagBlue1Asset = @"Models\punching bag blue1";
         
@@ -92,7 +91,7 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class MetalPunchingBag : PunchingBag {
 
-        public MetalPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.METAL, "") {} 
+        public MetalPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.METAL, @"Audio\punch") { } 
 
         private const string PunchingBagMetal5Asset = @"Models\punching bag metal5";
         private const string PunchingBagMetal4Asset = @"Models\punching bag metal4";
@@ -141,7 +140,7 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class RedPunchingBag : PunchingBag {
 
-        public RedPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.RED, "") {}
+        public RedPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.RED, @"Audio\punch") { }
         
         private const string PunchingBagRed2Asset = @"Models\punching bag red2";
         private const string PunchingBagRed1Asset = @"Models\punching bag red1";
@@ -178,7 +177,7 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class WoodPunchingBag : PunchingBag {
 
-        public WoodPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.WOOD, "") {}
+        public WoodPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.WOOD, @"Audio\punch") { }
         
         private const string PunchingBagWood4Asset = @"Models\punching bag wood4";
         private const string PunchingBagWood3Asset = @"Models\punching bag wood3";
