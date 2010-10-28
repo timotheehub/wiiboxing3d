@@ -53,7 +53,7 @@ namespace WiiBoxing3D.GameComponent {
 
             //load StaminaBar texture according to current health
 
-            string path = "StaminaBar\\SC";
+            string path = "StaminaBar\\SB";
             string pathDefined;
             for (int i = 1; i <= 18; i++)
             {
@@ -99,7 +99,7 @@ namespace WiiBoxing3D.GameComponent {
             base.Draw(CameraProjectionMatrix, CameraViewMatrix);
             base.Position.Z += 3;
 
-            Rectangle screenRectangle = new Rectangle(0, 0, 400, 50);
+            Rectangle screenRectangle = new Rectangle(0, 0, 400, 100);
             int picNo = (int)(((MAX_HEALTH*1.0f - Health*1.0f) / (MAX_HEALTH*1.0f) * 17) +1);
             Game.spriteBatch.Draw(staminaTexture[picNo], screenRectangle, Color.White);
         }
