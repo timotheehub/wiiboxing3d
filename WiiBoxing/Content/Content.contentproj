@@ -238,20 +238,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackGroundImage\gameover.jpg">
-      <Name>gameover</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BackGroundImage\StageClear.jpg">
-      <Name>StageClear</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="StaminaBar\SB1.png">
       <Name>SB1</Name>
       <Importer>TextureImporter</Importer>
@@ -339,6 +325,18 @@
     </Compile>
     <Compile Include="StaminaBar\SB9.PNG">
       <Name>SB9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BackGroundImage\gameover.jpg">
+      <Name>gameover</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="BackGroundImage\StageClear.jpg">
+      <Name>StageClear</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

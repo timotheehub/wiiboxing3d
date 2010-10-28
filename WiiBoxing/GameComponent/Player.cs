@@ -57,7 +57,6 @@ namespace WiiBoxing3D.GameComponent {
             string pathDefined;
             for (int i = 1; i <= 18; i++)
             {
-               
                 pathDefined = path + i;
                 staminaTexture[i] = Game.Content.Load<Texture2D>(pathDefined);
                 System.Console.WriteLine(pathDefined+" image loaded");
@@ -84,7 +83,7 @@ namespace WiiBoxing3D.GameComponent {
 
             base.Position += Offset;
 
-            if (base.Position.Z > 20)
+            if (base.Position.Z > 200)
             {
                 Game.screenState = ScreenState.GAME_CLEAR;
                 Game.gameScreen = new GameClearScreen(Game, Score);
@@ -103,8 +102,6 @@ namespace WiiBoxing3D.GameComponent {
             Rectangle screenRectangle = new Rectangle(0, 0, 400, 50);
             int picNo = (int)(((MAX_HEALTH*1.0f - Health*1.0f) / (MAX_HEALTH*1.0f) * 17) +1);
             Game.spriteBatch.Draw(staminaTexture[picNo], screenRectangle, Color.White);
-            System.Console.WriteLine("hp= "+Health+" " + picNo + " loaded.position="+Position.Z +" "+Game.screenState);
-
         }
 
 		public					void	hitByPunchingBag	() {
