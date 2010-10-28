@@ -5152,7 +5152,7 @@ Objects:  {
         }
         UseMipMap: 0
         Filename: "metal3.jpg"
-        RelativeFilename: "..\Textures\blue1.jpg"
+        RelativeFilename: "..\Textures\metal\metal3.jpg"
     }
     Video: "Video::Map #7_ncl1_1", "Clip" {
         Type: "Clip"
