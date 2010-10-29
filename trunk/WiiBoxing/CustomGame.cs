@@ -44,6 +44,7 @@ namespace WiiBoxing3D {
 		
 		public	ScreenState				screenState;
 		public	GameScreen				gameScreen;
+        public  GameStage               gameStage;
 
 		// Managers
 		public 	KeyboardManager			keyboardManager;
@@ -82,6 +83,7 @@ namespace WiiBoxing3D {
 			Window.Title	= "Wii Boxing 3D";
 
 			screenState		= ScreenState.GAME_PLAY;
+            gameStage = GameStage.SURVIVAL;
 
 			base.Initialize ();
 
@@ -181,5 +183,13 @@ namespace WiiBoxing3D {
         GAME_OVER   ,
         GAME_CLEAR  ,
 	};
+
+    public enum GameStage{
+        TUTORIAL1,
+        TUTORIAL2,
+        CAREER1,
+        CAREER2,
+        SURVIVAL,      
+    };
 
 }
