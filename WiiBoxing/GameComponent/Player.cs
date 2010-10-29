@@ -29,6 +29,13 @@ namespace WiiBoxing3D.GameComponent {
         public Texture2D[] staminaTexture = new Texture2D[20];
 
         Vector3 Offset;
+        
+        //defined max distance for each game stage: tutorial/career    survival mode infinite
+        public const uint DIS_TUTORIAL1 = 200;
+        public const uint DIS_TUTORIAL2 = 300;
+        public const uint DIS_CAREER1   = 300;
+        public const uint DIS_CAREER2 = 400;
+
 
 		double			GameplayTime;
 
@@ -83,13 +90,28 @@ namespace WiiBoxing3D.GameComponent {
 
             base.Position += Offset;
 
-            if (base.Position.Z > 200)
+            if ((Game.gameStage==GameStage.TUTORIAL1 )&&(base.Position.Z > DIS_TUTORIAL1))
+            {
+                Game.screenState = ScreenState.GAME_CLEAR;
+                Game.gameScreen = new GameClearScreen(Game, Score);
+            }
+            else if ((Game.gameStage == GameStage.TUTORIAL2) && (base.Position.Z > DIS_TUTORIAL2))
+            {
+                Game.screenState = ScreenState.GAME_CLEAR;
+                Game.gameScreen = new GameClearScreen(Game, Score);
+            }
+            else if ((Game.gameStage == GameStage.CAREER1) && (base.Position.Z > DIS_CAREER1))
+            {
+                Game.screenState = ScreenState.GAME_CLEAR;
+                Game.gameScreen = new GameClearScreen(Game, Score);
+            }
+            else if (((Game.gameStage == GameStage.CAREER2) && (base.Position.Z > DIS_CAREER2)))
             {
                 Game.screenState = ScreenState.GAME_CLEAR;
                 Game.gameScreen = new GameClearScreen(Game, Score);
             }
 
-			base.Update ( GameTime );
+            base.Update ( GameTime );
 		}
 
 		public		override	void	Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix )
