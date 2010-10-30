@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using WiiBoxing3D.GameComponent;
 using WiiBoxing3D.Screen;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace WiiBoxing3D.Screen {
 
@@ -26,6 +28,10 @@ namespace WiiBoxing3D.Screen {
         protected PunchingBagManager PunchingBagManager;
         protected LeftGlove LeftGlove;
         protected RightGlove RightGlove;
+
+        public SoundEffect bkgrdMusic;
+        public SoundEffectInstance bkgrdMusicInstance;
+ 
 
 		// Initialization			:
 		// ==========================
@@ -49,6 +55,10 @@ namespace WiiBoxing3D.Screen {
 			GameObjectCollection.Add ( LeftGlove );
 			GameObjectCollection.Add ( RightGlove );
             GameObjectCollection.Add ( Player );
+
+            bkgrdMusic = Game.Content.Load<SoundEffect>(@"Audio\bkgrd");
+            bkgrdMusicInstance = bkgrdMusic.CreateInstance();
+            bkgrdMusicInstance.Play();
 
 			base.LoadContent	();
 			UpdateCamera		();
