@@ -13,21 +13,28 @@
 ///																									/  \
 /// </Instructions>
 
+using WiiBoxing3D.Input;
 namespace WiiBoxing3D.GameComponent {
 
+    /// <summary>
+    /// Black punching bag
+    /// </summary>
 	public class BlackPunchingBag : PunchingBag {
 
-        public BlackPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLACK, @"Audio\blackSound") {}
+        public BlackPunchingBag(CustomGame Game, Player Player)
+            : base(Game, Player, PunchingBagType.BLACK, @"Audio\blackSound")
+        {
+            punchesNeeded = 3;
+        }
 
         private const string PunchingBagBlack3Asset = @"Models\punching bag black 3";
         private const string PunchingBagBlack2Asset = @"Models\punching bag black 2";
         private const string PunchingBagBlack1Asset = @"Models\punching bag black 1";
 
-        
-        override
-        protected void hitByGlove()
+
+        override protected void hitByGlove(PunchingType gestureType)
         {
-            base.hitByGlove();
+            base.hitByGlove(gestureType);
 
             switch (punchesNeeded)
             {
@@ -42,10 +49,7 @@ namespace WiiBoxing3D.GameComponent {
             }
         }
 
-        // is this method called by gameplayer to load the first model of the punching bag
-
-        override
-        public void LoadContent()
+        override public void LoadContent()
         {
             LoadModel(PunchingBagBlack3Asset);
             Rotation.X = 0;
@@ -55,41 +59,47 @@ namespace WiiBoxing3D.GameComponent {
 
 	}
 
+
+
+    /// <summary>
+    /// Blue punching bag
+    /// </summary>
 	public class BluePunchingBag : PunchingBag {
 
-        public BluePunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLUE, @"Audio\blueSound") { }
+        public BluePunchingBag(CustomGame Game, Player Player)
+            : base(Game, Player, PunchingBagType.BLUE, @"Audio\blueSound")
+        {
+            punchesNeeded = 1;
+        }
         
         private const string PunchingBagBlue1Asset = @"Models\punching bag blue1";
-        
-            override
-            protected void hitByGlove()
-        {
-            base.hitByGlove();
 
-            switch (punchesNeeded)
-            {
-                    // since blue punching bag only requires one punch, no other models to load
-                default: 
-                    break;
-            }
+        override protected void hitByGlove(PunchingType gestureType)
+        {
+            base.hitByGlove(gestureType);
         }
 
 
-            override
-            public void LoadContent()
+        override public void LoadContent()
         {
             LoadModel(PunchingBagBlue1Asset);
             Rotation.X = 0;
 
             base.LoadContent();
         }
-            
-
     }
 
+
+    /// <summary>
+    /// Metal punching bag
+    /// </summary>
 	public class MetalPunchingBag : PunchingBag {
 
-        public MetalPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.METAL, @"Audio\metalSound") { } 
+        public MetalPunchingBag(CustomGame Game, Player Player)
+            : base(Game, Player, PunchingBagType.METAL, @"Audio\metalSound")
+        {
+            punchesNeeded = 5;
+        } 
 
         private const string PunchingBagMetal5Asset = @"Models\punching bag metal5";
         private const string PunchingBagMetal4Asset = @"Models\punching bag metal4";
@@ -97,55 +107,66 @@ namespace WiiBoxing3D.GameComponent {
         private const string PunchingBagMetal2Asset = @"Models\punching bag metal2";
         private const string PunchingBagMetal1Asset = @"Models\punching bag metal1";
 
-        override
-        protected void hitByGlove()
+        override protected void hitByGlove(PunchingType gestureType)
         {
-            base.hitByGlove();
-
-            switch (punchesNeeded)
+            if (gestureType == PunchingType.JAB)
             {
-                case 4:  
-                    LoadModel(PunchingBagMetal4Asset);
-                    break;
-                case 3:  
-                    LoadModel(PunchingBagMetal3Asset);
-                    break;
-                case 2:  
-                    LoadModel(PunchingBagMetal2Asset);
-                    break;
-                case 1:  
-                    LoadModel(PunchingBagMetal1Asset);
-                    break;
-                default: 
-                    break;
+                // No gesture recognition before at least 20 frames.
+                CurrentHitTime = HIT_TIME; 
+            }
+            // Hit only if it's not a jab
+            else
+            {
+                base.hitByGlove(gestureType);
+
+                switch (punchesNeeded)
+                {
+                    case 4:  
+                        LoadModel(PunchingBagMetal4Asset);
+                        break;
+                    case 3:  
+                        LoadModel(PunchingBagMetal3Asset);
+                        break;
+                    case 2:  
+                        LoadModel(PunchingBagMetal2Asset);
+                        break;
+                    case 1:  
+                        LoadModel(PunchingBagMetal1Asset);
+                        break;
+                    default: 
+                        break;
+                }
             }
         }
 
 
-        override
-        public void LoadContent()
+        override public void LoadContent()
         {
             LoadModel(PunchingBagMetal5Asset);
             Rotation.X = 0;
 
             base.LoadContent();
         }
-        
-        
-
 	}
 
+    /// <summary>
+    /// Red punching bag
+    /// </summary>
 	public class RedPunchingBag : PunchingBag {
 
-        public RedPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.RED, @"Audio\redSound") { }
+        public RedPunchingBag(CustomGame Game, Player Player)
+            : base(Game, Player, PunchingBagType.RED, @"Audio\redSound")
+        {
+            punchesNeeded = 2;
+        }
         
         private const string PunchingBagRed2Asset = @"Models\punching bag red2";
         private const string PunchingBagRed1Asset = @"Models\punching bag red1";
 
         override
-        protected void hitByGlove()
+        protected void hitByGlove(PunchingType gestureType)
         {
-            base.hitByGlove();
+            base.hitByGlove(gestureType);
 
             switch (punchesNeeded)
             {
@@ -168,23 +189,29 @@ namespace WiiBoxing3D.GameComponent {
         }
 	}
 
+
+    /// <summary>
+    /// Wood punching bag
+    /// </summary>
 	public class WoodPunchingBag : PunchingBag {
 
-        public WoodPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.WOOD, @"Audio\woodSound") { }
+        public WoodPunchingBag(CustomGame Game, Player Player)
+            : base(Game, Player, PunchingBagType.WOOD, @"Audio\woodSound")
+        {
+            punchesNeeded = 4;
+        }
         
         private const string PunchingBagWood4Asset = @"Models\punching bag wood4";
         private const string PunchingBagWood3Asset = @"Models\punching bag wood3";
         private const string PunchingBagWood2Asset = @"Models\punching bag wood2";
         private const string PunchingBagWood1Asset = @"Models\punching bag wood1";
 
-        override
-        protected void hitByGlove()
+        override protected void hitByGlove(PunchingType gestureType)
         {
-            base.hitByGlove();
+            base.hitByGlove(gestureType);
 
             switch (punchesNeeded)
             {
-
                 case 3:  
                     LoadModel(PunchingBagWood3Asset);
                     break;
@@ -200,8 +227,7 @@ namespace WiiBoxing3D.GameComponent {
         }
 
 
-        override
-        public void LoadContent()
+        override public void LoadContent()
         {
             LoadModel(PunchingBagWood4Asset);
             Rotation.X = 0;

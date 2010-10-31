@@ -27,7 +27,6 @@ namespace WiiBoxing3D.Screen
         protected Skybox Skybox;
 
         // Difference configurations for different levels
-        protected int GamePlayLength = 200;
         protected double PlayerSpeed = 2;
         protected uint MininumScore = 100;
         protected GameStage GameStage;
@@ -45,7 +44,7 @@ namespace WiiBoxing3D.Screen
         public override void Initialize()
         {
             Player = new Player(Game, PlayerSpeed);
-            PunchingBagManager = new PunchingBagManager(1, Game, Player);
+            //PunchingBagManager = new PunchingBagManager(Game, Game, Player);
             LeftGlove = new LeftGlove(Game, Player);
             RightGlove = new RightGlove(Game, Player);
             Skybox = new Skybox(Game);
@@ -149,7 +148,8 @@ namespace WiiBoxing3D.Screen
             {
                 Game.ChangeScreenState(new GameOverScreen(Game, GameStage, Player.Score));
             }
-            if (Player.Position.Z > GamePlayLength)
+            if ((PunchingBagManager.allCollidableObjectsAreDead)
+                || (Player.Position.Z > PunchingBagManager.lastPunchingBag))
             {
                 if (Player.Score > MininumScore)
                 {

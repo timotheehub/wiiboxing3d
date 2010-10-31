@@ -63,7 +63,6 @@ namespace WiiBoxing3D.Input
         Vector3 NunchukSpeed;
 
         bool isWiimoteLeft = true;
-        string punchType = "";
 
         Dictionary<Guid, Wiimote>
                                     WiimoteMap;
@@ -123,14 +122,6 @@ namespace WiiBoxing3D.Input
 
             }
 
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            Rectangle screenRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height);
-            Game.DrawText(new Vector2(150, 10), new Vector2(Game.GraphicsDevice.Viewport.Width * 0.003f, Game.GraphicsDevice.Viewport.Width * 0.003f),
-                punchType, Color.White);
-            base.Draw(gameTime);
         }
 
         /// <summary>
@@ -217,27 +208,27 @@ namespace WiiBoxing3D.Input
             }
         }
 
-        public void RecognizeLeftHandGesture()
+        public PunchingType RecognizeLeftHandGesture()
         {
             if (isWiimoteLeft)
             {
-                RecognizeWiimoteGesture();
+                return RecognizeWiimoteGesture();
             }
             else
             {
-                RecognizeNunchukGesture();
+                return RecognizeNunchukGesture();
             }
         }
 
-        public void RecognizeRightHandGesture()
+        public PunchingType RecognizeRightHandGesture()
         {
             if (isWiimoteLeft)
             {
-                RecognizeNunchukGesture(); 
+                return RecognizeNunchukGesture(); 
             }
             else
             {
-                RecognizeWiimoteGesture();
+                return RecognizeWiimoteGesture();
             }
         }
 
@@ -565,7 +556,7 @@ namespace WiiBoxing3D.Input
 
         LEFTHOOK,
         RIGHTHOOK,
-        JAB,
+        JAB
     }
 
 }
