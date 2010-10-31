@@ -30,7 +30,7 @@ namespace WiiBoxing3D.GameComponent {
             }*/
 
             // Wiimote speed
-            relative_offset += Game.wiimoteManager.WiimoteSpeed * GameTime.ElapsedGameTime.Seconds;
+            relative_offset += Game.wiimoteManager.WiimoteSpeed * 0.02f;
 
             // Keyboard speed
             if (Game.keyboardManager.checkKey(Keys.A, KeyboardEvent.KEY_DOWN))
@@ -61,7 +61,7 @@ namespace WiiBoxing3D.GameComponent {
             if (Game.wiimoteManager.isWiimote)
             {
                 // Wiimote no movement
-                if (Game.wiimoteManager.WiimoteSpeed.Length() < 0.1)
+                if (Game.wiimoteManager.WiimoteSpeed.Length() < 0.01)
                 {
                     IsPunching = false;
                 }
@@ -81,12 +81,13 @@ namespace WiiBoxing3D.GameComponent {
             // If no movement, then comes back to the original position.
             if (IsPunching == false)
             {
-                if (relative_offset.X > 0) relative_offset.X -= speed;
-                if (relative_offset.X < 0) relative_offset.X += speed;
-                if (relative_offset.Y > 0) relative_offset.Y -= speed;
-                if (relative_offset.Y < 0) relative_offset.Y += speed;
-                if (relative_offset.Z > 0) relative_offset.Z -= speed;
-                if (relative_offset.Z < 0) relative_offset.Z += speed;
+                if (relative_offset.X > 1.0f) relative_offset.X -= speed;
+                else if (relative_offset.X < -1.0f) relative_offset.X += speed;
+                else if (relative_offset.Y > 1.0f) relative_offset.Y -= speed;
+                else if (relative_offset.Y < -1.0f) relative_offset.Y += speed;
+                else if (relative_offset.Z > 1.0f) relative_offset.Z -= speed;
+                else if (relative_offset.Z < -1.0f) relative_offset.Z += speed;
+                else relative_offset *= 0.8f;
             }
 
             this.Position = player_position + OFF_SET + relative_offset;
