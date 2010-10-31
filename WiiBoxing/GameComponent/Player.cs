@@ -6,82 +6,76 @@ using Microsoft.Xna.Framework.Input;
 using WiiBoxing3D.Input;
 using Microsoft.Xna.Framework.Graphics;
 using WiiBoxing3D.Screen;
+using System;
 
-namespace WiiBoxing3D.GameComponent {
+namespace WiiBoxing3D.GameComponent
+{
 
-	public class Player : AudioCollidable {
+    public class Player : AudioCollidable
+    {
 
-		const string	PlayerAsset		= @"Models\BOX";
-		const uint		MAX_HEALTH		= 100;
-		const uint		DAMAGE_TAKEN	= 5;
-		const float		MOVE_DISTANCE	= 0.2f;
-        public const uint      BASIC_SCORE     = 10;           // score of one successful punch
-        public const uint      DESTROY_SCORE   = 20;           // score of destroying one punchbag
+        const string PlayerAsset = @"Models\BOX";
+        const float MOVE_DISTANCE = 0.2f;
+        public const uint DAMAGE_TAKEN = 5;
+        public const uint MAX_HEALTH = 85;
+        public const uint BASIC_SCORE = 10;           // score of one successful punch
+        public const uint DESTROY_SCORE = 20;           // score of destroying one punchbag
 
-		new 
-		public	Vector3	Position		{ get { return base.Position;						} }
-		public	float 	DistanceMoved	{ get { return ( float ) ( Speed * GameplayTime );	} }
-		public	bool	IsDead			{ get { return Health <= 0;							} }
+        public float DistanceMoved { get { return (float)(Speed * GameplayTime); } }
+        public bool IsDead { get { return Health <= 0; } }
 
-				uint	Health;
-				double	Speed;
-        public  uint    Score;
+        public uint Health;
+        public uint Score;
         public Texture2D[] staminaTexture = new Texture2D[20];
 
         Vector3 Offset;
-        
-        //defined max distance for each game stage: tutorial/career    survival mode infinite
-        public const uint DIS_TUTORIAL1 = 200;
-        public const uint DIS_TUTORIAL2 = 300;
-        public const uint DIS_CAREER1   = 300;
-        public const uint DIS_CAREER2 = 400;
 
+        double Speed;
+        double GameplayTime;
 
-		double			GameplayTime;
+        public Player(CustomGame Game, double Speed)
+            : base(Game, "")
+        {
+            Offset = new Vector3(0);
+            Scale = new Vector3(0.008f);
 
-		public					Player						( CustomGame Game , double Speed ) : base ( Game , "" ) {
-            Offset          = new Vector3(0);
-            base.Scale      = new Vector3(0.008f);
+            Health = MAX_HEALTH;
+            this.Speed = Speed;
 
-			Health			= MAX_HEALTH;
-			this.Speed		= Speed;
-
-			GameplayTime	= 0;
+            GameplayTime = 0;
             Score = 0;
+        }
 
-		}
+        public override string ToString()
+        {
+            return "The Player";
+        }
 
-		public		override	string	ToString			() {
-			return "The Player";
-		}
-
-		public		override	void	LoadContent			() {
-			LoadModel ( PlayerAsset );
+        public override void LoadContent()
+        {
+            LoadModel(PlayerAsset);
 
             //load StaminaBar texture according to current health
-
             string path = "StaminaBar\\SB";
             string pathDefined;
             for (int i = 1; i <= 18; i++)
             {
                 pathDefined = path + i;
                 staminaTexture[i] = Game.Content.Load<Texture2D>(pathDefined);
-                System.Console.WriteLine(pathDefined+" image loaded");
+                System.Console.WriteLine(pathDefined + " image loaded");
             }
-			base.LoadContent ();
-		}
+            base.LoadContent();
+        }
 
-		public		override	void	Update				( GameTime GameTime ) {
-			GameplayTime += GameTime.ElapsedRealTime.TotalSeconds;
-
-			if ( IsDead && Speed > 0 )	// speed check to see if endGame has been processed
-				endGame ();
+        public override void Update(GameTime GameTime)
+        {
+            GameplayTime += GameTime.ElapsedRealTime.TotalSeconds;
 
             if (Game.keyboardManager.checkKey(Keys.Left, KeyboardEvent.KEY_DOWN, "Left")) Offset.X += MOVE_DISTANCE;
             if (Game.keyboardManager.checkKey(Keys.Right, KeyboardEvent.KEY_DOWN, "Right")) Offset.X -= MOVE_DISTANCE;
             if (Game.keyboardManager.checkKey(Keys.Up, KeyboardEvent.KEY_DOWN, "Up")) Offset.Z += MOVE_DISTANCE;
             if (Game.keyboardManager.checkKey(Keys.Down, KeyboardEvent.KEY_DOWN, "Down")) Offset.Z -= MOVE_DISTANCE;
-            
+
             base.Position.X = Game.wiimoteManager.headX * 5;
             base.Position.Y = Game.wiimoteManager.headY * 5;
             base.Position.Z = -Game.wiimoteManager.headDist * 5;
@@ -90,65 +84,34 @@ namespace WiiBoxing3D.GameComponent {
 
             base.Position += Offset;
 
-            if ((Game.gameStage==GameStage.TUTORIAL1 )&&(base.Position.Z > DIS_TUTORIAL1))
-            {
-                Game.screenState = ScreenState.GAME_CLEAR;
-                Game.gameScreen = new GameClearScreen(Game, Score);
-            }
-            else if ((Game.gameStage == GameStage.TUTORIAL2) && (base.Position.Z > DIS_TUTORIAL2))
-            {
-                Game.screenState = ScreenState.GAME_CLEAR;
-                Game.gameScreen = new GameClearScreen(Game, Score);
-            }
-            else if ((Game.gameStage == GameStage.CAREER1) && (base.Position.Z > DIS_CAREER1))
-            {
-                Game.screenState = ScreenState.GAME_CLEAR;
-                Game.gameScreen = new GameClearScreen(Game, Score);
-            }
-            else if (((Game.gameStage == GameStage.CAREER2) && (base.Position.Z > DIS_CAREER2)))
-            {
-                Game.screenState = ScreenState.GAME_CLEAR;
-                Game.gameScreen = new GameClearScreen(Game, Score);
-            }
+            base.Update(GameTime);
+        }
 
-            base.Update ( GameTime );
-		}
-
-		public		override	void	Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix )
+        public override void Draw(Matrix CameraProjectionMatrix, Matrix CameraViewMatrix)
         {
-            Game.DrawText(new Vector2(Game.graphics.PreferredBackBufferWidth * 0.9f, 30), "SCORE: " + Score.ToString(), Color.Beige);
+            Game.DrawText(new Vector2(Game.GraphicsDevice.Viewport.Width * 0.85f, Game.GraphicsDevice.Viewport.Height * 0.05f),
+                        new Vector2(Game.GraphicsDevice.Viewport.Width * 0.002f, Game.GraphicsDevice.Viewport.Width * 0.002f),
+                        "SCORE: " + Score.ToString(), Color.Black);
             base.Position.Z -= 3;
             base.Draw(CameraProjectionMatrix, CameraViewMatrix);
             base.Position.Z += 3;
 
-            Rectangle screenRectangle = new Rectangle(0, 0, 400, 100);
-            int picNo = (int)(((MAX_HEALTH*1.0f - Health*1.0f) / (MAX_HEALTH*1.0f) * 17) +1);
+            Rectangle screenRectangle = new Rectangle(0, 0, Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.4f), Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.14f));
+            int picNo = (int)(((MAX_HEALTH * 1.0f - Health * 1.0f) / (MAX_HEALTH * 1.0f) * 17) + 1);
             Game.spriteBatch.Draw(staminaTexture[picNo], screenRectangle, Color.White);
         }
 
-		public					void	hitByPunchingBag	() {
-			Health -= DAMAGE_TAKEN;
+        public void hitByPunchingBag()
+        {
+            Health -= DAMAGE_TAKEN;
+        }
 
-            // End of game
-            if (Health <= 0)
-            {
-                Game.screenState = ScreenState.GAME_OVER;
-                Game.gameScreen = new GameOverScreen(Game, Score);
-            }
-		}
+        protected override void OnCollidedHandler(object sender, CollidedEventArgs e)
+        {
+            hitByPunchingBag();
 
-		protected	override	void	OnCollidedHandler	( object sender , CollidedEventArgs e ) {
-			hitByPunchingBag ();
-
-			base.OnCollidedHandler ( sender , e );
-		}
-
-		private					void endGame			() {
-			// TODO : end the game
-			System.Console.WriteLine ( this + " has died!" );
-			Speed = 0;
-		}
-
-	}
+            base.OnCollidedHandler(sender, e);
+        }
+    }
 
 }

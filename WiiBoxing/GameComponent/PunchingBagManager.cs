@@ -9,18 +9,20 @@ using Microsoft.Xna.Framework;
 using WiiBoxing3D.GameComponent;
 using WiiBoxing3D.Screen;
 
-namespace WiiBoxing3D.GameComponent {
-	/// <summary>
-	/// Generates punching bags positions
-	/// </summary>
-	public sealed class PunchingBagManager : Manager , IGameObject {
+namespace WiiBoxing3D.GameComponent
+{
+    /// <summary>
+    /// Generates punching bags positions
+    /// </summary>
+    public sealed class PunchingBagManager : Manager, IGameObject
+    {
 
-		const uint		MAX_PUNCHBAGS			= 5;
-		const uint		DISTANCE_FROM_CENTER	= 5;
-		const float		MIN_DEPTH				= 20;
-		const float		MAX_DEPTH				= 200;
-        const float     HEIGHT_PUNCHBAGS        = -2;
-        const float     HEIGHT_BOXES            = (float)0.4;
+        const uint MAX_PUNCHBAGS = 5;
+        const uint DISTANCE_FROM_CENTER = 5;
+        const float MIN_DEPTH = 20;
+        const float MAX_DEPTH = 200;
+        const float HEIGHT_PUNCHBAGS = -2;
+        const float HEIGHT_BOXES = -0.8f;
 
         //global variables
         //***level used for the different screens
@@ -33,40 +35,44 @@ namespace WiiBoxing3D.GameComponent {
 
         int textureBags = 1; // to keep track of texture update for tutorial2screen
 
-		List < PunchingBag >	PunchingBags;
-		List < PunchingBag >	BagsToRemove;
+        List<PunchingBag> PunchingBags;
+        List<PunchingBag> BagsToRemove;
         //***
         List<Box> Boxes;
         List<Box> BoxesToRemove;
 
-		Random					Randomizer;
+        Random Randomizer;
 
-		Player					Player; 
+        Player Player;
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="Game"></param>
-		public	PunchingBagManager			( int level, CustomGame Game , Player Player ) : base ( Game ) {
-			this.Player = Player;
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="Game"></param>
+        public PunchingBagManager(int level, CustomGame Game, Player Player)
+            : base(Game)
+        {
+            this.Player = Player;
             gameLevel = level; //***take in level according to screen
 
-			Initialize ();
-		}   
+            Initialize();
+        }
 
-		public	void	Initialize			() {
-			PunchingBags	= new List < PunchingBag > ();
-			BagsToRemove	= new List < PunchingBag > ();
-            //***
+        public void Initialize()
+        {
+            PunchingBags = new List<PunchingBag>();
+            BagsToRemove = new List<PunchingBag>();
+
             Boxes = new List<Box>();
             BoxesToRemove = new List<Box>();
-		}
+        }
 
-		public	void	LoadContent			() {
-			Randomizer		= new Random ( DateTime.Now.Millisecond );
+        public void LoadContent()
+        {
+            Randomizer = new Random(DateTime.Now.Millisecond);
 
-			double depth	= MIN_DEPTH;
-            double xOffset  = Randomizer.NextDouble() + 1.0;
+            double depth = MIN_DEPTH;
+            double xOffset = Randomizer.NextDouble() + 1.0;
 
 
             //***tutorial 
@@ -74,7 +80,7 @@ namespace WiiBoxing3D.GameComponent {
             {
                 int numberOfBags = 0;
 
-                while(numberOfBags != 5)
+                while (numberOfBags != 5)
                 {
                     // if value is even, punching bag is on the left lane
                     // else punching bag is on the right lane
@@ -91,7 +97,7 @@ namespace WiiBoxing3D.GameComponent {
 
                     // depth increments by random 5.0-10.0 in the z-axis
                     depth += Randomizer.NextDouble() * 4.0 + 3.0;
-                    xOffset = Randomizer.NextDouble() * 0.8 + 1.0;            
+                    xOffset = Randomizer.NextDouble() * 0.8 + 1.0;
                     numberOfBags++;
                 }
                 textureBags = 1; //reset for next use
@@ -116,74 +122,76 @@ namespace WiiBoxing3D.GameComponent {
                     if (gameLevel == 1)
                     {
                         xOffset = Randomizer.NextDouble() * 0.7 + 1.0;
-                       
+
                     }
                     else if (gameLevel == 2)
                     {
                         xOffset = Randomizer.NextDouble() * 1.3 + 1.0;
-                        
+
                     }
                     else if (gameLevel == 3)
                     {
                         xOffset = Randomizer.NextDouble() * 2.2 + 1.0;
-                        
+
                     }
                 }
             }//***end levels
-		}
 
-		public	void	UnloadContent		() {
-
-			foreach ( PunchingBag punchingBag in PunchingBags )
-				punchingBag.UnloadContent ();
+            // Load content
+            foreach (PunchingBag PunchingBag in PunchingBags)
+                PunchingBag.LoadContent();
 
             foreach (Box Box in Boxes)
-                Box.UnloadContent();
-		}
+                Box.LoadContent();
+        }
 
-		override
-		public	void	Update				( GameTime GameTime ) {
-			// update punching bag properties
-			foreach ( PunchingBag PunchingBag in PunchingBags ) {
-				PunchingBag.Update ( GameTime );  
+        override
+        public void Update(GameTime GameTime)
+        {
+            // update punching bag properties
+            foreach (PunchingBag PunchingBag in PunchingBags)
+            {
+                PunchingBag.Update(GameTime);
 
-				// check if dead bag, and add to recycle bin
+                // check if dead bag, and add to recycle bin
                 if (PunchingBag.isDead)
-                
+
                     BagsToRemove.Add(PunchingBag);
             }
 
-            
-                foreach (Box Box in Boxes){
-                    Box.Update(GameTime);
+
+            foreach (Box Box in Boxes)
+            {
+                Box.Update(GameTime);
                 // check if dead box, and add to bin
                 if (Box.isDead)
                     BoxesToRemove.Add(Box);
-                }
-               
-       		
+            }
 
-			// remove out of view bags from display list
-			foreach ( PunchingBag PunchingBag in BagsToRemove )
-				PunchingBags.Remove ( PunchingBag );
 
-			BagsToRemove.Clear ();
 
-			//TimeBeforeNext--;
+            // remove out of view bags from display list
+            foreach (PunchingBag PunchingBag in BagsToRemove)
+                PunchingBags.Remove(PunchingBag);
 
-		}
+            foreach (Box Box in BoxesToRemove)
+                Boxes.Remove(Box);
 
-		public	void	Draw				( Matrix CameraProjectionMatrix , Matrix CameraViewMatrix ) {
+            BagsToRemove.Clear();
+            BoxesToRemove.Clear();
+        }
 
-			foreach ( PunchingBag punchingBag in PunchingBags )
-				punchingBag.Draw ( CameraProjectionMatrix , CameraViewMatrix );
+        public void Draw(Matrix CameraProjectionMatrix, Matrix CameraViewMatrix)
+        {
+            foreach (PunchingBag punchingBag in PunchingBags)
+                punchingBag.Draw(CameraProjectionMatrix, CameraViewMatrix);
 
             foreach (Box Box in Boxes)
-               Box.Draw(CameraProjectionMatrix, CameraViewMatrix);
-		}
+                Box.Draw(CameraProjectionMatrix, CameraViewMatrix);
+        }
 
-		public	void	CheckCollision		( params Collidable [] Collidables ) {
-
+        public void CheckCollision(params Collidable[] Collidables)
+        {
             foreach (Collidable Collidable in Collidables)
             {
                 foreach (PunchingBag PunchingBag in PunchingBags)
@@ -191,42 +199,33 @@ namespace WiiBoxing3D.GameComponent {
                 foreach (Box Box in Boxes)
                     Box.IsCollidingWith(Collidable);
             }
+        }
 
-           
-		}
-
-#if DEBUG
-		public PunchingBag getBag ( int BagID ) {
-			return PunchingBags [ BagID ];
-		}
-#endif
-
-		private	void	createPunchingBag	(float xOffset , float depth ) {
-
-            
+        private void createPunchingBag(float xOffset, float depth)
+        {
             PunchingBag bag;
             Box box;
 
             int random = 0; //***storing a random value based on the game lvl to random the bags
-            
+
             //***getting a random value based on the level
-            if (gameLevel == 1 || gameLevel ==4) 
+            if (gameLevel == 1 || gameLevel == 4)
             {
                 random = Randomizer.Next(4);
-                
+
             }//end tut1 and lvl1
 
 
             else if (gameLevel == 2)
             {
                 random = Randomizer.Next(6) + 1;
-                      
+
             }//end level 2 
 
             else if (gameLevel == 3)
             {
                 random = Randomizer.Next(7) + 1;
-          
+
             }//end level 3
 
             else if (gameLevel == 5)
@@ -237,65 +236,63 @@ namespace WiiBoxing3D.GameComponent {
 
             //***using the random number to do the adding of types of bags
 
-                if (random == 1)
-                {
-                    box = new Box(Game, Player, "");
-                    box.punchesNeeded = 1;
-                    box.Position = new Vector3(xOffset, HEIGHT_BOXES, depth);
-                    box.Scale = new Vector3(0.008f);
-                    Boxes.Add(box);
-                    //Console.WriteLine("added BOX");
-                }
-                else if (random == 2)
-                {
-                    bag = new BluePunchingBag(Game, Player);
-                    bag.punchesNeeded = 1;
-                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
-                    bag.Scale = new Vector3(0.008f);
-                    PunchingBags.Add(bag);
-                    //Console.WriteLine("added BLUE");
-                }
-                else if (random == 3)
-                {
-                    bag = new RedPunchingBag(Game, Player);
-                    bag.punchesNeeded = 2;
-                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
-                    bag.Scale = new Vector3(0.008f);
-                    PunchingBags.Add(bag);
-                    //Console.WriteLine("added RED");
-                }
+            if (random == 1)
+            {
+                box = new Box(Game, Player, "");
+                box.punchesNeeded = 1;
+                box.Position = new Vector3(xOffset, HEIGHT_BOXES, depth);
+                box.Scale = new Vector3(0.008f);
+                Boxes.Add(box);
+                //Console.WriteLine("added BOX");
+            }
+            else if (random == 2)
+            {
+                bag = new BluePunchingBag(Game, Player);
+                bag.punchesNeeded = 1;
+                bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                bag.Scale = new Vector3(0.008f);
+                PunchingBags.Add(bag);
+                //Console.WriteLine("added BLUE");
+            }
+            else if (random == 3)
+            {
+                bag = new RedPunchingBag(Game, Player);
+                bag.punchesNeeded = 2;
+                bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                bag.Scale = new Vector3(0.008f);
+                PunchingBags.Add(bag);
+                //Console.WriteLine("added RED");
+            }
 
-                else if (random == 4)
-                {
-                    bag = new BlackPunchingBag(Game, Player);
-                    bag.punchesNeeded = 3;
-                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
-                    bag.Scale = new Vector3(0.008f);
-                    PunchingBags.Add(bag);
-                    //Console.WriteLine("added BLACK");
-                }
-                else if (random == 5)
-                {
-                    bag = new WoodPunchingBag(Game, Player);
-                    bag.punchesNeeded = 4;
-                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
-                    bag.Scale = new Vector3(0.008f);
-                    PunchingBags.Add(bag);
-                    //Console.WriteLine("added WOOD");
-                }
-                else
-                {
-                    bag = new MetalPunchingBag(Game, Player);
-                    bag.punchesNeeded = 5;
-                    bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
-                    bag.Scale = new Vector3(0.008f);
-                    PunchingBags.Add(bag);
-                    //Console.WriteLine("added METAL");
-                }		
+            else if (random == 4)
+            {
+                bag = new BlackPunchingBag(Game, Player);
+                bag.punchesNeeded = 3;
+                bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                bag.Scale = new Vector3(0.008f);
+                PunchingBags.Add(bag);
+                //Console.WriteLine("added BLACK");
+            }
+            else if (random == 5)
+            {
+                bag = new WoodPunchingBag(Game, Player);
+                bag.punchesNeeded = 4;
+                bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                bag.Scale = new Vector3(0.008f);
+                PunchingBags.Add(bag);
+                //Console.WriteLine("added WOOD");
+            }
+            else
+            {
+                bag = new MetalPunchingBag(Game, Player);
+                bag.punchesNeeded = 5;
+                bag.Position = new Vector3(xOffset, HEIGHT_PUNCHBAGS, depth);
+                bag.Scale = new Vector3(0.008f);
+                PunchingBags.Add(bag);
+                //Console.WriteLine("added METAL");
+            }
+        }//end createPunchingBag
 
-			//TimeBeforeNext		= random ( 100 , 200 );
-		}//end createPunchingBag
-
-	}
+    }
 
 }

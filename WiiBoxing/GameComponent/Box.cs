@@ -11,8 +11,6 @@ namespace WiiBoxing3D.GameComponent
         // Private Constants		:
 		// ==========================
 		private const string BoxAsset		= @"Models\BOX";
-		//private const string HitPunchingBagAsset	= @"Models\punching_bag";
-		//private const string DeadPunchingBagAsset	= @"Models\punching_bag";
 
 		private const int	 HitTime				= 50;	// in game frames
 
@@ -30,7 +28,7 @@ namespace WiiBoxing3D.GameComponent
 
 		// Initialization			:
 		// ==========================
-		public	Box		( CustomGame Game , Player player, string ImpactSFXAsset ) : base ( Game , @"Audio\punch" ) {
+		public	Box		( CustomGame Game , Player player, string ImpactSFXAsset ) : base ( Game , @"Audio\boxSound" ) {
             this.player = player;
             Rotation = new Vector3(0, 3.14f, 0);
 		}
@@ -38,13 +36,6 @@ namespace WiiBoxing3D.GameComponent
 		override
 		public		string	ToString			() {
 			return "Box at " + Position;
-		}
-
-		override
-		public		void	Initialize			() {
-			LoadContent		();
-
-			base.Initialize	();
 		}
 
 		override
@@ -62,9 +53,7 @@ namespace WiiBoxing3D.GameComponent
             {
                 CurrentHitTime--;
             }
-
-            //if (CurrentHitTime == 1) System.Console.WriteLine("end hit anim");	// debug line to test hit animation duration
-
+          
             base.Update(GameTime);
         }
 
@@ -73,9 +62,9 @@ namespace WiiBoxing3D.GameComponent
 			punchesNeeded--;
 			CurrentHitTime = HitTime;
             player.Score += Player.BASIC_SCORE;
-            if (punchesNeeded == 0)
+            if (player.Health + Player.DAMAGE_TAKEN <= Player.MAX_HEALTH)
             {
-                player.Score += Player.DESTROY_SCORE;
+                player.Health += Player.DAMAGE_TAKEN;
             }
 		}
 

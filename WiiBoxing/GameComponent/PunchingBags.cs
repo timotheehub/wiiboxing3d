@@ -17,7 +17,7 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class BlackPunchingBag : PunchingBag {
 
-        public BlackPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLACK, @"Audio\punch") {}
+        public BlackPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLACK, @"Audio\blackSound") {}
 
         private const string PunchingBagBlack3Asset = @"Models\punching bag black 3";
         private const string PunchingBagBlack2Asset = @"Models\punching bag black 2";
@@ -47,18 +47,17 @@ namespace WiiBoxing3D.GameComponent {
         override
         public void LoadContent()
         {
-            base.LoadContent();
-
             LoadModel(PunchingBagBlack3Asset);
             Rotation.X = 0;
 
+            base.LoadContent();
         }
 
 	}
 
 	public class BluePunchingBag : PunchingBag {
 
-        public BluePunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLUE, @"Audio\punch") { }
+        public BluePunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.BLUE, @"Audio\blueSound") { }
         
         private const string PunchingBagBlue1Asset = @"Models\punching bag blue1";
         
@@ -79,11 +78,10 @@ namespace WiiBoxing3D.GameComponent {
             override
             public void LoadContent()
         {
-            base.LoadContent();
-
             LoadModel(PunchingBagBlue1Asset);
             Rotation.X = 0;
 
+            base.LoadContent();
         }
             
 
@@ -91,7 +89,7 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class MetalPunchingBag : PunchingBag {
 
-        public MetalPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.METAL, @"Audio\punch") { } 
+        public MetalPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.METAL, @"Audio\metalSound") { } 
 
         private const string PunchingBagMetal5Asset = @"Models\punching bag metal5";
         private const string PunchingBagMetal4Asset = @"Models\punching bag metal4";
@@ -127,11 +125,10 @@ namespace WiiBoxing3D.GameComponent {
         override
         public void LoadContent()
         {
-            base.LoadContent();
-
             LoadModel(PunchingBagMetal5Asset);
             Rotation.X = 0;
 
+            base.LoadContent();
         }
         
         
@@ -140,7 +137,7 @@ namespace WiiBoxing3D.GameComponent {
 
 	public class RedPunchingBag : PunchingBag {
 
-        public RedPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.RED, @"Audio\punch") { }
+        public RedPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.RED, @"Audio\redSound") { }
         
         private const string PunchingBagRed2Asset = @"Models\punching bag red2";
         private const string PunchingBagRed1Asset = @"Models\punching bag red1";
@@ -164,20 +161,16 @@ namespace WiiBoxing3D.GameComponent {
         override
         public void LoadContent()
         {
-            base.LoadContent();
-
             LoadModel(PunchingBagRed2Asset);
             Rotation.X = 0;
 
+            base.LoadContent();
         }
-      
-        
-
 	}
 
 	public class WoodPunchingBag : PunchingBag {
 
-        public WoodPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.WOOD, @"Audio\punch") { }
+        public WoodPunchingBag(CustomGame Game, Player Player) : base(Game, Player, PunchingBagType.WOOD, @"Audio\woodSound") { }
         
         private const string PunchingBagWood4Asset = @"Models\punching bag wood4";
         private const string PunchingBagWood3Asset = @"Models\punching bag wood3";
@@ -191,7 +184,7 @@ namespace WiiBoxing3D.GameComponent {
 
             switch (punchesNeeded)
             {
- 
+
                 case 3:  
                     LoadModel(PunchingBagWood3Asset);
                     break;
@@ -210,11 +203,10 @@ namespace WiiBoxing3D.GameComponent {
         override
         public void LoadContent()
         {
-            base.LoadContent();
-
             LoadModel(PunchingBagWood4Asset);
             Rotation.X = 0;
 
+            base.LoadContent();
         }
 
 	}

@@ -9,187 +9,207 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-// Unused XNA
-//using Microsoft.Xna.Framework.Audio;
-//using Microsoft.Xna.Framework.Content;
-//using Microsoft.Xna.Framework.GamerServices;
-//using Microsoft.Xna.Framework.Input;
-//using Microsoft.Xna.Framework.Media;
-//using Microsoft.Xna.Framework.Net;
-//using Microsoft.Xna.Framework.Storage;
-
 // Game
 using WiiBoxing3D.Input;
 using WiiBoxing3D.Screen;
+using Microsoft.Xna.Framework.Audio;
 
 #endregion
 
-namespace WiiBoxing3D {
+namespace WiiBoxing3D
+{
 
-	/// <summary>
-	/// This is the main type for your game
-	/// </summary>
-	public sealed class CustomGame : Game {
+    /// <summary>
+    /// This is the main type for your game
+    /// </summary>
+    public sealed class CustomGame : Game
+    {
 
-		// Properties				:
-		// ==========================
+        // Properties				:
+        // ==========================
 
-		// Location of content resources
-		const	string					contentLocation = "Content";
+        // Location of content resources
+        const string contentLocation = "Content";
 
-		// Graphics 
-		public	GraphicsDeviceManager	graphics;
-		public	SpriteBatch				spriteBatch;
-		public	SpriteFont				fontTimesNewRoman;
-		
-		public	ScreenState				screenState;
-		public	GameScreen				gameScreen;
-        public  GameStage               gameStage;
+        // Graphics 
+        public GraphicsDeviceManager graphics;
+        public SpriteBatch spriteBatch;
+        public SpriteFont fontTimesNewRoman;
 
-		// Managers
-		public 	KeyboardManager			keyboardManager;
-		public 	WiimoteManager			wiimoteManager;
-		
-		// Initialization			:
-		// ==========================
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public				CustomGame			() {
-			graphics		= new GraphicsDeviceManager	( this );
-			keyboardManager	= new KeyboardManager		( this );
+        // Game screen
+        public GameScreen gameScreen;
+
+        // Managers
+        public KeyboardManager keyboardManager;
+        public WiimoteManager wiimoteManager;
+
+        // Career variables
+        public bool isStage2Cleared;
+        public bool isStage3Cleared;
+
+        // Background music
+        SoundEffect bkgrdMusic = null;
+        SoundEffectInstance bkgrdMusicInstance = null;
+        string lastSoundName = "";
+
+        // Initialization			:
+        // ==========================
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public CustomGame()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            keyboardManager = new KeyboardManager(this);
             wiimoteManager = new WiimoteManager(this);
-            gameScreen     = new Level3Screen(this);
-			
-			Content.RootDirectory = contentLocation;
-		}
+            gameScreen = new MainMenuScreen(this);
 
-		// XNA Game Methods			:
-		// ==========================
-		/// <summary>
-		/// Allows the game to perform any initialization it needs to before starting to run.
-		/// This is where it can query for any required services and load any non-graphic
-		/// related content.  Calling base.Initialize will enumerate through any components
-		/// and initialize them as well.
-		/// </summary>
-		protected override	void Initialize		() {
-			graphics.PreferredBackBufferWidth	= 1080;
-			graphics.PreferredBackBufferHeight	= 720;
-			graphics.IsFullScreen				= false;
-			graphics.PreferMultiSampling		= true;
+            isStage2Cleared = false;
+            isStage3Cleared = false;
 
-			graphics.ApplyChanges ();
+            Content.RootDirectory = contentLocation;
+        }
 
-			Window.Title	= "Wii Boxing 3D";
+        // XNA Game Methods			:
+        // ==========================
+        /// <summary>
+        /// Allows the game to perform any initialization it needs to before starting to run.
+        /// This is where it can query for any required services and load any non-graphic
+        /// related content.  Calling base.Initialize will enumerate through any components
+        /// and initialize them as well.
+        /// </summary>
+        protected override void Initialize()
+        {
+            graphics.PreferredBackBufferWidth = 1080;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.IsFullScreen = false;
+            graphics.PreferMultiSampling = true;
 
-			screenState		= ScreenState.GAME_PLAY;
-            gameStage = GameStage.SURVIVAL;
+            graphics.ApplyChanges();
 
-			base.Initialize ();
+            Window.Title = "Wii Boxing 3D";
 
-			Console.WriteLine ( "Game initialized! Running game now ...\n" );
-		}
+            gameScreen.Initialize();
 
-		/// <summary>
-		/// LoadContent will be called once per game and is the place to load
-		/// all of your content.
-		/// </summary>
-		protected override	void LoadContent	() {
+            base.Initialize();
 
-			// Create a new SpriteBatch, which can be used to draw textures.
-			spriteBatch			= new SpriteBatch ( GraphicsDevice );
+            Console.WriteLine("Game initialized! Running game now ...\n");
+        }
 
-			fontTimesNewRoman	= Content.Load < SpriteFont > ( @"Fonts\Times New Roman" );
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
+        protected override void LoadContent()
+        {
 
-			gameScreen.LoadContent ();
-		}
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
-		/// <summary>
-		/// UnloadContent will be called once per game and is the place to unload
-		/// all content.
-		/// </summary>
-		protected override	void UnloadContent	() {
-			// TODO : Unload any non ContentManager content here
-		}
+            fontTimesNewRoman = Content.Load<SpriteFont>(@"Fonts\Times New Roman");
 
-		/// <summary>
-		/// Allows the game to run logic such as updating the world,
-		/// checking for collisions, gathering input, and playing audio.
-		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>
-		protected override	void Update			( GameTime gameTime ) {
-			
-			#if XBOX360
-				// Allows the game to exit (if you want to play with the XBox 360 :D)
-				if ( GamePad.GetState ( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed )
-					this.Exit ();
-			#endif
+            gameScreen.LoadContent();
 
-			keyboardManager	.Update ( gameTime );
-            wiimoteManager  .Update ( gameTime );
-			gameScreen		.Update ( gameTime );
+            base.LoadContent();
+        }
 
-			base			.Update ( gameTime );
-		}
+        /// <summary>
+        /// UnloadContent will be called once per game and is the place to unload
+        /// all content.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+        }
 
-		/// <summary>
-		/// This is called when the game should draw itself.
-		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>
-		protected override	void Draw			( GameTime gameTime ) {
-			GraphicsDevice.Clear ( Color.CornflowerBlue );
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Update(GameTime gameTime)
+        {
 
-			#if XNA_4_0
-				GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+#if XBOX360
+			// Allows the game to exit (if you want to play with the XBox 360 :D)
+			if ( GamePad.GetState ( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed )
+				this.Exit ();
+#endif
 
-				spriteBatch.Begin ( SpriteSortMode.Deferred , BlendState.AlphaBlend );
-			#else
-				GraphicsDevice.RenderState.DepthBufferEnable		= true; 
-				GraphicsDevice.RenderState.DepthBufferWriteEnable	= true; 
+            keyboardManager.Update(gameTime);
+            wiimoteManager.Update(gameTime);
 
-				spriteBatch.Begin ( SpriteBlendMode.AlphaBlend );
-			#endif
+            gameScreen.Update(gameTime);
 
-			//if ( screenState == ScreenState.GAME_PLAY )
-			gameScreen.Draw ( gameTime );
+            base.Update(gameTime);
+        }
 
-			spriteBatch.End ();
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-			base.Draw ( gameTime );
-		}
+#if XNA_4_0
+			GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-		// Public Methods			:
-		// ==========================
-		/// <summary>
-		/// Write some text.
-		/// </summary>
-		public				void DrawText		( Vector2 position , string text , Color color ) {
-			// Find the center of the string
-			Vector2 FontOrigin = fontTimesNewRoman.MeasureString ( text ) / 2;
+			spriteBatch.Begin ( SpriteSortMode.Deferred , BlendState.AlphaBlend );
+#else
+            GraphicsDevice.RenderState.DepthBufferEnable = true;
+            GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
 
-			// Draw the string
-			spriteBatch.DrawString ( fontTimesNewRoman , text , position , color , 0 , FontOrigin , 1.0f , SpriteEffects.None , 0.5f );
-		}
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+#endif
 
-	}
+            gameScreen.Draw(gameTime);
 
-	/// <summary>
-	/// Specifies the possible screen states that the Game may be in
-	/// at a particular point of time.
-	/// </summary>
-	public enum ScreenState { 
-		MENU		,
-		GAME_PLAY	,
-        GAME_OVER   ,
-        GAME_CLEAR  ,
-	};
+            spriteBatch.End();
 
-    public enum GameStage{
-        TUTORIAL1,
-        TUTORIAL2,
-        CAREER1,
-        CAREER2,
-        SURVIVAL,      
-    };
+            base.Draw(gameTime);
+        }
 
+        // Public Methods			:
+        // ==========================
+        /// <summary>
+        /// Write some text.
+        /// </summary>
+        public void DrawText(Vector2 position, Vector2 scale, string text, Color color)
+        {
+            // Find the center of the string
+            Vector2 FontOrigin = fontTimesNewRoman.MeasureString(text) / 2;
+
+            // Draw the string
+            spriteBatch.DrawString(fontTimesNewRoman, text, position, color, 0, FontOrigin, scale, SpriteEffects.None, 0.5f);
+        }
+
+        /// <summary>
+        /// Change the screen
+        /// </summary>
+        public void ChangeScreenState(GameScreen newGameScreen)
+        {
+            gameScreen = newGameScreen;
+            gameScreen.Initialize();
+            gameScreen.LoadContent();
+        }
+
+        /// <summary>
+        /// Change the background music
+        /// </summary>
+        public void ChangeMusic(string soundName)
+        {
+            if (soundName != lastSoundName)
+            {
+                if (bkgrdMusicInstance != null)
+                {
+                    bkgrdMusicInstance.Stop();
+                }
+                bkgrdMusic = Content.Load<SoundEffect>(soundName);
+                bkgrdMusicInstance = bkgrdMusic.CreateInstance();
+                bkgrdMusicInstance.IsLooped = true;
+                bkgrdMusicInstance.Play();
+                lastSoundName = soundName;
+            }
+        }
+    }
 }

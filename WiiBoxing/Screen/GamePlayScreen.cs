@@ -8,118 +8,116 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 
 
-namespace WiiBoxing3D.Screen {
+namespace WiiBoxing3D.Screen
+{
 
-	/// <summary>
-	/// This is the gameplay.
-	/// </summary>
-	public class GamePlayScreen : GameScreen {
+    /// <summary>
+    /// This is the gameplay.
+    /// </summary>
+    public class GamePlayScreen : Game3DScreen
+    {
 
-		protected double PlayerSpeed = 2;
-
-		// Protected Properties		:
-		// ==========================
-
-		// Camera variables
-        protected Matrix CameraProjectionMatrix;
-        protected Matrix CameraViewMatrix;
-
+        // Protected Properties		:
+        // ==========================
+        // Game objects
         protected Player Player;
         protected PunchingBagManager PunchingBagManager;
         protected LeftGlove LeftGlove;
         protected RightGlove RightGlove;
+        protected Skybox Skybox;
 
-        public SoundEffect bkgrdMusic;
-        public SoundEffectInstance bkgrdMusicInstance;
- 
+        // Difference configurations for different levels
+        protected int GamePlayLength = 200;
+        protected double PlayerSpeed = 2;
+        protected uint MininumScore = 100;
+        protected GameStage GameStage;
 
-		// Initialization			:
-		// ==========================
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public			GamePlayScreen		( CustomGame game ) : base ( game ) { }
 
-		// XNA Game Methods			:
-		// ==========================
-		public override	void Initialize		() {
-			Player				= new Player			 ( Game , PlayerSpeed );
-			PunchingBagManager	= new PunchingBagManager ( 1, Game , Player );
-			LeftGlove			= new LeftGlove			 ( Game , Player );
-			RightGlove			= new RightGlove		 ( Game , Player );
-            Game.wiimoteManager.player = Player;
-		}
+        // Initialization			:
+        // ==========================
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public GamePlayScreen(CustomGame game) : base(game) { }
 
-		public override	void LoadContent	() {
-			GameObjectCollection.Add ( PunchingBagManager );
-			GameObjectCollection.Add ( LeftGlove );
-			GameObjectCollection.Add ( RightGlove );
-            GameObjectCollection.Add ( Player );
-
-            bkgrdMusic = Game.Content.Load<SoundEffect>(@"Audio\bkgrd");
-            bkgrdMusicInstance = bkgrdMusic.CreateInstance();
-            bkgrdMusicInstance.Play();
-
-			base.LoadContent	();
-			UpdateCamera		();
-		}
-
-		public override	void Update			( GameTime GameTime ) {
-			UpdateCamera	();
-			CheckCollision	();
-
-			//if ( Game.keyboardManager.checkKey ( Keys.Space ) )
-			//	PunchingBagManager.getBag ( 0 ).hitByGlove ();
-
-			base.Update		( GameTime );
-		}
-
-		public override	void Draw			( GameTime GameTime ) {
-			// text sample
-			//Game.DrawText ( new Vector2 ( 150 , 10 ) , "This is how you can draw some text." , Color.Black );
-
-			foreach ( IGameObject GameObject in GameObjectCollection )
-				GameObject.Draw ( CameraProjectionMatrix , CameraViewMatrix );
-
-			base.Draw ( GameTime );
-		}
-
-		// Public Methods			:
-		// ==========================
-		/// <summary>
-		/// Check if there are collisions between gloves, player's head
-		/// and punching bags.
-		/// Update the data according to the detected collisions.
-		/// </summary>
-		public			void CheckCollision	() {
-			PunchingBagManager.CheckCollision ( Player , LeftGlove , RightGlove );
-		}
-
-		// Protected Methods			:
-		// ==========================
-		/// <summary>
-		/// Update the camera.
-		/// </summary>
-        protected void UpdateCamera()
+        // XNA Game Methods			:
+        // ==========================
+        public override void Initialize()
         {
-			Vector3 headPosition = Player.Position;
+            Player = new Player(Game, PlayerSpeed);
+            PunchingBagManager = new PunchingBagManager(1, Game, Player);
+            LeftGlove = new LeftGlove(Game, Player);
+            RightGlove = new RightGlove(Game, Player);
+            Skybox = new Skybox(Game);
+            Game.wiimoteManager.player = Player;
 
-			// Camera
+            base.Initialize();
+        }
 
-			#if ! HEAD_TRACKING // define in Global Defines in Properties, or just toggle the ! here
-				CameraViewMatrix		= Matrix.CreateLookAt (	
-											headPosition , 
-											new Vector3 ( headPosition.X, headPosition.Y, headPosition.Z + 20 ) , 
-											Vector3.UnitY 
-										);
+        public override void LoadContent()
+        {
+            GameObjectCollection.Add(PunchingBagManager);
+            GameObjectCollection.Add(Player);
+            GameObjectCollection.Add(LeftGlove);
+            GameObjectCollection.Add(RightGlove);
+            GameObjectCollection.Add(Skybox);
 
-				CameraProjectionMatrix	= Matrix.CreatePerspectiveFieldOfView (
-											MathHelper.ToRadians ( 45.0f ) , 
-											Game.GraphicsDevice.Viewport.AspectRatio ,
-											1.0f , 
-											10000.0f 
-										);
-			#else // HEAD_TRACKING
+            Game.ChangeMusic("Audio\\bkgrd");
+
+            base.LoadContent();
+        }
+
+        public override void Update(GameTime GameTime)
+        {
+            CheckCollision();
+            CheckEndOfGame();
+
+            base.Update(GameTime);
+        }
+
+        public override void PressHome()
+        {
+            Game.ChangeScreenState(new MainMenuScreen(Game));
+            base.PressHome();
+        }
+
+        // Public Methods			:
+        // ==========================
+        /// <summary>
+        /// Check if there are collisions between gloves, player's head
+        /// and punching bags.
+        /// Update the data according to the detected collisions.
+        /// </summary>
+        public void CheckCollision()
+        {
+            PunchingBagManager.CheckCollision(Player, LeftGlove, RightGlove);
+        }
+
+        // Protected Methods			:
+        // ==========================
+        /// <summary>
+        /// Update the camera.
+        /// </summary>
+        protected override void UpdateCamera()
+        {
+            Vector3 headPosition = Player.Position;
+
+            // Camera
+
+#if ! HEAD_TRACKING // define in Global Defines in Properties, or just toggle the ! here
+            CameraViewMatrix = Matrix.CreateLookAt(
+                                        headPosition,
+                                        new Vector3(headPosition.X, headPosition.Y, headPosition.Z + 20),
+                                        Vector3.UnitY
+                                    );
+
+            CameraProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(
+                                        MathHelper.ToRadians(45.0f),
+                                        Game.GraphicsDevice.Viewport.AspectRatio,
+                                        1.0f,
+                                        10000.0f
+                                    );
+#else // HEAD_TRACKING
 				CameraViewMatrix		= Matrix.CreateLookAt (	
 											new Vector3 ( headPosition.X , headPosition.Y , headPosition.Z ) , 
 											new Vector3 ( headPosition.X , headPosition.Y , Player.DistanceMoved ) , 
@@ -141,10 +139,41 @@ namespace WiiBoxing3D.Screen {
 											nearestPoint ,
 											1000.0f
 										);
-			#endif
+#endif
 
-		}
+        }
 
-	}
+        protected void CheckEndOfGame()
+        {
+            if (Player.Health <= 0)
+            {
+                Game.ChangeScreenState(new GameOverScreen(Game, GameStage, Player.Score));
+            }
+            if (Player.Position.Z > GamePlayLength)
+            {
+                if (Player.Score > MininumScore)
+                {
+                    Game.ChangeScreenState(new GameClearScreen(Game, GameStage, Player.Score));
+                }
+                else
+                {
+                    Game.ChangeScreenState(new GameOverScreen(Game, GameStage, Player.Score));
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Type of Gameplay
+    /// </summary>
+    public enum GameStage
+    {
+        TUTORIAL1,
+        TUTORIAL2,
+        CAREER1,
+        CAREER2,
+        CAREER3
+    };
 
 }
