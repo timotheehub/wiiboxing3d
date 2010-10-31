@@ -16,16 +16,25 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 namespace WiiBoxing3D.Screen
 {
-    public class GameClearScreen : GameScreen
+    public class GameClearScreen : Game2DScreen
     {
-        Texture2D backgroundTexture;
+        GameStage gameStage;
         uint score;
 
-        public GameClearScreen(CustomGame game, uint score)
+        public GameClearScreen(CustomGame game, GameStage gameStage, uint score)
             : base(game)
         {
+            this.gameStage = gameStage;
             this.score = score;
-            LoadContent();
+
+            if (gameStage == GameStage.CAREER1)
+            {
+                Game.isStage2Cleared = true;
+            }
+            if (gameStage == GameStage.CAREER2)
+            {
+                Game.isStage3Cleared = true;
+            }
         }
 
         public override void LoadContent()
@@ -34,18 +43,36 @@ namespace WiiBoxing3D.Screen
             base.LoadContent();
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
         public override void Draw(GameTime gameTime)
         {
-            Rectangle screenRectangle = new Rectangle(0, 0, Game.graphics.PreferredBackBufferWidth, Game.graphics.PreferredBackBufferHeight);
-            Game.spriteBatch.Draw(backgroundTexture, screenRectangle, Color.White);
-            Game.DrawText(new Vector2(Game.graphics.PreferredBackBufferWidth * 0.9f, 30), "SCORE: " + score.ToString(), Color.Beige);
             base.Draw(gameTime);
+
+            Game.DrawText(new Vector2(Game.GraphicsDevice.Viewport.Width * 0.85f, Game.GraphicsDevice.Viewport.Height * 0.05f),
+                        new Vector2(Game.GraphicsDevice.Viewport.Width * 0.002f, Game.GraphicsDevice.Viewport.Width * 0.002f),
+                                    "SCORE: " + score.ToString(), Color.Black);
         }
 
+        public override void PressA()
+        {
+            if ((gameStage == GameStage.CAREER1) || (gameStage == GameStage.CAREER2))
+            {
+                Game.ChangeScreenState(new CareerMenuScreen(Game));
+            }
+            else if (gameStage == GameStage.TUTORIAL1)
+            {
+                Game.ChangeScreenState(new Help4Screen(Game,true));
+            }
+            else
+            {
+                Game.ChangeScreenState(new MainMenuScreen(Game));
+            }
+            base.PressA();
+        }
+
+        public override void PressHome()
+        {
+            Game.ChangeScreenState(new MainMenuScreen(Game));
+            base.PressHome();
+        }
     }
 }

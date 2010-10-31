@@ -4,13 +4,16 @@ using WiiBoxing3D.Input;
 
 using System;
 
-namespace WiiBoxing3D.GameComponent {
+namespace WiiBoxing3D.GameComponent
+{
 
-	public class LeftGlove : Glove {
+    public class LeftGlove : Glove
+    {
         public Vector3 OFF_SET = new Vector3(1, -0.8f, 2.5f);      //original position w.r.t player position
-        public  Vector3 relative_offset;   //relative position w.r.t player position
+        public Vector3 relative_offset;   //relative position w.r.t player position
 
-		public LeftGlove ( CustomGame game, Player player ) : base ( game, player, "" ) 
+        public LeftGlove(CustomGame game, Player player)
+            : base(game, player, "")
         {
             speed = 1.0f;                                      //speed for glove movement per frame
             IsPunching = false;
@@ -23,14 +26,9 @@ namespace WiiBoxing3D.GameComponent {
         {
             Vector3 player_position = new Vector3(0, 0, 0);
             player_position = player.Position;
-            /*if (Math.Abs(Game.wiimoteManager.WiimoteAccel.Z) > 4.5)
-            {
-                if (relative_offset.Z + speed*5 <= MAX_RANGE) relative_offset.Z += speed*5;
-                IsPunching = true;
-            }*/
 
             // Wiimote speed
-            relative_offset += Game.wiimoteManager.WiimoteSpeed * 0.02f;
+            relative_offset += Game.wiimoteManager.LeftSpeed * 0.02f;
 
             // Keyboard speed
             if (Game.keyboardManager.checkKey(Keys.A, KeyboardEvent.KEY_DOWN))
@@ -39,7 +37,7 @@ namespace WiiBoxing3D.GameComponent {
             }
             if (Game.keyboardManager.checkKey(Keys.D, KeyboardEvent.KEY_DOWN))
             {
-               relative_offset.X -= speed;
+                relative_offset.X -= speed;
             }
             if (Game.keyboardManager.checkKey(Keys.W, KeyboardEvent.KEY_DOWN))
             {
@@ -61,7 +59,7 @@ namespace WiiBoxing3D.GameComponent {
             if (Game.wiimoteManager.isWiimote)
             {
                 // Wiimote no movement
-                if (Game.wiimoteManager.WiimoteSpeed.Length() < 0.01)
+                if (Game.wiimoteManager.LeftSpeed.Length() < 0.01)
                 {
                     IsPunching = false;
                 }
@@ -92,6 +90,6 @@ namespace WiiBoxing3D.GameComponent {
 
             this.Position = player_position + OFF_SET + relative_offset;
         }
-	}
+    }
 
 }

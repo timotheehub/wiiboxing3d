@@ -24,14 +24,9 @@ namespace WiiBoxing3D.GameComponent
         {
             Vector3 player_position = new Vector3(0, 0, 0);
             player_position = player.Position;
-            /*if (Math.Abs(Game.wiimoteManager.NunchukAccel.Z) > 2.3)
-            {
-                if (relative_offset.Z + speed * 5 <= MAX_RANGE) relative_offset.Z += speed * 5;
-                IsPunching = true;
-            }*/
 
             // Wiimote speed
-            relative_offset += Game.wiimoteManager.NunchukSpeed * 0.02f;
+            relative_offset += Game.wiimoteManager.RightSpeed * 0.02f;
 
             // Keyboard speed
             if (Game.keyboardManager.checkKey(Keys.K, KeyboardEvent.KEY_DOWN))
@@ -62,7 +57,7 @@ namespace WiiBoxing3D.GameComponent
             if (Game.wiimoteManager.isWiimote)
             {
                 // Nunchuk no movement
-                if (Game.wiimoteManager.NunchukSpeed.Length() < 0.01)
+                if (Game.wiimoteManager.RightSpeed.Length() < 0.01)
                 {
                     IsPunching = false;
                 }
@@ -90,7 +85,7 @@ namespace WiiBoxing3D.GameComponent
                 else if (relative_offset.Z < -1.0f) relative_offset.Z += speed;
                 else relative_offset *= 0.8f;
             }
-             
+
             this.Position = player_position + OFF_SET + relative_offset;
         }
     }
