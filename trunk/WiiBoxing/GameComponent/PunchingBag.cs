@@ -100,19 +100,19 @@ namespace WiiBoxing3D.GameComponent {
                     if (e.ObjectCollidedWith.GetType() == typeof(LeftGlove))
                     {
                         Console.WriteLine("Collision left glove");
-                        if (Game.wiimoteManager.isWiimote)
-                        {
-                            Game.wiimoteManager.RecognizeLeftHandGesture();
-                        }
+                        //if (Game.wiimoteManager.isWiimote)
+                        //{
+                        //    Game.wiimoteManager.RecognizeLeftHandGesture();
+                        //}
 
                     }
                     else if (e.ObjectCollidedWith.GetType() == typeof(RightGlove))
                     {
                         Console.WriteLine("Collision right glove");
-                        if (Game.wiimoteManager.isWiimote)
-                        {
-                            Game.wiimoteManager.RecognizeRightHandGesture();
-                        }
+                        //if (Game.wiimoteManager.isWiimote)
+                        //{
+                        //    Game.wiimoteManager.RecognizeRightHandGesture();
+                        //}
                     }
 
                     hitByGlove();
