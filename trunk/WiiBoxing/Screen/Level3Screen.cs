@@ -20,7 +20,7 @@ namespace WiiBoxing3D.Screen
         public override void Initialize()
         {
             base.Initialize();
-            PunchingBagManager = new PunchingBagManager(3, Game, Player); //*** changed constructor
+            PunchingBagManager = new PunchingBagManager(GameStage.CAREER3, Game, Player);
         }
 
     }

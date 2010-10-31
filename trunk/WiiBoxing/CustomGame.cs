@@ -34,7 +34,7 @@ namespace WiiBoxing3D
         // Graphics 
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
-        public SpriteFont fontTimesNewRoman;
+        SpriteFont font;
 
         // Game screen
         public GameScreen gameScreen;
@@ -106,7 +106,7 @@ namespace WiiBoxing3D
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            fontTimesNewRoman = Content.Load<SpriteFont>(@"Fonts\Times New Roman");
+            font = Content.Load<SpriteFont>(@"Fonts\Font");
 
             gameScreen.LoadContent();
 
@@ -177,10 +177,11 @@ namespace WiiBoxing3D
         public void DrawText(Vector2 position, Vector2 scale, string text, Color color)
         {
             // Find the center of the string
-            Vector2 FontOrigin = fontTimesNewRoman.MeasureString(text) / 2;
+            Vector2 FontOrigin = font.MeasureString(text) / 2;
+            scale *= 0.7f;
 
             // Draw the string
-            spriteBatch.DrawString(fontTimesNewRoman, text, position, color, 0, FontOrigin, scale, SpriteEffects.None, 0.5f);
+            spriteBatch.DrawString(font, text, position, color, 0, FontOrigin, scale, SpriteEffects.None, 0.5f);
         }
 
         /// <summary>

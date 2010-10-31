@@ -16,6 +16,8 @@ namespace WiiBoxing3D.GameComponent
 
         const string PlayerAsset = @"Models\BOX";
         const float MOVE_DISTANCE = 0.2f;
+        const int DRAW_TIME = 60;
+
         public const uint DAMAGE_TAKEN = 5;
         public const uint MAX_HEALTH = 85;
         public const uint BASIC_SCORE = 10;           // score of one successful punch
@@ -24,14 +26,18 @@ namespace WiiBoxing3D.GameComponent
         public float DistanceMoved { get { return (float)(Speed * GameplayTime); } }
         public bool IsDead { get { return Health <= 0; } }
 
+        public PunchingType PunchingType { get { return _PunchingType; }
+                    set { DrawTime = DRAW_TIME; _PunchingType = value; } }
         public uint Health;
         public uint Score;
         public Texture2D[] staminaTexture = new Texture2D[20];
 
         Vector3 Offset;
-
+        PunchingType _PunchingType;
         double Speed;
         double GameplayTime;
+        int DrawTime;
+        
 
         public Player(CustomGame Game, double Speed)
             : base(Game, "")
@@ -40,10 +46,12 @@ namespace WiiBoxing3D.GameComponent
             Scale = new Vector3(0.008f);
 
             Health = MAX_HEALTH;
+            PunchingType = PunchingType.NOT_INIT;
             this.Speed = Speed;
 
             GameplayTime = 0;
             Score = 0;
+            DrawTime = 0;
         }
 
         public override string ToString()
@@ -69,6 +77,11 @@ namespace WiiBoxing3D.GameComponent
 
         public override void Update(GameTime GameTime)
         {
+            if (DrawTime > 0)
+            {
+                DrawTime--;
+            }
+
             GameplayTime += GameTime.ElapsedRealTime.TotalSeconds;
 
             if (Game.keyboardManager.checkKey(Keys.Left, KeyboardEvent.KEY_DOWN, "Left")) Offset.X += MOVE_DISTANCE;
@@ -92,6 +105,12 @@ namespace WiiBoxing3D.GameComponent
             Game.DrawText(new Vector2(Game.GraphicsDevice.Viewport.Width * 0.85f, Game.GraphicsDevice.Viewport.Height * 0.05f),
                         new Vector2(Game.GraphicsDevice.Viewport.Width * 0.002f, Game.GraphicsDevice.Viewport.Width * 0.002f),
                         "SCORE: " + Score.ToString(), Color.Black);
+            if (DrawTime > 0)
+            {
+                Game.DrawText(new Vector2(Game.GraphicsDevice.Viewport.Width * 0.5f, Game.GraphicsDevice.Viewport.Height * 0.2f),
+                        new Vector2(Game.GraphicsDevice.Viewport.Width * 0.004f, Game.GraphicsDevice.Viewport.Width * 0.004f),
+                        GestureToString(PunchingType), Color.DarkGreen);
+            }
             base.Position.Z -= 3;
             base.Draw(CameraProjectionMatrix, CameraViewMatrix);
             base.Position.Z += 3;
@@ -111,6 +130,21 @@ namespace WiiBoxing3D.GameComponent
             hitByPunchingBag();
 
             base.OnCollidedHandler(sender, e);
+        }
+
+        protected string GestureToString(PunchingType PunchingType)
+        {
+            switch (PunchingType)
+            {
+                case PunchingType.JAB:
+                    return "JAB";
+                case PunchingType.LEFTHOOK:
+                    return "LEFT HOOK";
+                case PunchingType.RIGHTHOOK:
+                    return "RIGHT HOOK";
+                default:
+                    return "";
+            }
         }
     }
 

@@ -13,7 +13,6 @@ namespace WiiBoxing3D.Screen
         public Tutorial2Screen(CustomGame game) : base(game)
         {
             PlayerSpeed = 1.0f;
-            GamePlayLength = 35;
             GameStage = GameStage.TUTORIAL2;
         }
 
@@ -21,7 +20,7 @@ namespace WiiBoxing3D.Screen
         public override void Initialize()
         {
             base.Initialize();
-            PunchingBagManager = new PunchingBagManager(5, Game, Player); //*** changed constructor
+            PunchingBagManager = new PunchingBagManager(GameStage.TUTORIAL2, Game, Player);
         }
 
     }
