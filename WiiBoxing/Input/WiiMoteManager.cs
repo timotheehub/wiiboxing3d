@@ -3,6 +3,8 @@
 // .NET
 using System;
 using System.Collections.Generic;
+using System.Collections;
+
 
 // XNA
 using Microsoft.Xna.Framework;
@@ -40,8 +42,6 @@ namespace WiiBoxing3D.Input {
         public Vector3 WiimoteSpeed;
         public Vector3 NunchukSpeed;
 
-        private Queue<Vector3> wiiMoteQ;
-        private Queue<Vector3> nunchukQ;
 
         public bool isRightHanded;
         
@@ -63,9 +63,22 @@ namespace WiiBoxing3D.Input {
         float relativeVerticalAngle = 0; //current head position view angle
         //bool cameraIsAboveScreen = true;//has no affect until zeroing and then is set automatically.
 
-        const float WIIMOTE_ACCELERATION_SCALING = 20;
+        const float WIIMOTE_ACCELERATION_SCALING = 500;
 
+        private static PunchingType _Type = PunchingType.NOT_INIT;
+        public  PunchingType Type
+        {
+            get { return _Type; }
+            set { if (_Type == PunchingType.NOT_INIT) _Type = value; }
+        }
+        public enum PunchingType
+        {
+            NOT_INIT,
 
+            LEFTHOOK,
+            RIGHTHOOK,
+            JAB,
+        }
 
 		// Initialization			:
 		// ==========================
@@ -76,8 +89,6 @@ namespace WiiBoxing3D.Input {
 		public	WiimoteManager							( CustomGame game ) : base ( game ) {
             try
             {
-                wiiMoteQ= new Queue<Vector3>(30);
-                nunchukQ = new Queue<Vector3>(30);
                 WiimoteMap = new Dictionary<Guid, Wiimote>();
                 Wiimotes = new WiimoteCollection();
                 player = new Player(game, 5);
@@ -104,15 +115,7 @@ namespace WiiBoxing3D.Input {
             }
 			
 		}
-        public Queue<Vector3> getWiiMoteQ()
-        {
-            return wiiMoteQ;
-        }
-        public Queue<Vector3> getNunchukQ()
-        {
-            return nunchukQ;
-        }
-
+      
 
         public string punchType = "";
         public override void Draw(GameTime gameTime)
@@ -127,157 +130,174 @@ namespace WiiBoxing3D.Input {
         /// Override this method with manager-specific update code.
         /// </summary>
         /// <param name="game"></param>
+        /// 
+        ArrayList wiiQ = new ArrayList();
+
         public override void Update(GameTime gameTime)
         {
-            // Update queue of acceleration
-            if (wiiMoteQ.Count <= 30)
-            {
-                wiiMoteQ.Enqueue(WiimoteAccel);
-            }
-            else
-            {
-                wiiMoteQ.Enqueue(WiimoteAccel);
-                wiiMoteQ.Dequeue();
-            }
-            if (nunchukQ.Count <= 30) 
-            { 
-                nunchukQ.Enqueue(NunchukAccel);
-            }
-            else
-            {
-                nunchukQ.Enqueue(NunchukAccel);
-                nunchukQ.Dequeue();
-            }
-
+            
             // Update Wiimote speed
             if (WiimoteAccel.Length() >= 2)
             {
-                WiimoteSpeed += WiimoteAccel * gameTime.ElapsedRealTime.Seconds * WIIMOTE_ACCELERATION_SCALING;
-                RecognizeWiimoteGesture();
+                WiimoteSpeed += WiimoteAccel * 0.02f * WIIMOTE_ACCELERATION_SCALING;
+                double s1 = DotProduct(WiimoteSpeed, new Vector3(1, 0, 0));
+                double s2 = DotProduct(WiimoteSpeed, new Vector3(0, 0, 1));
+                double s3 = DotProduct(WiimoteSpeed, new Vector3(-1, 0, 0));
+                double sm = Math.Max(Math.Max(s1, s2), s3); // favorite direction
+                if (sm == s1) // left hook
+                {
+                    WiimoteSpeed.Y = 0;
+                    wiiQ.Add(PunchingType.LEFTHOOK);
+                    Console.WriteLine("left");
+                }
+                else if (sm == s2) // punch
+                {
+                    WiimoteSpeed.X = 0;
+                    WiimoteSpeed.Y = 0;
+                    wiiQ.Add(PunchingType.JAB);
+                    Console.WriteLine("punch");
+                }
+                else if (sm == s3) // right hook
+                {
+                    Console.WriteLine("right : " + WiimoteSpeed.Y);
+                    WiimoteSpeed.Y = 0;
+                    wiiQ.Add(PunchingType.RIGHTHOOK);
+                }
             }
             else
             {
-                WiimoteSpeed = Vector3.Zero;
+                WiimoteSpeed *= 0.9f;
+                wiiQ.Clear();
             }
-
             // Update Nunchuk speed
             if (NunchukAccel.Length() >= 2)
             {
-                NunchukSpeed += NunchukAccel * gameTime.ElapsedRealTime.Seconds * WIIMOTE_ACCELERATION_SCALING;
+                NunchukSpeed += NunchukAccel * 0.02f * WIIMOTE_ACCELERATION_SCALING;
             }
             else
             {
                 NunchukSpeed = Vector3.Zero;
             }
+            if (wiiQ.Count != 0)
+            {
+                RecognizeWiimoteGesture(wiiQ);
+            }
         }
 
         
-        public void RecognizeLeftHandGesture()
-        {
-            if (isRightHanded)
-            {
-                RecognizeWiimoteGesture();
-            }
-            else
-            {
-                RecognizeNunchukGesture();
-            }
+        //public void RecognizeLeftHandGesture()
+        //{
+        //    if (isRightHanded)
+        //    {
+        //        RecognizeWiimoteGesture();
+        //    }
+        //    else
+        //    {
+        //        RecognizeNunchukGesture();
+        //    }
             
-        }
+        //}
 
-        public void RecognizeRightHandGesture()
-        {
-            if (isRightHanded)
-            {
-                RecognizeNunchukGesture(); 
-            }
-            else
-            {
-                RecognizeWiimoteGesture();
-            }
-        }
+        //public void RecognizeRightHandGesture()
+        //{
+        //    if (isRightHanded)
+        //    {
+        //        RecognizeNunchukGesture(); 
+        //    }
+        //    else
+        //    {
+        //        RecognizeWiimoteGesture();
+        //    }
+        //}
 
 		// Private Methods			:
 		// ==========================
-        private void RecognizeWiimoteGesture()
+      
+        private PunchingType RecognizeWiimoteGesture(ArrayList wiiQ) 
         {
-            Vector3[] vectorArrayAbs = new Vector3[30];
-            Vector3[] vectorArray = wiiMoteQ.ToArray();
-
-            float highestX = -99;
-            float highestY = -99;
-            float highestZ = -99;
-            float lowestX = 99;
-            float lowestY = 99;
-            float lowestZ = 99;
-
-            for (int i = 0; i < 30; i++)
+            ArrayList gestureGroup = new ArrayList();
+            ArrayList gestureType = new ArrayList();
+            PunchingType firstType = new PunchingType();
+            firstType = (PunchingType)wiiQ.IndexOf(0);
+            int j = 1;
+            for (int i = 0; i < wiiQ.Count; i++)
             {
-                vectorArrayAbs[i] = vectorArray[i];
-                if (vectorArray[i].X > highestX)
+                if ((PunchingType)wiiQ.IndexOf(i) == firstType)
                 {
-                    highestX = vectorArray[i].X;
-                }
-                if (vectorArray[i].Y > highestY)
-                {
-                    highestY = vectorArray[i].Y;
-                }
-                if (vectorArray[i].Z > highestZ)
-                {
-                    highestZ = vectorArray[i].Z;
-                }
-                if (vectorArray[i].X < lowestX)
-                {
-                    lowestX = vectorArray[i].X;
-                }
-                if (vectorArray[i].Y < lowestY)
-                {
-                    lowestY = vectorArray[i].Y;
-                }
-                if (vectorArray[i].Z < lowestZ)
-                {
-                    lowestZ = vectorArray[i].Z;
-                }
-                vectorArrayAbs[i].X = Math.Abs(vectorArray[i].X);
-                vectorArrayAbs[i].Y = Math.Abs(vectorArray[i].Y);
-                vectorArrayAbs[i].Z = Math.Abs(vectorArray[i].Z);
-            }
-            float totalX = 0.0F;
-            float totalY = 0.0F;
-            float totalZ = 0.0F;
-
-            for (int i = 0; i < 30; i++)
-            {
-                totalX += vectorArrayAbs[i].X;
-                totalY += vectorArrayAbs[i].Y;
-                totalZ += vectorArrayAbs[i].Z;
-            }
-
-            Vector3 averageVector = new Vector3();
-            averageVector.X = totalX / 30;
-            averageVector.Y = totalY / 30;
-            averageVector.Z = totalZ / 30;
-
-            if (averageVector.Length() >= 2)
-            {
-                if (highestZ >= 4 && lowestZ > -2)
-                {      //Recognize a hook
-                    punchType = "Hook";
-                    Console.WriteLine("Wiimote Hook");
-                }
-                else if (highestZ >= 3 && lowestX < -3 && lowestY < -3) //Recognize a Punch
-                {
-                    punchType = "Jab";
-                    Console.WriteLine("Wiimote Punch");
+                    j+=1;
                 }
                 else
-                {                              //Recognize a Uppercut
-                    punchType = "Uppercut";
-                    Console.WriteLine("Wiimote Uppercut");
+                {
+                    gestureGroup.Add(firstType);
+                    gestureGroup.Add(j);
+                    gestureType.Clear();
+                    firstType = (PunchingType)wiiQ[i];
+                    j = 1;
                 }
             }
-        }
+            //e.g. [left hook][3][right hook][1][jab][6]
 
+            for (int i = 1; i <= gestureGroup.Count; i++)
+            {
+                if ((int)gestureGroup[i * 2 -1] == 1)
+                {
+                    gestureGroup.RemoveAt(i * 2 -1);
+                    gestureGroup.RemoveAt(i * 2 - 2);
+                    i -= 1;
+                }
+            }
+            // e.g. [left hook][3][jab][6]
+            if (gestureGroup.Count/2 > 3)
+            {
+                // recognize as jab e.g. [left hook][3][jab][6][right hook][3]
+                return PunchingType.JAB;
+            }
+            else if (gestureGroup.Count != 0)
+            {
+                //this portion require tuning
+                if ((PunchingType)gestureGroup[0] == PunchingType.LEFTHOOK)
+                {
+                    return PunchingType.LEFTHOOK;
+                }
+                else if ((PunchingType)gestureGroup[0] == PunchingType.RIGHTHOOK)
+                {
+                    return PunchingType.RIGHTHOOK;
+                }
+                else
+                {
+                    return PunchingType.JAB;
+                }
+            }
+            else
+            {
+                return PunchingType.NOT_INIT;
+            }
+
+            
+
+
+            //PunchingType previousType = new PunchingType();
+            //previousType = (PunchingType)wiiQ.IndexOf(0);
+            //bool change = false;
+            //for (int i=0;i<wiiQ.Count;i++)
+            //{
+            //    PunchingType currentType = (PunchingType)wiiQ.IndexOf(i);
+            //    if (currentType != previousType && !change)
+            //    {
+            //        change = true;
+            //    }
+            //    else if (currentType != previousType && change)
+            //    {
+            //        // Previous need to trim
+            //        wiiQ.RemoveAt(i - 1);
+            //    }
+            //    else
+            //    {
+            //        change = false;
+            //    }
+            //    previousType = currentType;
+            //}
+        }
         private void RecognizeNunchukGesture()
         {
             //TODO: From the queue of 30 vector, get the abs value of them and vector length them.
@@ -325,13 +345,14 @@ namespace WiiBoxing3D.Input {
                 if (isFirstRemote)
                 {
                     isFirstRemote = false;
-                    Wiimote.WiimoteChanged += new EventHandler<WiimoteChangedEventArgs>(WiimoteChangedHandler);
-                    Console.WriteLine("Boxing Controller Connected");
+                    Wiimote.WiimoteChanged += new EventHandler<WiimoteChangedEventArgs>(HeadTrackingChangedHandler);
+                    Console.WriteLine("Head Tracking Controller Connected");
+                    
                 }
                 else
                 {
-                    Wiimote.WiimoteChanged += new EventHandler<WiimoteChangedEventArgs>(HeadTrackingChangedHandler);
-                    Console.WriteLine("Head Tracking Controller Connected");
+                    Wiimote.WiimoteChanged += new EventHandler<WiimoteChangedEventArgs>(WiimoteChangedHandler);
+                    Console.WriteLine("Boxing Controller Connected");
                 }
 				
                 
@@ -512,6 +533,16 @@ namespace WiiBoxing3D.Input {
 		private	Vector3	pt_to_vect						( Point3F p ) {
 			return new Vector3 ( p.X , p.Y , p.Z );
 		}
+
+        private double DotProduct(Vector3 v1, Vector3 v2)
+        {
+           return
+           (
+              v1.X * v2.X +
+              v1.Y * v2.Y +
+              v1.Z * v2.Z
+           );
+        }
 
 	}
 
