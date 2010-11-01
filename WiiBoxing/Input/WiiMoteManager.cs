@@ -509,8 +509,6 @@ namespace WiiBoxing3D.Input
             }
         }
 
-
-
         private void WiimoteExtensionChangedHandler(object sender, WiimoteExtensionChangedEventArgs e)
         {
             Console.WriteLine("Nunchuk " + (e.Inserted ? "attached" : "removed") + "!");

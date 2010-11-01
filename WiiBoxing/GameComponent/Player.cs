@@ -103,8 +103,8 @@ namespace WiiBoxing3D.GameComponent
         public override void Draw(Matrix CameraProjectionMatrix, Matrix CameraViewMatrix)
         {
             Game.DrawText(new Vector2(Game.GraphicsDevice.Viewport.Width * 0.85f, Game.GraphicsDevice.Viewport.Height * 0.05f),
-                        new Vector2(Game.GraphicsDevice.Viewport.Width * 0.002f, Game.GraphicsDevice.Viewport.Width * 0.002f),
-                        "SCORE: " + Score.ToString(), Color.Black);
+                      new Vector2(Game.GraphicsDevice.Viewport.Width * 0.002f, Game.GraphicsDevice.Viewport.Width * 0.002f),
+                      "SCORE: " + Score.ToString(), Color.Black);
             if (DrawTime > 0)
             {
                 Game.DrawText(new Vector2(Game.GraphicsDevice.Viewport.Width * 0.5f, Game.GraphicsDevice.Viewport.Height * 0.2f),
@@ -115,9 +115,9 @@ namespace WiiBoxing3D.GameComponent
             base.Draw(CameraProjectionMatrix, CameraViewMatrix);
             base.Position.Z += 3;
 
-            Rectangle screenRectangle = new Rectangle(0, 0, Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.4f), Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.14f));
-            int picNo = (int)(((MAX_HEALTH * 1.0f - Health * 1.0f) / (MAX_HEALTH * 1.0f) * 17) + 1);
-            Game.spriteBatch.Draw(staminaTexture[picNo], screenRectangle, Color.White);
+           Rectangle screenRectangle = new Rectangle(0, 0, Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.4f), Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.14f));
+           int picNo = (int)(((MAX_HEALTH * 1.0f - Health * 1.0f) / (MAX_HEALTH * 1.0f) * 17) + 1);
+           Game.spriteBatch.Draw(staminaTexture[picNo], screenRectangle, Color.White);
         }
 
         public void hitByPunchingBag()

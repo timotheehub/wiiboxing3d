@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 namespace WiiBoxing3D.Screen
 {
 
-    public abstract class GameScreen
+    public class GameScreen
     {
 
         // Protected Properties		:
@@ -54,6 +54,10 @@ namespace WiiBoxing3D.Screen
                 PressRight();
             }
             if (Game.keyboardManager.checkKey(Keys.Enter))
+            {
+                PressA();
+            }
+            if (Game.keyboardManager.checkKey(Keys.A))
             {
                 PressA();
             }
