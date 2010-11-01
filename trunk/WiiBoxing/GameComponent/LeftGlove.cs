@@ -9,7 +9,7 @@ namespace WiiBoxing3D.GameComponent
 
     public class LeftGlove : Glove
     {
-        public Vector3 OFF_SET = new Vector3(1, -0.8f, 2.5f);      //original position w.r.t player position
+        public Vector3 OFF_SET = new Vector3(1, -0.8f, 2.3f);      //original position w.r.t player position
         public Vector3 relative_offset;   //relative position w.r.t player position
 
         public LeftGlove(CustomGame game, Player player)
@@ -18,7 +18,7 @@ namespace WiiBoxing3D.GameComponent
             speed = 1.0f;                                      //speed for glove movement per frame
             IsPunching = false;
             relative_offset = new Vector3(0, 0, 0);
-            base.Rotation = new Vector3(0.0f, 1.2f, 0.5f);
+            base.Rotation = new Vector3(0.0f, 0.8f, 0.5f);
         }
 
 
@@ -59,7 +59,7 @@ namespace WiiBoxing3D.GameComponent
             if (Game.wiimoteManager.isWiimote)
             {
                 // Wiimote no movement
-                if (Game.wiimoteManager.LeftSpeed.Length() < 0.01)
+                if (Game.wiimoteManager.LeftSpeed.Length() < 0.01f)
                 {
                     IsPunching = false;
                 }

@@ -16,15 +16,15 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
 namespace WiiBoxing3D.Screen{
-    public class GameOverScreen : Game2DScreen{
-        GameStage gameStage;
-        uint score;
+    public class GameOverScreen : GameScreen{
 
-        public GameOverScreen(CustomGame game, GameStage gameStage, uint score)
+        protected Texture2D backgroundTexture;
+        GameStage gameStage;
+
+        public GameOverScreen(CustomGame game, GamePlayScreen gamePlayScreen)
             : base(game) 
         {
-            this.gameStage = gameStage;
-            this.score = score;
+            this.gameStage = gamePlayScreen.GameStage;
         }
 
         public override void LoadContent()
@@ -36,10 +36,10 @@ namespace WiiBoxing3D.Screen{
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-
-            Game.DrawText(new Vector2(Game.GraphicsDevice.Viewport.Width * 0.85f, Game.GraphicsDevice.Viewport.Height * 0.05f),
-                        new Vector2(Game.GraphicsDevice.Viewport.Width * 0.002f, Game.GraphicsDevice.Viewport.Width * 0.002f),
-                                    "SCORE: " + score.ToString(), Color.Black);
+            Rectangle screenRectangle = new Rectangle(Game.GraphicsDevice.Viewport.Width / 4,
+                Game.GraphicsDevice.Viewport.Height / 4,
+                Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height / 2);
+            Game.spriteBatch.Draw(backgroundTexture, screenRectangle, Color.White);
         }
 
         public override void PressA()

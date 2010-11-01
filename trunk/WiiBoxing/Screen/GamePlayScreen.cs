@@ -16,11 +16,13 @@ namespace WiiBoxing3D.Screen
     /// </summary>
     public class GamePlayScreen : Game3DScreen
     {
+        public bool IsPlaying;
+        public Player Player;
+        public GameStage GameStage;
 
         // Protected Properties		:
         // ==========================
         // Game objects
-        protected Player Player;
         protected PunchingBagManager PunchingBagManager;
         protected LeftGlove LeftGlove;
         protected RightGlove RightGlove;
@@ -29,7 +31,9 @@ namespace WiiBoxing3D.Screen
         // Difference configurations for different levels
         protected double PlayerSpeed = 2;
         protected uint MininumScore = 100;
-        protected GameStage GameStage;
+
+        // Subscreen
+        GameScreen SubScreen = null;
 
 
         // Initialization			:
@@ -44,11 +48,11 @@ namespace WiiBoxing3D.Screen
         public override void Initialize()
         {
             Player = new Player(Game, PlayerSpeed);
-            //PunchingBagManager = new PunchingBagManager(Game, Game, Player);
             LeftGlove = new LeftGlove(Game, Player);
             RightGlove = new RightGlove(Game, Player);
             Skybox = new Skybox(Game);
             Game.wiimoteManager.player = Player;
+            IsPlaying = true;
 
             base.Initialize();
         }
@@ -68,17 +72,102 @@ namespace WiiBoxing3D.Screen
 
         public override void Update(GameTime GameTime)
         {
-            CheckCollision();
-            CheckEndOfGame();
+            if (IsPlaying)
+            {
+                CheckCollision();
+                CheckEndOfGame();
 
-            base.Update(GameTime);
+                base.Update(GameTime);
+            }
+            else
+            {
+                SubScreen.Update(GameTime);
+            }
+        }
+
+        public override void Draw(GameTime GameTime)
+        {
+            base.Draw(GameTime);
+            if (IsPlaying == false)
+            {
+                SubScreen.Draw(GameTime);
+            }
+        }
+
+        #region Input
+        public override void PressA()
+        {
+            if (IsPlaying)
+            {
+                base.PressA();
+            }
+            else
+            {
+                SubScreen.PressA();
+            }
+        }
+
+        public override void PressLeft()
+        {
+            if (IsPlaying)
+            {
+                base.PressLeft();
+            }
+            else
+            {
+                SubScreen.PressLeft();
+            }
+        }
+
+        public override void PressRight()
+        {
+            if (IsPlaying)
+            {
+                base.PressRight();
+            }
+            else
+            {
+                SubScreen.PressRight();
+            }
+        }
+
+        public override void PressUp()
+        {
+            if (IsPlaying)
+            {
+                base.PressUp();
+            }
+            else
+            {
+                SubScreen.PressUp();
+            }
+        }
+
+        public override void PressDown()
+        {
+            if (IsPlaying)
+            {
+                base.PressDown();
+            }
+            else
+            {
+                SubScreen.PressDown();
+            }
         }
 
         public override void PressHome()
         {
-            Game.ChangeScreenState(new MainMenuScreen(Game));
-            base.PressHome();
+            if (IsPlaying)
+            {
+                Game.ChangeScreenState(new MainMenuScreen(Game));
+                base.PressHome();
+            }
+            else
+            {
+                SubScreen.PressHome();
+            }
         }
+        #endregion Input
 
         // Public Methods			:
         // ==========================
@@ -146,18 +235,27 @@ namespace WiiBoxing3D.Screen
         {
             if (Player.Health <= 0)
             {
-                Game.ChangeScreenState(new GameOverScreen(Game, GameStage, Player.Score));
+                IsPlaying = false;
+                SubScreen = new GameOverScreen(Game, this);
+                SubScreen.Initialize();
+                SubScreen.LoadContent();
             }
             if ((PunchingBagManager.allCollidableObjectsAreDead)
                 || (Player.Position.Z > PunchingBagManager.lastPunchingBag))
             {
                 if (Player.Score > MininumScore)
                 {
-                    Game.ChangeScreenState(new GameClearScreen(Game, GameStage, Player.Score));
+                    IsPlaying = false;
+                    SubScreen = new GameClearScreen(Game, this);
+                    SubScreen.Initialize();
+                    SubScreen.LoadContent();
                 }
                 else
                 {
-                    Game.ChangeScreenState(new GameOverScreen(Game, GameStage, Player.Score));
+                    IsPlaying = false;
+                    SubScreen = new GameOverScreen(Game, this);
+                    SubScreen.Initialize();
+                    SubScreen.LoadContent();
                 }
             }
         }
@@ -175,5 +273,6 @@ namespace WiiBoxing3D.Screen
         CAREER2,
         CAREER3
     };
+
 
 }
