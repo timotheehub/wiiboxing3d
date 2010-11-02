@@ -65,6 +65,10 @@ namespace WiiBoxing3D.Screen
             {
                 PressHome();
             }
+            if (Game.keyboardManager.checkKey(Keys.Home))
+            {
+                PressPause();
+            }
         }
 
         public virtual void Initialize() { }
@@ -80,6 +84,8 @@ namespace WiiBoxing3D.Screen
         public virtual void PressUp() { }
 
         public virtual void PressDown() { }
+
+        public virtual void PressPause() { }
 
     }
 

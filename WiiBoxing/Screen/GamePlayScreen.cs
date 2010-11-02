@@ -53,7 +53,7 @@ namespace WiiBoxing3D.Screen
             Skybox = new Skybox(Game);
             Game.wiimoteManager.player = Player;
             IsPlaying = true;
-
+            SubScreen = new SubScreen(Game);
             base.Initialize();
         }
 
@@ -167,6 +167,12 @@ namespace WiiBoxing3D.Screen
                 SubScreen.PressHome();
             }
         }
+
+        public override void PressPause()
+        {
+            IsPlaying = !IsPlaying;
+        }
+
         #endregion Input
 
         // Public Methods			:
