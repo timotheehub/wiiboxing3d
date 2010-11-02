@@ -17,6 +17,7 @@ namespace WiiBoxing3D.Screen
     public class GamePlayScreen : Game3DScreen
     {
         public bool IsPlaying;
+        public GameScreen SubScreen;
         public Player Player;
         public GameStage GameStage;
 
@@ -31,9 +32,6 @@ namespace WiiBoxing3D.Screen
         // Difference configurations for different levels
         protected double PlayerSpeed = 2;
         protected uint MininumScore = 100;
-
-        // Subscreen
-        GameScreen SubScreen = null;
 
 
         // Initialization			:
@@ -53,7 +51,7 @@ namespace WiiBoxing3D.Screen
             Skybox = new Skybox(Game);
             Game.wiimoteManager.player = Player;
             IsPlaying = true;
-            SubScreen = new SubScreen(Game);
+            SubScreen = null;
             base.Initialize();
         }
 
@@ -159,7 +157,10 @@ namespace WiiBoxing3D.Screen
         {
             if (IsPlaying)
             {
-                Game.ChangeScreenState(new MainMenuScreen(Game));
+                IsPlaying = false;
+                SubScreen = new PauseMenuScreen(Game, this);
+                SubScreen.Initialize();
+                SubScreen.LoadContent();
                 base.PressHome();
             }
             else
