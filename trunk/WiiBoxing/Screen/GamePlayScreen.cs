@@ -17,7 +17,6 @@ namespace WiiBoxing3D.Screen
     public class GamePlayScreen : Game3DScreen
     {
         public bool IsPlaying;
-        public GameScreen SubScreen;
         public Player Player;
         public GameStage GameStage;
 
@@ -32,6 +31,9 @@ namespace WiiBoxing3D.Screen
         // Difference configurations for different levels
         protected double PlayerSpeed = 2;
         protected uint MininumScore = 100;
+
+        // Subscreen
+        protected GameScreen SubScreen;
 
 
         // Initialization			:
@@ -158,9 +160,7 @@ namespace WiiBoxing3D.Screen
             if (IsPlaying)
             {
                 IsPlaying = false;
-                SubScreen = new PauseMenuScreen(Game, this);
-                SubScreen.Initialize();
-                SubScreen.LoadContent();
+                ChangeScreenState(new PauseMenuScreen(Game, this));
                 base.PressHome();
             }
             else
@@ -186,6 +186,16 @@ namespace WiiBoxing3D.Screen
         public void CheckCollision()
         {
             PunchingBagManager.CheckCollision(Player, LeftGlove, RightGlove);
+        }
+
+        /// <summary>
+        /// Change the screen
+        /// </summary>
+        public void ChangeScreenState(GameScreen newGameScreen)
+        {
+            SubScreen = newGameScreen;
+            SubScreen.Initialize();
+            SubScreen.LoadContent();
         }
 
         // Protected Methods			:
@@ -243,9 +253,7 @@ namespace WiiBoxing3D.Screen
             if (Player.Health <= 0)
             {
                 IsPlaying = false;
-                SubScreen = new GameOverScreen(Game, this);
-                SubScreen.Initialize();
-                SubScreen.LoadContent();
+                ChangeScreenState(new GameOverScreen(Game, this));
             }
             if ((PunchingBagManager.allCollidableObjectsAreDead)
                 || (Player.Position.Z > PunchingBagManager.lastPunchingBag))
@@ -253,16 +261,12 @@ namespace WiiBoxing3D.Screen
                 if (Player.Score > MininumScore)
                 {
                     IsPlaying = false;
-                    SubScreen = new GameClearScreen(Game, this);
-                    SubScreen.Initialize();
-                    SubScreen.LoadContent();
+                    ChangeScreenState(new GameClearScreen(Game, this));
                 }
                 else
                 {
                     IsPlaying = false;
-                    SubScreen = new GameOverScreen(Game, this);
-                    SubScreen.Initialize();
-                    SubScreen.LoadContent();
+                    ChangeScreenState(new GameOverScreen(Game, this));
                 }
             }
         }

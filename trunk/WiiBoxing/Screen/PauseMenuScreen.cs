@@ -64,7 +64,7 @@ namespace WiiBoxing3D.Screen
                     gamePlayScreen.IsPlaying = true;
                     break;
                 case 2:
-                    gamePlayScreen.SubScreen = new Help1Screen(Game, true);
+                    gamePlayScreen.ChangeScreenState(new Help1Screen(Game, false));
                     break;
                 case 3:
                     Game.ChangeScreenState(new MainMenuScreen(Game));
