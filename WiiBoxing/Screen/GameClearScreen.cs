@@ -60,7 +60,7 @@ namespace WiiBoxing3D.Screen
             }
             else if (gameStage == GameStage.TUTORIAL1)
             {
-                Game.ChangeScreenState(new Help4Screen(Game,true));
+                Game.ChangeScreenState(new Help4Screen(Game,true, null));
             }
             else
             {

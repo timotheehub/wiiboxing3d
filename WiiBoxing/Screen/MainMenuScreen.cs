@@ -59,7 +59,7 @@ namespace WiiBoxing3D.Screen
             switch (selectedOption)
             {
                 case 1:
-                    Game.ChangeScreenState(new Help1Screen(Game, true));
+                    Game.ChangeScreenState(new Help1Screen(Game, true, null));
                     break;
                 case 2:
                     Game.ChangeScreenState(new CareerMenuScreen(Game));
@@ -67,7 +67,7 @@ namespace WiiBoxing3D.Screen
                 case 3:
                     break;
                 case 4:
-                    Game.ChangeScreenState(new Help1Screen(Game, false));
+                    Game.ChangeScreenState(new Help1Screen(Game, false, null));
                     break;
                 case 5:
                     Game.Exit();
