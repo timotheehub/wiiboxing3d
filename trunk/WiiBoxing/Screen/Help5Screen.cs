@@ -9,10 +9,11 @@ namespace WiiBoxing3D.Screen
     public class Help5Screen : Game2DScreen
     {
         bool isInTutorial;
-
-        public Help5Screen(CustomGame Game, bool isInTutorial)
+        GamePlayScreen screen;
+        public Help5Screen(CustomGame Game, bool isInTutorial, GamePlayScreen screen)
             : base(Game)
         {
+            this.screen = screen;
             this.isInTutorial = isInTutorial;
         }
 
@@ -28,16 +29,19 @@ namespace WiiBoxing3D.Screen
             {
                 Game.ChangeScreenState(new Tutorial2Screen(Game));
             }
-            else
+            else if (screen == null)
             {
                 Game.ChangeScreenState(new MainMenuScreen(Game));
             }
+            else screen.IsPlaying = true;
+
             base.PressA();
         }
 
         public override void PressHome()
         {
-            Game.ChangeScreenState(new MainMenuScreen(Game));
+            if (screen == null) Game.ChangeScreenState(new MainMenuScreen(Game));
+            else screen.IsPlaying = true;
             base.PressHome();
         }
     }

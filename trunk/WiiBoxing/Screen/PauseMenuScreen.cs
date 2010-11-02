@@ -66,7 +66,7 @@ namespace WiiBoxing3D.Screen
                     gamePlayScreen.IsPlaying = true;
                     break;
                 case 2:
-                    gamePlayScreen.ChangeScreenState(new Help1Screen(Game, false));
+                    gamePlayScreen.ChangeScreenState(new Help1Screen(Game, false, gamePlayScreen));
                     break;
                 case 3:
                     Game.ChangeScreenState(new MainMenuScreen(Game));
@@ -90,7 +90,7 @@ namespace WiiBoxing3D.Screen
 
         public override void PressHome()
         {
-            Game.Exit();
+            gamePlayScreen.IsPlaying = true;
         }
     }
 }
