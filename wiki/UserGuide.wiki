@@ -10,11 +10,11 @@ There are several programs that you need to install for the game to run:
 
 There are also several devices that you should have for the game to run:
 
-  - bluetooth-enabled computer
+  - bluetooth-enabled computer <insert picture>
 
   - IR glasses <insert picture>
 
-  - 2 Wiimotes
+  - 2 Wiimotes <insert picture>
 
 = How to play =
 
