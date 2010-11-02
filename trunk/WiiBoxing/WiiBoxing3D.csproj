@@ -129,6 +129,7 @@
     <Compile Include="Screen\Level2Screen.cs" />
     <Compile Include="Screen\Level3Screen.cs" />
     <Compile Include="Screen\MainMenuScreen.cs" />
+    <Compile Include="Screen\SubScreen.cs" />
     <Compile Include="Screen\Tutorial1Screen.cs" />
     <Compile Include="Screen\Tutorial2Screen.cs" />
   </ItemGroup>
