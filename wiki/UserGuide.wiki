@@ -1,0 +1,27 @@
+Hello! Welcome to the wiiboxing3d user guide. In this guide, we will cover some requirements for the game, and also show you how to play it! 
+
+= Game Requirements = 
+
+There are several programs that you need to install for the game to run:
+
+  - <a href = "http://www.microsoft.com/express/Downloads/#2008-Visual-CS">Visual C# 2008</a>
+
+  -  <a href = "http://www.microsoft.com/downloads/en/details.aspx?FamilyID=80782277-d584-42d2-8024-893fcd9d3e82&displaylang=en">XNA 3.1</a>
+
+There are also several devices that you should have for the game to run:
+
+  - bluetooth-enabled computer
+
+  - IR glasses <insert picture>
+
+  - 2 Wiimotes
+
+= How to play =
+
+<a href="http://s301.photobucket.com/albums/nn53/schlart/?action=view&current=tutorialscreen2.jpg" target="_blank"><img src="http://i301.photobucket.com/albums/nn53/schlart/tutorialscreen2.jpg" border="0" alt="CS3249 4">
+
+<a href="http://s301.photobucket.com/albums/nn53/schlart/?action=view&current=tutorialscreen1p3.jpg" target="_blank"><img src="http://i301.photobucket.com/albums/nn53/schlart/tutorialscreen1p3.jpg" border="0" alt="CS3249 3">
+
+<a href="http://s301.photobucket.com/albums/nn53/schlart/?action=view&current=tutorialscreen1p2.jpg" target="_blank"><img src="http://i301.photobucket.com/albums/nn53/schlart/tutorialscreen1p2.jpg" border="0" alt="CS3249 2">
+
+<a href="http://s301.photobucket.com/albums/nn53/schlart/?action=view&current=tutorialscreen1p1.jpg" target="_blank"><img src="http://i301.photobucket.com/albums/nn53/schlart/tutorialscreen1p1.jpg" border="0" alt="CS3249 1">
