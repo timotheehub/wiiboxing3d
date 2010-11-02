@@ -23,7 +23,6 @@ namespace WiiBoxing3D.Screen
         // ==========================
         public override void Draw(GameTime GameTime)
         {
-            backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\background");
             base.LoadContent();
             Rectangle screenRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height);
             Game.spriteBatch.Draw(backgroundTexture, screenRectangle, Color.White);
