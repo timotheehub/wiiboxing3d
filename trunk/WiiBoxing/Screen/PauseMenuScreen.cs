@@ -9,15 +9,18 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace WiiBoxing3D.Screen
 {
-    public class SubScreen : Game2DScreen
+    public class PauseMenuScreen : GameScreen
     {
         protected int selectedOption;
         protected const int NUMBER_OF_OPTIONS = 3;
+        protected GamePlayScreen gamePlayScreen;
+        protected Texture2D backgroundTexture;
 
-        public SubScreen(CustomGame Game)
+        public PauseMenuScreen(CustomGame Game, GamePlayScreen gamePlayScreen)
             : base(Game)
         {
             selectedOption = 1;
+            this.gamePlayScreen = gamePlayScreen;
         }
 
         // Public Methods			:
@@ -32,13 +35,16 @@ namespace WiiBoxing3D.Screen
 
         public override void Update(GameTime gameTime)
         {
-
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            Rectangle screenRectangle = new Rectangle(Game.GraphicsDevice.Viewport.Width / 4,
+                Game.GraphicsDevice.Viewport.Height / 4,
+                Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height / 2);
+            Game.spriteBatch.Draw(backgroundTexture, screenRectangle, Color.White);
 
             int width = Game.GraphicsDevice.Viewport.Width;
             int height = Game.GraphicsDevice.Viewport.Height;
@@ -48,7 +54,6 @@ namespace WiiBoxing3D.Screen
                             "Help Screen", (selectedOption == 2) ? Color.OrangeRed : Color.Black);
             Game.DrawText(new Vector2(width * 0.7f, height * 0.7f), new Vector2(width * 0.002f, width * 0.002f),
                             "Go to menu", (selectedOption == 3) ? Color.OrangeRed : Color.Black);
-
         }
 
         public override void PressA()
@@ -56,13 +61,10 @@ namespace WiiBoxing3D.Screen
             switch (selectedOption)
             {
                 case 1:
-                    //change IsPlaying to true
-                    //Game.ChangeScreenState(previousGamePlayScreen);
-                    //IsPlaying = true;
-
+                    gamePlayScreen.IsPlaying = true;
                     break;
                 case 2:
-                    Game.ChangeScreenState(new Help1Screen(Game, true));
+                    gamePlayScreen.SubScreen = new Help1Screen(Game, true);
                     break;
                 case 3:
                     Game.ChangeScreenState(new MainMenuScreen(Game));
