@@ -53,7 +53,7 @@ namespace WiiBoxing3D.Screen
             Skybox = new Skybox(Game);
             Game.wiimoteManager.player = Player;
             IsPlaying = true;
-            SubScreen = null;
+            SubScreen = new PauseMenuScreen(Game, this);
             base.Initialize();
         }
 

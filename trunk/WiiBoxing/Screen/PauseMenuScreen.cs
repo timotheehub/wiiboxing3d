@@ -40,11 +40,11 @@ namespace WiiBoxing3D.Screen
 
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
+
             Rectangle screenRectangle = new Rectangle(Game.GraphicsDevice.Viewport.Width / 4,
                 Game.GraphicsDevice.Viewport.Height / 4,
                 Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height / 2);
-            Game.spriteBatch.Draw(backgroundTexture, screenRectangle, Color.White);
+            Game.spriteBatch.Draw(Game.Content.Load<Texture2D>("BackgroundImage\\background"), screenRectangle, Color.White);
 
             int width = Game.GraphicsDevice.Viewport.Width;
             int height = Game.GraphicsDevice.Viewport.Height;
@@ -54,6 +54,8 @@ namespace WiiBoxing3D.Screen
                             "Help Screen", (selectedOption == 2) ? Color.OrangeRed : Color.Black);
             Game.DrawText(new Vector2(width * 0.7f, height * 0.7f), new Vector2(width * 0.002f, width * 0.002f),
                             "Go to menu", (selectedOption == 3) ? Color.OrangeRed : Color.Black);
+
+            base.Draw(gameTime);
         }
 
         public override void PressA()
