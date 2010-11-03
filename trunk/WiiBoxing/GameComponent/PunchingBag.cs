@@ -127,11 +127,11 @@ namespace WiiBoxing3D.GameComponent
                 }
 
                 player.PunchingType = gestureType;
-                player.goodPunch = !((Type == PunchingBagType.BLACK) && (gestureType == PunchingType.JAB));
+                player.goodPunch = !(Type == PunchingBagType.METAL);
                 hitByGlove(gestureType);
             }
 
-            if ((Type == PunchingBagType.BLACK) && (gestureType == PunchingType.JAB))
+            if ((Type == PunchingBagType.METAL) && (gestureType == PunchingType.JAB))
             {
                 if (soundJab != null) soundJab.Play();
             }
