@@ -20,18 +20,13 @@ namespace WiiBoxing3D.GameComponent
 
         // Public Properties		:
         // ==========================
-        public static PunchingBagType Type
-        {
-            get { return _Type; }
-            set { if (_Type == PunchingBagType.NOT_INIT) _Type = value; }
-        }
+        public PunchingBagType Type;
 
         public int punchesNeeded;
         public bool isDead { get { return punchesNeeded == 0; } }
 
         // Protected Properties		:
         // ==========================
-        protected static PunchingBagType _Type = PunchingBagType.NOT_INIT;
         protected Player player;
         protected int CurrentHitTime = 0;
 
@@ -127,7 +122,7 @@ namespace WiiBoxing3D.GameComponent
                 }
 
                 player.PunchingType = gestureType;
-                player.goodPunch = !(Type == PunchingBagType.METAL);
+                player.goodPunch = !((Type == PunchingBagType.METAL) && (gestureType == PunchingType.JAB));
                 hitByGlove(gestureType);
             }
 
