@@ -34,6 +34,12 @@ namespace WiiBoxing3D.Input
         public float headY = 0;
         public float headDist = 2;
         public Player player;
+        bool isPressHome = false;
+        bool isPressA = false;
+        bool isPressLeft = false;
+        bool isPressRight = false;
+        bool isPressUp = false;
+        bool isPressDown = false;
 
         public Vector3 LeftSpeed
         { 
@@ -466,40 +472,71 @@ namespace WiiBoxing3D.Input
             }
 
             // Buttons
-            if (ws.ButtonState.A)
-            {
+            if ((ws.ButtonState.A)&&(isPressA == false))
+           {
                 Console.WriteLine("A");
-                Game.gameScreen.PressA();
+                //Game.gameScreen.PressA();
+                Game.ScreenPressA();
+                isPressA = true;
+            }
+            else
+            {
+                isPressA = false;
             }
             if (ws.ButtonState.B) Console.WriteLine("B");
             if (ws.ButtonState.Minus) Console.WriteLine("-");
-            if (ws.ButtonState.Home)
+            if ((ws.ButtonState.Home) && (isPressHome == false))
             {
                 Console.WriteLine("Home");
                 Game.gameScreen.PressHome();
+                isPressHome = true;
+            }
+            else
+            {
+                isPressHome = false;
             }
             if (ws.ButtonState.Plus) Console.WriteLine("+");
             if (ws.ButtonState.One) Console.WriteLine("1");
             if (ws.ButtonState.Two) Console.WriteLine("2");
-            if (ws.ButtonState.Up)
+            if ((ws.ButtonState.Up) && (isPressUp == false))
             {
                 Console.WriteLine("Up");
                 Game.gameScreen.PressUp();
+                isPressUp = true;
             }
-            if (ws.ButtonState.Down)
+            else
+            {
+                isPressUp = false;
+            }
+            if ((ws.ButtonState.Down) && (isPressDown == false))
             {
                 Console.WriteLine("Down");
                 Game.gameScreen.PressDown();
+                isPressDown = true;
             }
-            if (ws.ButtonState.Left)
+            else
+            {
+                isPressDown = false;
+            }
+            if ((ws.ButtonState.Left) && (isPressLeft == false))
             {
                 Console.WriteLine("Left");
                 Game.gameScreen.PressLeft();
+                isPressLeft = true;
             }
-            if (ws.ButtonState.Right)
+            else
+            {
+                isPressLeft = false;
+            }
+            if ((ws.ButtonState.Right) && (isPressRight == false))
             {
                 Console.WriteLine("Right");
                 Game.gameScreen.PressRight();
+                isPressRight = true;
+            }
+            else
+            {
+                isPressRight = false;
             }
 
             if (ws.ExtensionType == ExtensionType.Nunchuk)

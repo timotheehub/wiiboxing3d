@@ -6,11 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace WiiBoxing3D.Screen
 {
-    public class Help2Screen : Game2DScreen
+    public class Help2Screen : GameHelpScreen
     {
-        bool isInTutorial;
-        GamePlayScreen screen;
-
         public Help2Screen(CustomGame Game, bool isInTutorial, GamePlayScreen screen)
             : base(Game)
         {
@@ -21,6 +18,8 @@ namespace WiiBoxing3D.Screen
         public override void LoadContent()
         {
             backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\tutorialscreenlayout");
+            backgroundTransparentTexture = Game.Content.Load<Texture2D>("BackgroundImage\\tutorialscreenlayoutW");
+
             base.LoadContent();
         }
 
