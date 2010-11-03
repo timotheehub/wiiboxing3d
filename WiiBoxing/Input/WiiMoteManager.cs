@@ -472,12 +472,14 @@ namespace WiiBoxing3D.Input
             }
 
             // Buttons
-            if ((ws.ButtonState.A)&&(isPressA == false))
-           {
-                Console.WriteLine("A");
-                //Game.gameScreen.PressA();
-                Game.ScreenPressA();
-                isPressA = true;
+            if (ws.ButtonState.A)
+            {
+               if (isPressA == false)
+               {
+                   Console.WriteLine("A");
+                   Game.gameScreen.PressA();
+                   isPressA = true;
+               }
             }
             else
             {
@@ -485,11 +487,14 @@ namespace WiiBoxing3D.Input
             }
             if (ws.ButtonState.B) Console.WriteLine("B");
             if (ws.ButtonState.Minus) Console.WriteLine("-");
-            if ((ws.ButtonState.Home) && (isPressHome == false))
+            if (ws.ButtonState.Home)
             {
-                Console.WriteLine("Home");
-                Game.gameScreen.PressHome();
-                isPressHome = true;
+                if (isPressHome == false)
+                {
+                    Console.WriteLine("Home");
+                    Game.gameScreen.PressHome();
+                    isPressHome = true;
+                }
             }
             else
             {
@@ -498,41 +503,53 @@ namespace WiiBoxing3D.Input
             if (ws.ButtonState.Plus) Console.WriteLine("+");
             if (ws.ButtonState.One) Console.WriteLine("1");
             if (ws.ButtonState.Two) Console.WriteLine("2");
-            if ((ws.ButtonState.Up) && (isPressUp == false))
+            if (ws.ButtonState.Up)
             {
-                Console.WriteLine("Up");
-                Game.gameScreen.PressUp();
-                isPressUp = true;
+                if (isPressUp == false)
+                {
+                    Console.WriteLine("Up");
+                    Game.gameScreen.PressUp();
+                    isPressUp = true;
+                }
             }
             else
             {
                 isPressUp = false;
             }
-            if ((ws.ButtonState.Down) && (isPressDown == false))
+            if (ws.ButtonState.Down)
             {
-                Console.WriteLine("Down");
-                Game.gameScreen.PressDown();
-                isPressDown = true;
+                if (isPressDown == false)
+                {
+                    Console.WriteLine("Down");
+                    Game.gameScreen.PressDown();
+                    isPressDown = true;
+                }
             }
             else
             {
                 isPressDown = false;
             }
-            if ((ws.ButtonState.Left) && (isPressLeft == false))
+            if (ws.ButtonState.Left)
             {
-                Console.WriteLine("Left");
-                Game.gameScreen.PressLeft();
-                isPressLeft = true;
+                if (isPressLeft == false)
+                {
+                    Console.WriteLine("Left");
+                    Game.gameScreen.PressLeft();
+                    isPressLeft = true;
+                }
             }
             else
             {
                 isPressLeft = false;
             }
-            if ((ws.ButtonState.Right) && (isPressRight == false))
+            if (ws.ButtonState.Right)
             {
-                Console.WriteLine("Right");
-                Game.gameScreen.PressRight();
-                isPressRight = true;
+                if (isPressRight == false)
+                {
+                    Console.WriteLine("Right");
+                    Game.gameScreen.PressRight();
+                    isPressRight = true;
+                }
             }
             else
             {

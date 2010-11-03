@@ -213,10 +213,5 @@ namespace WiiBoxing3D
                 lastSoundName = soundName;
             }
         }
-
-        public void ScreenPressA()
-        {
-            gameScreen.PressA();
-        }
     }
 }
