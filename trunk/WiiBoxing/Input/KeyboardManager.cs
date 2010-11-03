@@ -45,6 +45,35 @@ namespace WiiBoxing3D.Input
         }
 
         /// <summary>
+        /// Gesture recognition
+        /// </summary>
+        public PunchingType RecognizeLeftHandGesture()
+        {
+            if (CurrentState.IsKeyDown(Keys.A))
+            {
+                return PunchingType.LEFTHOOK;
+            }
+            if (CurrentState.IsKeyDown(Keys.D))
+            {
+                return PunchingType.RIGHTHOOK;
+            }
+            return PunchingType.JAB;
+        }
+
+        public PunchingType RecognizeRightHandGesture()
+        {
+            if (CurrentState.IsKeyDown(Keys.K))
+            {
+                return PunchingType.LEFTHOOK;
+            }
+            if (CurrentState.IsKeyDown(Keys.OemSemicolon))
+            {
+                return PunchingType.RIGHTHOOK;
+            }
+            return PunchingType.JAB;
+        }
+
+        /// <summary>
         /// Checks if the given key was recently pressed and released.
         /// </summary>
         /// <param name="key">The key to check for.</param>

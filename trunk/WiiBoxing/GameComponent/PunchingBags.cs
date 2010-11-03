@@ -52,7 +52,6 @@ namespace WiiBoxing3D.GameComponent {
         override public void LoadContent()
         {
             LoadModel(PunchingBagBlack3Asset);
-            Rotation.X = 0;
 
             base.LoadContent();
         }
@@ -83,7 +82,6 @@ namespace WiiBoxing3D.GameComponent {
         override public void LoadContent()
         {
             LoadModel(PunchingBagBlue1Asset);
-            Rotation.X = 0;
 
             base.LoadContent();
         }
@@ -143,7 +141,6 @@ namespace WiiBoxing3D.GameComponent {
         override public void LoadContent()
         {
             LoadModel(PunchingBagMetal5Asset);
-            Rotation.X = 0;
 
             base.LoadContent();
         }
@@ -183,7 +180,6 @@ namespace WiiBoxing3D.GameComponent {
         public void LoadContent()
         {
             LoadModel(PunchingBagRed2Asset);
-            Rotation.X = 0;
 
             base.LoadContent();
         }
@@ -230,7 +226,6 @@ namespace WiiBoxing3D.GameComponent {
         override public void LoadContent()
         {
             LoadModel(PunchingBagWood4Asset);
-            Rotation.X = 0;
 
             base.LoadContent();
         }

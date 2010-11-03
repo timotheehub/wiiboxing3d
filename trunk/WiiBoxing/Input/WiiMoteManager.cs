@@ -93,25 +93,26 @@ namespace WiiBoxing3D.Input
         public WiimoteManager(CustomGame game)
             : base(game)
         {
-            try
-            {
-                WiimoteMap = new Dictionary<Guid, Wiimote>();
-                Wiimotes = new WiimoteCollection();
-                player = new Player(game, 5);
-                WiimoteAccel = Vector3.Zero;
-                NunchukAccel = Vector3.Zero;
-                NunchukJoystick = Vector2.Zero;
-                WiimoteSpeed = Vector3.Zero;
-                NunchukSpeed = Vector3.Zero;
-                isWiimote = false;
-                wiimoteGesturesList = new List<PunchingType>();
-                nunchukGesturesList = new List<PunchingType>();
-                IRPositions = new Vector2[MAX_IR_SENSORS] {	Vector2.Zero ,
+
+            WiimoteMap = new Dictionary<Guid, Wiimote>();
+            Wiimotes = new WiimoteCollection();
+            player = null;
+            WiimoteAccel = Vector3.Zero;
+            NunchukAccel = Vector3.Zero;
+            NunchukJoystick = Vector2.Zero;
+            WiimoteSpeed = Vector3.Zero;
+            NunchukSpeed = Vector3.Zero;
+            isWiimote = false;
+            wiimoteGesturesList = new List<PunchingType>();
+            nunchukGesturesList = new List<PunchingType>();
+            IRPositions = new Vector2[MAX_IR_SENSORS] {	Vector2.Zero ,
 																Vector2.Zero ,
 																Vector2.Zero ,
 																Vector2.Zero 
 																};
 
+            try
+            {
                 ConnectWiimotes();
 
                 Console.WriteLine("Wiimote Manager initialized!\n");

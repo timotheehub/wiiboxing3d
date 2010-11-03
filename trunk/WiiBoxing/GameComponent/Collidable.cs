@@ -51,9 +51,13 @@ namespace WiiBoxing3D.GameComponent
             {
                 currentModelBounds.Radius = 1.0f;
             }
+            else if (Game.wiimoteManager.isWiimote)
+            {
+                currentModelBounds.Radius = 1.5f;
+            }
             else
             {
-                currentModelBounds.Radius = 2.0f;
+                currentModelBounds.Radius = 1.2f;
             }
 
             BoundingSphere checkModelBounds = CollidableObject.Mesh.BoundingSphere;

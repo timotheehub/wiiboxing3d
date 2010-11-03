@@ -41,18 +41,20 @@ namespace WiiBoxing3D.Screen
         public override void Draw(GameTime gameTime)
         {
 
-            Rectangle screenRectangle = new Rectangle(Game.GraphicsDevice.Viewport.Width / 4,
-                Game.GraphicsDevice.Viewport.Height / 4,
-                Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height / 2);
+            Rectangle screenRectangle = new Rectangle(
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.2f),
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.2f),
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.6f),
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.5f));
             Game.spriteBatch.Draw(Game.Content.Load<Texture2D>("BackgroundImage\\newpause"), screenRectangle, Color.White);
 
             int width = Game.GraphicsDevice.Viewport.Width;
             int height = Game.GraphicsDevice.Viewport.Height;
-            Game.DrawText(new Vector2(width * 0.5f, height * 0.4f), new Vector2(width * 0.002f, width * 0.002f),
-                            "Resume", (selectedOption == 1) ? Color.OrangeRed : Color.Black);
             Game.DrawText(new Vector2(width * 0.5f, height * 0.5f), new Vector2(width * 0.002f, width * 0.002f),
-                            "Help Screen", (selectedOption == 2) ? Color.OrangeRed : Color.Black);
+                            "Resume", (selectedOption == 1) ? Color.OrangeRed : Color.Black);
             Game.DrawText(new Vector2(width * 0.5f, height * 0.6f), new Vector2(width * 0.002f, width * 0.002f),
+                            "Help Screen", (selectedOption == 2) ? Color.OrangeRed : Color.Black);
+            Game.DrawText(new Vector2(width * 0.5f, height * 0.7f), new Vector2(width * 0.002f, width * 0.002f),
                             "Go to menu", (selectedOption == 3) ? Color.OrangeRed : Color.Black);
 
             base.Draw(gameTime);

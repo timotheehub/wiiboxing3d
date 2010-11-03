@@ -40,7 +40,7 @@ namespace WiiBoxing3D.GameComponent
         
 
         public Player(CustomGame Game, double Speed)
-            : base(Game, "")
+            : base(Game, @"Audio\hitByBag")
         {
             Offset = new Vector3(0);
             Scale = new Vector3(0.008f);

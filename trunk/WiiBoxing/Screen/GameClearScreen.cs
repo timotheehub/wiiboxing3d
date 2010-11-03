@@ -39,16 +39,38 @@ namespace WiiBoxing3D.Screen
 
         public override void LoadContent()
         {
-            backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\StageClear");
+            switch (gameStage)
+            {
+                case GameStage.TUTORIAL1:
+                    backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\tutorial1clear");
+                    break;
+                case GameStage.TUTORIAL2:
+                    backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\tutorial2clear");
+                    break;
+                case GameStage.CAREER1:
+                    backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\stage1clear");
+                    break;
+                case GameStage.CAREER2:
+                    backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\stage2clear");
+                    break;
+                case GameStage.CAREER3:
+                    backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\stage3clear");
+                    break;
+                default:
+                    backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\tutorial1clear");
+                    break;
+            }
             base.LoadContent();
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            Rectangle screenRectangle = new Rectangle(Game.GraphicsDevice.Viewport.Width / 4,
-                Game.GraphicsDevice.Viewport.Height / 5,
-                Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height / 2);
+            Rectangle screenRectangle = new Rectangle(
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.1f),
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.2f),
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.8f),
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.5f));
             Game.spriteBatch.Draw(backgroundTexture, screenRectangle, Color.White);
         }
 

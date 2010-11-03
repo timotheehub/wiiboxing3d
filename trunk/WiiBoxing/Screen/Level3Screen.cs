@@ -14,6 +14,7 @@ namespace WiiBoxing3D.Screen
         {
             PlayerSpeed = 2;
             GameStage = GameStage.CAREER3;
+            MininumScore = 1000;
         }
 
 

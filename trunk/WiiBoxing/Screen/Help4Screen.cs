@@ -31,7 +31,14 @@ namespace WiiBoxing3D.Screen
 
         public override void PressA()
         {
-            Game.ChangeScreenState(new Help5Screen(Game, isInTutorial, screen));
+            if (screen == null)
+            {
+                Game.ChangeScreenState(new Help5Screen(Game, isInTutorial, screen));
+            }
+            else
+            {
+                screen.ChangeScreenState(new Help5Screen(Game, isInTutorial, screen));
+            }
             base.PressA();
         }
 

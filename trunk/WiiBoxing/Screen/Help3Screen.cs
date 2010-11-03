@@ -29,16 +29,23 @@ namespace WiiBoxing3D.Screen
             {
                 Game.ChangeScreenState(new Tutorial1Screen(Game));
             }
-            else
+            else if (screen == null)
             {
                 Game.ChangeScreenState(new Help4Screen(Game, isInTutorial, screen));
+            }
+            else
+            {
+                screen.ChangeScreenState(new Help4Screen(Game, isInTutorial, screen));
             }
             base.PressA();
         }
 
         public override void PressHome()
         {
-            if (screen == null) Game.ChangeScreenState(new MainMenuScreen(Game));
+            if (screen == null)
+            {
+                Game.ChangeScreenState(new MainMenuScreen(Game));
+            }
             else
             {
                 Console.WriteLine("screen is not null is help 3\n");

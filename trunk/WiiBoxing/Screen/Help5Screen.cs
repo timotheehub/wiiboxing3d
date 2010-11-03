@@ -33,15 +33,24 @@ namespace WiiBoxing3D.Screen
             {
                 Game.ChangeScreenState(new MainMenuScreen(Game));
             }
-            else screen.IsPlaying = true;
+            else
+            {
+                screen.IsPlaying = true;
+            }
 
             base.PressA();
         }
 
         public override void PressHome()
         {
-            if (screen == null) Game.ChangeScreenState(new MainMenuScreen(Game));
-            else screen.IsPlaying = true;
+            if (screen == null)
+            {
+                Game.ChangeScreenState(new MainMenuScreen(Game));
+            }
+            else
+            {
+                screen.IsPlaying = true;
+            }
             base.PressHome();
         }
     }

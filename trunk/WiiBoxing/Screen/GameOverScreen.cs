@@ -19,26 +19,35 @@ namespace WiiBoxing3D.Screen{
     public class GameOverScreen : GameScreen{
 
         protected Texture2D backgroundTexture;
-        GameStage gameStage;
+        Player player;
 
         public GameOverScreen(CustomGame game, GamePlayScreen gamePlayScreen)
             : base(game) 
         {
-            this.gameStage = gamePlayScreen.GameStage;
+            this.player = gamePlayScreen.Player;
         }
 
         public override void LoadContent()
         {
-            backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\gameover");
+            if (player.IsDead)
+            {
+                backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\gameOverNoEnergy");
+            }
+            else
+            {
+                backgroundTexture = Game.Content.Load<Texture2D>("BackgroundImage\\gameOverLowScore");
+            }
             base.LoadContent();
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            Rectangle screenRectangle = new Rectangle(Game.GraphicsDevice.Viewport.Width / 4,
-                Game.GraphicsDevice.Viewport.Height / 4,
-                Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height / 2);
+            Rectangle screenRectangle = new Rectangle(
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.1f),
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.2f),
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.8f),
+                Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.5f));
             Game.spriteBatch.Draw(backgroundTexture, screenRectangle, Color.White);
         }
 
