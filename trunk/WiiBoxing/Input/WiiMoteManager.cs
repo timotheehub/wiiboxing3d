@@ -141,9 +141,9 @@ namespace WiiBoxing3D.Input
             if (WiimoteAccel.Length() >= 2)
             {
                 WiimoteSpeed += WiimoteAccel * 0.02f * WIIMOTE_ACCELERATION_SCALING;
-                double s1 = 0.8f * DotProduct(WiimoteSpeed, new Vector3(1, 0, 0));
+                double s1 = DotProduct(WiimoteSpeed, new Vector3(1, 0, 0));
                 double s2 = DotProduct(WiimoteSpeed, new Vector3(0, 0, 1));
-                double s3 = 0.8f *DotProduct(WiimoteSpeed, new Vector3(-1, 0, 0));
+                double s3 = DotProduct(WiimoteSpeed, new Vector3(-1, 0, 0));
                 double sm = Math.Max(Math.Max(s1, s2), s3); // favorite direction
                 if (sm == s1) // left hook
                 {
@@ -179,9 +179,9 @@ namespace WiiBoxing3D.Input
             if (NunchukAccel.Length() >= 2)
             {
                 NunchukSpeed += NunchukAccel * 0.02f * WIIMOTE_ACCELERATION_SCALING;
-                double s1 = 0.8f * DotProduct(NunchukSpeed, new Vector3(1, 0, 0));
+                double s1 = DotProduct(NunchukSpeed, new Vector3(1, 0, 0));
                 double s2 = DotProduct(NunchukSpeed, new Vector3(0, 0, 1));
-                double s3 = 0.8f * DotProduct(NunchukSpeed, new Vector3(-1, 0, 0));
+                double s3 = DotProduct(NunchukSpeed, new Vector3(-1, 0, 0));
                 double sm = Math.Max(Math.Max(s1, s2), s3); // favorite direction
                 if (sm == s1) // left hook
                 {
