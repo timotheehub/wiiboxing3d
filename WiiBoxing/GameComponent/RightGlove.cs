@@ -61,6 +61,10 @@ namespace WiiBoxing3D.GameComponent
                 {
                     IsPunching = false;
                 }
+                else
+                {
+                    IsPunching = true;
+                }
             }
             else
             {

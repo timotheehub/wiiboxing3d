@@ -50,11 +50,11 @@ namespace WiiBoxing3D.Screen
 
             int width = Game.GraphicsDevice.Viewport.Width;
             int height = Game.GraphicsDevice.Viewport.Height;
-            Game.DrawText(new Vector2(width * 0.5f, height * 0.5f), new Vector2(width * 0.002f, width * 0.002f),
+            Game.DrawText(new Vector2(width * 0.5f, height * 0.35f), new Vector2(width * 0.002f, width * 0.002f),
                             "Resume", (selectedOption == 1) ? Color.OrangeRed : Color.Black);
-            Game.DrawText(new Vector2(width * 0.5f, height * 0.6f), new Vector2(width * 0.002f, width * 0.002f),
+            Game.DrawText(new Vector2(width * 0.5f, height * 0.45f), new Vector2(width * 0.002f, width * 0.002f),
                             "Help Screen", (selectedOption == 2) ? Color.OrangeRed : Color.Black);
-            Game.DrawText(new Vector2(width * 0.5f, height * 0.7f), new Vector2(width * 0.002f, width * 0.002f),
+            Game.DrawText(new Vector2(width * 0.5f, height * 0.55f), new Vector2(width * 0.002f, width * 0.002f),
                             "Go to menu", (selectedOption == 3) ? Color.OrangeRed : Color.Black);
 
             base.Draw(gameTime);

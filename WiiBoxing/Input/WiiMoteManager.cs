@@ -28,6 +28,7 @@ namespace WiiBoxing3D.Input
         // Public Properties		:
         // ==========================
         public bool isWiimote;
+        public bool isWiimoteLeft = true;
 
         public float headX = 0;
         public float headY = 0;
@@ -61,8 +62,6 @@ namespace WiiBoxing3D.Input
         Vector2[] IRPositions;
         Vector3 WiimoteSpeed;
         Vector3 NunchukSpeed;
-
-        bool isWiimoteLeft = true;
 
         Dictionary<Guid, Wiimote>
                                     WiimoteMap;
