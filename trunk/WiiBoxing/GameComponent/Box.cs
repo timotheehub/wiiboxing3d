@@ -125,6 +125,7 @@ namespace WiiBoxing3D.GameComponent
                 }
 
                 player.PunchingType = gestureType;
+                player.goodPunch = (gestureType == PunchingType.JAB);
                 hitByGlove(gestureType);
             }
 

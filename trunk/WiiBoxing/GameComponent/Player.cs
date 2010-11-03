@@ -28,6 +28,7 @@ namespace WiiBoxing3D.GameComponent
 
         public PunchingType PunchingType { get { return _PunchingType; }
                     set { DrawTime = DRAW_TIME; _PunchingType = value; } }
+        public bool goodPunch;
         public uint Health;
         public uint Score;
         public Texture2D[] staminaTexture = new Texture2D[20];
@@ -52,6 +53,8 @@ namespace WiiBoxing3D.GameComponent
             GameplayTime = 0;
             Score = 0;
             DrawTime = 0;
+
+            goodPunch = true;
         }
 
         public override string ToString()
@@ -109,7 +112,7 @@ namespace WiiBoxing3D.GameComponent
             {
                 Game.DrawText(new Vector2(Game.GraphicsDevice.Viewport.Width * 0.5f, Game.GraphicsDevice.Viewport.Height * 0.2f),
                         new Vector2(Game.GraphicsDevice.Viewport.Width * 0.004f, Game.GraphicsDevice.Viewport.Width * 0.004f),
-                        GestureToString(PunchingType), Color.DarkGreen);
+                        GestureToString(PunchingType), goodPunch ? Color.DarkGreen : Color.DarkRed);
             }
             base.Position.Z -= 3;
             base.Draw(CameraProjectionMatrix, CameraViewMatrix);
