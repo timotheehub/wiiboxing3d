@@ -6,6 +6,7 @@ using WiiBoxing3D.GameComponent;
 using WiiBoxing3D.Screen;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace WiiBoxing3D.Screen
@@ -88,6 +89,10 @@ namespace WiiBoxing3D.Screen
         public override void Draw(GameTime GameTime)
         {
             base.Draw(GameTime);
+            Game.DrawText(new Vector2(Game.GraphicsDevice.Viewport.Width * 0.90f, Game.GraphicsDevice.Viewport.Height * 0.10f),
+                      new Vector2(Game.GraphicsDevice.Viewport.Width * 0.001f, Game.GraphicsDevice.Viewport.Width * 0.001f),
+                      "GOAL: " + MininumScore.ToString(),
+                      (Player.Score >= MininumScore) ? Color.DarkGreen : Color.DarkRed);
             if (IsPlaying == false)
             {
                 SubScreen.Draw(GameTime);
@@ -258,7 +263,7 @@ namespace WiiBoxing3D.Screen
             if ((PunchingBagManager.allCollidableObjectsAreDead)
                 || (Player.Position.Z > PunchingBagManager.lastPunchingBag))
             {
-                if (Player.Score > MininumScore)
+                if (Player.Score >= MininumScore)
                 {
                     IsPlaying = false;
                     ChangeScreenState(new GameClearScreen(Game, this));

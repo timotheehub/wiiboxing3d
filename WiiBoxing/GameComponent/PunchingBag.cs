@@ -4,6 +4,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
 using WiiBoxing3D.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace WiiBoxing3D.GameComponent
 {
@@ -14,6 +15,7 @@ namespace WiiBoxing3D.GameComponent
         // Protected Constants		:
         // ==========================
         protected const int HIT_TIME = 20;	// in game frames
+        protected const string SoundJabAsset = @"Audio\metalSound";
 
 
         // Public Properties		:
@@ -33,6 +35,8 @@ namespace WiiBoxing3D.GameComponent
         protected Player player;
         protected int CurrentHitTime = 0;
 
+        private SoundEffect soundJab;
+
 
         // Initialization			:
         // ==========================
@@ -43,12 +47,21 @@ namespace WiiBoxing3D.GameComponent
             this.player = player;
             Rotation = new Vector3(0, 3.14f, 0);
             Scale = new Vector3(0.008f);
+            soundJab = null;
         }
 
         override
         public string ToString()
         {
             return "Punching Bag at " + Position;
+        }
+
+        public override void LoadContent()
+        {
+            soundJab = Game.Content.Load<SoundEffect>(SoundJabAsset);
+            Rotation.X = 0;
+
+            base.LoadContent();
         }
 
         override
@@ -95,6 +108,10 @@ namespace WiiBoxing3D.GameComponent
                     {
                         gestureType = Game.wiimoteManager.RecognizeLeftHandGesture();
                     }
+                    else
+                    {
+                        gestureType = Game.keyboardManager.RecognizeLeftHandGesture();
+                    }
                 }
                 else if (e.ObjectCollidedWith.GetType() == typeof(RightGlove))
                 {
@@ -103,13 +120,24 @@ namespace WiiBoxing3D.GameComponent
                     {
                         gestureType = Game.wiimoteManager.RecognizeRightHandGesture();
                     }
+                    else
+                    {
+                        gestureType = Game.keyboardManager.RecognizeRightHandGesture();
+                    }
                 }
 
                 player.PunchingType = gestureType;
                 hitByGlove(gestureType);
             }
 
-            base.OnCollidedHandler(sender, e);
+            if ((Type == PunchingBagType.BLACK) && (gestureType == PunchingType.JAB))
+            {
+                if (soundJab != null) soundJab.Play();
+            }
+            else
+            {
+                base.OnCollidedHandler(sender, e);
+            }
         }
 
     }
