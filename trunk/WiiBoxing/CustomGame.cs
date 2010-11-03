@@ -64,8 +64,9 @@ namespace WiiBoxing3D
             wiimoteManager = new WiimoteManager(this);
             gameScreen = new MainMenuScreen(this);
 
-            isStage2Cleared = false;
-            isStage3Cleared = false;
+            // TODO : to change to false
+            isStage2Cleared = true;
+            isStage3Cleared = true;
 
             Content.RootDirectory = contentLocation;
         }
@@ -211,6 +212,11 @@ namespace WiiBoxing3D
                 bkgrdMusicInstance.Play();
                 lastSoundName = soundName;
             }
+        }
+
+        public void ScreenPressA()
+        {
+            gameScreen.PressA();
         }
     }
 }

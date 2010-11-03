@@ -117,6 +117,7 @@
     <Compile Include="Screen\Game2DScreen.cs" />
     <Compile Include="Screen\Game3DScreen.cs" />
     <Compile Include="Screen\GameClearScreen.cs" />
+    <Compile Include="Screen\GameHelpScreen.cs" />
     <Compile Include="Screen\GameOverScreen.cs" />
     <Compile Include="Screen\GamePlayScreen.cs" />
     <Compile Include="Screen\GameScreen.cs" />
