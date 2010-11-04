@@ -19,7 +19,7 @@ namespace WiiBoxing3D.GameComponent
         const int DRAW_TIME = 60;
 
         public const uint DAMAGE_TAKEN = 5;
-        public const uint MAX_HEALTH = 85;
+        public const uint MAX_HEALTH = 90;
         public const uint BASIC_SCORE = 10;           // score of one successful punch
         public const uint DESTROY_SCORE = 20;           // score of destroying one punchbag
 
@@ -69,7 +69,7 @@ namespace WiiBoxing3D.GameComponent
             //load StaminaBar texture according to current health
             string path = "StaminaBar\\SB";
             string pathDefined;
-            for (int i = 1; i <= 18; i++)
+            for (int i = 1; i <= 19; i++)
             {
                 pathDefined = path + i;
                 staminaTexture[i] = Game.Content.Load<Texture2D>(pathDefined);
@@ -119,7 +119,7 @@ namespace WiiBoxing3D.GameComponent
             base.Position.Z += 3;
 
            Rectangle screenRectangle = new Rectangle(0, 0, Convert.ToInt32(Game.GraphicsDevice.Viewport.Width * 0.4f), Convert.ToInt32(Game.GraphicsDevice.Viewport.Height * 0.14f));
-           int picNo = (int)(((MAX_HEALTH * 1.0f - Health * 1.0f) / (MAX_HEALTH * 1.0f) * 17) + 1);
+           int picNo = (int)(((MAX_HEALTH * 1.0f - Health * 1.0f) / (MAX_HEALTH * 1.0f) * 18) + 1);
            Game.spriteBatch.Draw(staminaTexture[picNo], screenRectangle, Color.White);
         }
 
