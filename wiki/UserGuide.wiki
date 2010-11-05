@@ -10,7 +10,7 @@ With head-tracking employed, your view changes with the movement of your head. F
 
 1. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Game_Requirements"> Game Requirements </a>
 
-2. <a href = "http://code.google.com/p/wiiboxing3d/Installation"> Installation </a>
+2. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Installation"> Installation </a>
 
 3. Game Play
 
