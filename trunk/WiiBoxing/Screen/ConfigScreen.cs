@@ -11,9 +11,11 @@ namespace WiiBoxing3D.Screen {
 		private const float UNSELECTED_SIZE	= 0.35f;
 		private const float SELECTED_SIZE	= 0.7f;
 		private const float SCALE_STEP		= 0.025f;
-		private const float POSITION_STEP	= 0.019f;
+		private const float POSITION_STEP	= 0.0175f;
 		private const float BUTTON_Y		= 0.275f;
 		private const float RIGHT_LIMIT		= 0.650f;
+
+		private static Color HIGHLIGHT		= Color.Yellow;
 
 		private static Rectangle CIRCLE_PART = new Rectangle ( 684 , 471 , 35 , 35 );
 
@@ -25,6 +27,8 @@ namespace WiiBoxing3D.Screen {
 		private Vector2 leftPosition;
 		private Vector2 rightScale;
 		private Vector2 rightPosition;
+		private Vector2 selectedScale;
+		private Vector2 selectedPosition;
 
 		public ConfigScreen ( CustomGame Game ) : base ( Game ) {
 			selectedOption = Game.wiimoteManager.isWiimoteLeft;
@@ -35,14 +39,14 @@ namespace WiiBoxing3D.Screen {
 			int width = Game.GraphicsDevice.Viewport.Width;
 			int height = Game.GraphicsDevice.Viewport.Height;
 
-			leftScale = new Vector2 ( 1 , 1 ) * ( selectedOption ? SELECTED_SIZE : UNSELECTED_SIZE );
+			leftScale = Vector2.One * ( selectedOption ? SELECTED_SIZE : UNSELECTED_SIZE );
 			leftPosition = new Vector2 ( width * 0.075f , height * BUTTON_Y );
 
 			rightScale = Vector2.One * ( !selectedOption ? SELECTED_SIZE : UNSELECTED_SIZE );
-			rightPosition = new Vector2 ( width * ( 0.381f + ( selectedOption ? 0.269f : 0 ) ) , height * BUTTON_Y );
+			rightPosition = new Vector2 ( width * ( 0.411f + ( selectedOption ? 0.269f : 0 ) ) , height * BUTTON_Y );
 
 			backgroundTexture = Game.Content.Load < Texture2D > ( @"BackgroundImage\background" );
-			buttonTexture = Game.Content.Load < Texture2D > ( @"BackgroundImage\background" );		// load one only, left and right are flipped
+			buttonTexture = Game.Content.Load < Texture2D > ( @"BackgroundImage\controller" );		// load one only, left and right are flipped
 			circleTexture = Game.Content.Load < Texture2D > ( @"BackgroundImage\tutorialscreenhowtoplayW" );
 
 			base.LoadContent ();
@@ -95,7 +99,7 @@ namespace WiiBoxing3D.Screen {
 						isAnimating = false;
 					else { }
 				else
-					if ( leftScale.X + leftChange <= UNSELECTED_SIZE )
+					if ( leftScale.X + 2 * leftChange <= UNSELECTED_SIZE )
 						isAnimating = false;
 					else { }
 
@@ -109,8 +113,15 @@ namespace WiiBoxing3D.Screen {
 				}
 			}
 
-			Game.spriteBatch.Draw ( buttonTexture , leftPosition , null , Color.White , 0 , Vector2.Zero , leftScale , SpriteEffects.None , 0 );
+			selectedScale = ( selectedOption ? leftScale : rightScale ) * 1.05f;
+			selectedPosition = ( selectedOption ? leftPosition : rightPosition );
+			selectedPosition.X -= 13f;
+			selectedPosition.Y -= 11f;
+
+			Game.spriteBatch.Draw ( buttonTexture , selectedPosition , null , HIGHLIGHT , 0 , Vector2.Zero , selectedScale , ( selectedOption ? SpriteEffects.FlipHorizontally : SpriteEffects.None ) , 0 );
+			Game.spriteBatch.Draw ( buttonTexture , leftPosition , null , Color.White , 0 , Vector2.Zero , leftScale , SpriteEffects.FlipHorizontally , 0 );
 			Game.spriteBatch.Draw ( buttonTexture , rightPosition , null , Color.White , 0 , Vector2.Zero , rightScale , SpriteEffects.None , 0 );
+
 		}
 
 		public override void PressA () {
