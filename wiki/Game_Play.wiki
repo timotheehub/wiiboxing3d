@@ -1,0 +1,31 @@
+#Introduces elements of the game such as the gestures needed and the punching bag; Also introduces how to play the game
+
+
+Types of gestures 
+  - left and right hook <insert picture>
+  - punch <insert picture>
+
+Types of punching bags
+  - wood
+  - metal
+  - red
+  - blue
+  - black
+
+Box
+  - what is it (picture)
+  - how to hit it
+  - replenish stamina points
+
+
+
+
+
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
