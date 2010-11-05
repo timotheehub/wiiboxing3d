@@ -11,13 +11,13 @@ namespace WiiBoxing3D.Screen
 {
     public class MainMenuScreen : Game2DScreen
     {
-        protected int selectedOption;
+        protected static int selectedOption = 1;
         protected const int NUMBER_OF_OPTIONS = 5;
 
         public MainMenuScreen(CustomGame Game)
             : base(Game)
         {
-            selectedOption = 1;
+            //selectedOption = 1;
         }
 
         // Public Methods			:
@@ -65,6 +65,7 @@ namespace WiiBoxing3D.Screen
                     Game.ChangeScreenState(new CareerMenuScreen(Game));
                     break;
                 case 3:
+					Game.ChangeScreenState ( new ConfigScreen ( Game ) );
                     break;
                 case 4:
                     Game.ChangeScreenState(new Help1Screen(Game, false, null));
