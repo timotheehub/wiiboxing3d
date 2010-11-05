@@ -1,11 +1,13 @@
-
 There are several programs that you need to have for the game to run:
 
-- .NET Framework 3.5, which is provided in Visual C# 2008
-- XNA Framework Redistributable 3.1, which is provided in XNA 3.1
+  - .NET Framework 3.5, which is provided in Visual C# 2008
+
+  - XNA Framework Redistributable 3.1, which is provided in XNA 3.1
 
 There are also several devices that you should have to play the game:
 
-- bluetooth-enabled computer <insert picture>
-- IR glasses <insert picture>
-- 2 Wiimotes <insert picture>
+  - bluetooth-enabled computer <insert picture>
+  
+  - IR glasses <insert picture>
+  
+  - 2 Wiimotes <insert picture>
