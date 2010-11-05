@@ -1,7 +1,6 @@
 Hello! Welcome to the Wiiboxing 3D user guide! 
 
-<a href="http://s301.photobucket.com/albums/nn53/schlart/?action=view&current=logo.png" target="_blank"><img src="http://i301.photobucket.com/albums/nn53/schlart/logo.png" border="0" alt="cs3249 logo"></a>
-
+<a href="http://s301.photobucket.com/albums/nn53/schlart/?action=view&current=logo-1.png" target="_blank"><img src="http://i301.photobucket.com/albums/nn53/schlart/logo-1.png" border="0" alt="Photobucket">
 
 Wiiboxing 3D is a boxing video game built on the Wii platform. The game uses head-tracking and 3D visual effects to give a life-like experience to the player.
 
