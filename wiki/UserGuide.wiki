@@ -1,14 +1,17 @@
-Hello! Welcome to the wiiboxing3d user guide! 
+Hello! Welcome to the Wiiboxing 3D user guide! 
 
-Wii Boxing 3D is a boxing video game built on the Wii platform. The game uses head-tracking and 3D visual effects to give a life-like experience to the player.
+<a href="http://s301.photobucket.com/albums/nn53/schlart/?action=view&current=logo.png" target="_blank"><img src="http://i301.photobucket.com/albums/nn53/schlart/logo.png" border="0" alt="cs3249 logo"></a>
+
+
+Wiiboxing 3D is a boxing video game built on the Wii platform. The game uses head-tracking and 3D visual effects to give a life-like experience to the player.
 
 You are moving forward in a long corridor, hanging from the ceilings of this corridor are punching bags that are of different colors and materials. Your goal is to punch the bags as they get close to you. 
 
 With head-tracking employed, your view changes with the movement of your head. For example, if you lean over in order to reach a bag, the screen perspective changes accordingly, as in real life. Similarly, if you turn your head left or right, your perspective will change. This gives an immersive feel to the game.
 
-1. <a href = "http://code.google.com/p/wiiboxing3d/w/edit/Game_Requirements"> Game Requirements </a>
+1. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Game_Requirements"> Game Requirements </a>
 
-2. <a href = "http://code.google.com/p/wiiboxing3d/w/edit/Installation"> Installation </a>
+2. <a href = "http://code.google.com/p/wiiboxing3d/Installation"> Installation </a>
 
 3. Game Play
 
