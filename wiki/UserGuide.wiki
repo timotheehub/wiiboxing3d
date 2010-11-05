@@ -1,23 +1,27 @@
 Hello! Welcome to the wiiboxing3d user guide! 
 
+Wii Boxing 3D is a boxing video game built on the Wii platform. The game uses head-tracking and 3D visual effects to give a life-like experience to the player.
 
+You are moving forward in a long corridor, hanging from the ceilings of this corridor are punching bags that are of different colors and materials. Your goal is to punch the bags as they get close to you. 
 
-1. = Game Requirements = 
+With head-tracking employed, your view changes with the movement of your head. For example, if you lean over in order to reach a bag, the screen perspective changes accordingly, as in real life. Similarly, if you turn your head left or right, your perspective will change. This gives an immersive feel to the game.
 
-There are several programs that you need to have for the game to run:
+1. <a href = "http://code.google.com/p/wiiboxing3d/w/edit/Game_Requirements"> Game Requirements </a>
 
-  - .NET Framework 3.5, which is provided in <a href = "http://www.microsoft.com/express/Downloads/#2008-Visual-CS">Visual C# 2008</a>
+2. <a href = "http://code.google.com/p/wiiboxing3d/w/edit/Installation"> Installation </a>
 
-  - XNA Framework Redistributable 3.1, which is provided in <a href = "http://www.microsoft.com/downloads/en/details.aspx?FamilyID=80782277-d584-42d2-8024-893fcd9d3e82&displaylang=en">XNA 3.1</a> 
+3. Game Play
 
-There are also several devices that you should have for the game to run:
+  - Gestures, types of punches, using the nunchuk and wii
 
-  - bluetooth-enabled computer <insert picture>
+  - Elements in the game, the types of punching bags + boxes, punch type needed to clear    those obstacles
 
-  - IR glasses <insert picture>
+  - Stamina bar, points, levels i.e. how to win, lose points etc
 
-  - 2 Wiimotes <insert picture>
+4. Configurations
 
-2. = Installation =
+  - left/ right hand config
 
-3. = 
+5. FAQ / Problems
+
+6. Contact Us
