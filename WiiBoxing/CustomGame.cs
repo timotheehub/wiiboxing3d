@@ -64,9 +64,8 @@ namespace WiiBoxing3D
             wiimoteManager = new WiimoteManager(this);
             gameScreen = new MainMenuScreen(this);
 
-            // TODO : to change to false
-            isStage2Cleared = true;
-            isStage3Cleared = true;
+            isStage2Cleared = false;
+            isStage3Cleared = false;
 
             Content.RootDirectory = contentLocation;
         }
@@ -83,9 +82,9 @@ namespace WiiBoxing3D
         {
             IsFixedTimeStep = false; // No minimal framerate
 
-            graphics.PreferredBackBufferWidth = 1080;
-            graphics.PreferredBackBufferHeight = 720;
-            graphics.IsFullScreen = false;
+            graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferredBackBufferHeight = 768;
+            graphics.IsFullScreen = true;
             graphics.PreferMultiSampling = true;
 
             graphics.ApplyChanges();

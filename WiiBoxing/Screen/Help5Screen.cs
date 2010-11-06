@@ -35,7 +35,7 @@ namespace WiiBoxing3D.Screen
             }
             else
             {
-                screen.IsPlaying = true;
+                screen.ChangeScreenState(new PauseMenuScreen(Game, screen));
             }
 
             base.PressA();
