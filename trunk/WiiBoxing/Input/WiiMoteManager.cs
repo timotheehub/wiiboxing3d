@@ -24,11 +24,14 @@ namespace WiiBoxing3D.Input
         // Private Constants		:
         // ==========================
         const int MAX_IR_SENSORS = 4;
+        const float WIIMOTE_ACCELERATION_SCALING = 500;
+        const float IS_HOOK = 3.0f;
+        const float MAX_POSSIBLE_SPEED = 100.0f;
 
         // Public Properties		:
         // ==========================
         public bool isWiimote;
-        public bool isWiimoteLeft = true;
+        public bool isWiimoteLeft = false;
 
         public float headX = 0;
         public float headY = 0;
@@ -55,6 +58,62 @@ namespace WiiBoxing3D.Input
             }
         }
 
+        public float maxLeftHandLeftOffset
+        {
+            get
+            {
+                if (isWiimoteLeft) return maxWiimoteLeft;
+                else return maxNunchukLeft;
+            }
+            set
+            {
+                if (isWiimoteLeft) maxWiimoteLeft = value;
+                else maxNunchukLeft = value;
+            }
+        }
+
+        public float maxLeftHandRightOffset
+        {
+            get
+            {
+                if (isWiimoteLeft) return maxWiimoteRight;
+                else return maxNunchukRight;
+            }
+            set
+            {
+                if (isWiimoteLeft) maxWiimoteRight = value;
+                else maxNunchukRight = value;
+            }
+        }
+
+        public float maxRightHandLeftOffset
+        {
+            get
+            {
+                if (isWiimoteLeft) return maxNunchukLeft;
+                else return maxWiimoteLeft;
+            }
+            set
+            {
+                if (isWiimoteLeft) maxNunchukLeft = value;
+                else maxWiimoteLeft = value;
+            }
+        }
+
+        public float maxRightHandRightOffset
+        {
+            get
+            {
+                if (isWiimoteLeft) return maxNunchukRight;
+                else return maxWiimoteRight;
+            }
+            set
+            {
+                if (isWiimoteLeft) maxNunchukRight = value;
+                else maxWiimoteRight = value;
+            }
+        }
+
 
         // Private Properties		:
         // ==========================
@@ -68,9 +127,11 @@ namespace WiiBoxing3D.Input
         Dictionary<Guid, Wiimote>
                                     WiimoteMap;
         WiimoteCollection Wiimotes;
-        List<PunchingType> wiimoteGesturesList;
-        List<PunchingType> nunchukGesturesList;
 
+        float maxWiimoteLeft;
+        float maxWiimoteRight;
+        float maxNunchukLeft;
+        float maxNunchukRight;
 
         //        float dotDistanceInMM = 5.75f*25.4f;
         float dotDistanceInMM = 8.5f * 25.4f;//width of the wii sensor bar
@@ -80,10 +141,6 @@ namespace WiiBoxing3D.Input
 
         float cameraVerticaleAngle = 0; //begins assuming the camera is point straight forward
         float relativeVerticalAngle = 0; //current head position view angle
-
-        const float WIIMOTE_ACCELERATION_SCALING = 500;
-
-        public PunchingType PunchingType = PunchingType.NOT_INIT;
 
         bool isPressHome = false;
         bool isPressA = false;
@@ -102,7 +159,6 @@ namespace WiiBoxing3D.Input
         public WiimoteManager(CustomGame game)
             : base(game)
         {
-
             WiimoteMap = new Dictionary<Guid, Wiimote>();
             Wiimotes = new WiimoteCollection();
             player = null;
@@ -111,9 +167,11 @@ namespace WiiBoxing3D.Input
             NunchukJoystick = Vector2.Zero;
             WiimoteSpeed = Vector3.Zero;
             NunchukSpeed = Vector3.Zero;
+            maxWiimoteLeft = 0.0f;
+            maxWiimoteRight = 0.0f;
+            maxNunchukLeft = 0.0f;
+            maxNunchukRight = 0.0f;
             isWiimote = false;
-            wiimoteGesturesList = new List<PunchingType>();
-            nunchukGesturesList = new List<PunchingType>();
             IRPositions = new Vector2[MAX_IR_SENSORS] {	Vector2.Zero ,
 																Vector2.Zero ,
 																Vector2.Zero ,
@@ -145,28 +203,10 @@ namespace WiiBoxing3D.Input
             if (WiimoteAccel.Length() >= 2)
             {
                 WiimoteSpeed += WiimoteAccel * Game.GetSeconds(gameTime) * WIIMOTE_ACCELERATION_SCALING;
-                double s1 = DotProduct(WiimoteSpeed, new Vector3(1, 0, 0));
-                double s2 = DotProduct(WiimoteSpeed, new Vector3(0, 0, 1));
-                double s3 = DotProduct(WiimoteSpeed, new Vector3(-1, 0, 0));
-                double sm = Math.Max(Math.Max(s1, s2), s3); // favorite direction
-                if (sm == s1) // left hook
+                WiimoteSpeed.Y = 0;
+                if (WiimoteSpeed.Length() > MAX_POSSIBLE_SPEED)
                 {
-                    WiimoteSpeed.Y = 0;
-                    wiimoteGesturesList.Add(PunchingType.LEFTHOOK);
-                    Console.WriteLine("Wiimote: left");
-                }
-                else if (sm == s2) // punch
-                {
-                    WiimoteSpeed.X = 0;
-                    WiimoteSpeed.Y = 0;
-                    wiimoteGesturesList.Add(PunchingType.JAB);
-                    Console.WriteLine("Wiimote: jab");
-                }
-                else if (sm == s3) // right hook
-                {
-                    WiimoteSpeed.Y = 0;
-                    wiimoteGesturesList.Add(PunchingType.RIGHTHOOK);
-                    Console.WriteLine("Wiimote: right");
+                    WiimoteSpeed *= MAX_POSSIBLE_SPEED / WiimoteSpeed.Length();
                 }
             }
             else
@@ -174,36 +214,19 @@ namespace WiiBoxing3D.Input
                 ReduceSpeed(ref WiimoteSpeed, gameTime);
                 if (WiimoteSpeed.Length() < 0.1f)
                 {
-                    wiimoteGesturesList.Clear();
+                    maxWiimoteLeft = 0.0f;
+                    maxWiimoteRight = 0.0f;
                 }
             }
 
             // Update Nunchuk speed
             if (NunchukAccel.Length() >= 2)
             {
-                NunchukSpeed += NunchukAccel * Game.GetSeconds(gameTime) *WIIMOTE_ACCELERATION_SCALING;
-                double s1 = DotProduct(NunchukSpeed, new Vector3(1, 0, 0));
-                double s2 = DotProduct(NunchukSpeed, new Vector3(0, 0, 1));
-                double s3 = DotProduct(NunchukSpeed, new Vector3(-1, 0, 0));
-                double sm = Math.Max(Math.Max(s1, s2), s3); // favorite direction
-                if (sm == s1) // left hook
+                NunchukSpeed += NunchukAccel * Game.GetSeconds(gameTime) * WIIMOTE_ACCELERATION_SCALING;
+                NunchukSpeed.Y = 0;
+                if (NunchukSpeed.Length() > MAX_POSSIBLE_SPEED)
                 {
-                    NunchukSpeed.Y = 0;
-                    nunchukGesturesList.Add(PunchingType.LEFTHOOK);
-                    Console.WriteLine("Nunchuk: left");
-                }
-                else if (sm == s2) // punch
-                {
-                    NunchukSpeed.X = 0;
-                    NunchukSpeed.Y = 0;
-                    nunchukGesturesList.Add(PunchingType.JAB);
-                    Console.WriteLine("Nunchuk: jab");
-                }
-                else if (sm == s3) // right hook
-                {
-                    NunchukSpeed.Y = 0;
-                    nunchukGesturesList.Add(PunchingType.RIGHTHOOK);
-                    Console.WriteLine("Nunchuk: right");
+                    NunchukSpeed *= MAX_POSSIBLE_SPEED / NunchukSpeed.Length();
                 }
             }
             else
@@ -211,7 +234,8 @@ namespace WiiBoxing3D.Input
                 ReduceSpeed(ref NunchukSpeed, gameTime);
                 if (NunchukSpeed.Length() < 0.1f)
                 {
-                    nunchukGesturesList.Clear();
+                    maxNunchukRight = 0.0f;
+                    maxNunchukLeft = 0.0f;
                 }
             }
         }
@@ -245,87 +269,35 @@ namespace WiiBoxing3D.Input
 
         private PunchingType RecognizeWiimoteGesture()
         {
-            List<PunchingType> gestureGroup = new List<PunchingType>();
-            PunchingType beforeLastGesture = PunchingType.NOT_INIT;
-            PunchingType lastGesture = PunchingType.NOT_INIT;
-
-            // Create groups of gestures
-            for (int i = 0; i < wiimoteGesturesList.Count; i++)
+            if ((maxWiimoteLeft > IS_HOOK) || (maxWiimoteRight > IS_HOOK))
             {
-                if ((wiimoteGesturesList[i] == lastGesture) && (lastGesture != beforeLastGesture))
-                {
-                    gestureGroup.Add(wiimoteGesturesList[i]);
-                }
-            }
-            wiimoteGesturesList.Clear();
-
-            // Analyze group of gestures
-            if (gestureGroup.Count > 3)
-            {
-                return PunchingType.JAB;
-            }
-            else if (gestureGroup.Count != 0)
-            {
-                if (gestureGroup[0] == PunchingType.LEFTHOOK)
+                if (maxWiimoteLeft > maxWiimoteRight)
                 {
                     return PunchingType.LEFTHOOK;
                 }
-                else if (gestureGroup[0] == PunchingType.RIGHTHOOK)
+                else
                 {
                     return PunchingType.RIGHTHOOK;
                 }
-                else
-                {
-                    return PunchingType.JAB;
-                }
             }
-            else
-            {
-                return PunchingType.JAB;
-            }
+            return PunchingType.JAB;
         }
 
 
         private PunchingType RecognizeNunchukGesture()
         {
-            List<PunchingType> gestureGroup = new List<PunchingType>();
-            PunchingType beforeLastGesture = PunchingType.NOT_INIT;
-            PunchingType lastGesture = PunchingType.NOT_INIT;
-
-            // Create groups of gestures
-            for (int i = 0; i < nunchukGesturesList.Count; i++)
+            if ((maxNunchukLeft > IS_HOOK) || (maxNunchukRight > IS_HOOK))
             {
-                if ((nunchukGesturesList[i] == lastGesture) && (lastGesture != beforeLastGesture))
-                {
-                    gestureGroup.Add(nunchukGesturesList[i]);
-                }
-            }
-            nunchukGesturesList.Clear();
-
-            // Analyze group of gestures
-            if (gestureGroup.Count > 3)
-            {
-                return PunchingType.JAB;
-            }
-            else if (gestureGroup.Count != 0)
-            {
-                if (gestureGroup[0] == PunchingType.LEFTHOOK)
+                if (maxNunchukLeft > maxNunchukRight)
                 {
                     return PunchingType.LEFTHOOK;
                 }
-                else if (gestureGroup[0] == PunchingType.RIGHTHOOK)
+                else
                 {
                     return PunchingType.RIGHTHOOK;
                 }
-                else
-                {
-                    return PunchingType.JAB;
-                }
             }
-            else
-            {
-                return PunchingType.JAB;
-            }
+            return PunchingType.JAB;
         }
 
         // Connection-related Methods :
@@ -572,15 +544,15 @@ namespace WiiBoxing3D.Input
 
         private void ReduceSpeed(ref Vector3 speed, GameTime gameTime)
         {
-            const float DECELERATION = 300.0f;
+            const float DECELERATION = 1000.0f;
 
-            if (speed.X > 1.0f) speed.X -= DECELERATION * Game.GetSeconds(gameTime);
-            else if (speed.X < -1.0f) speed.X += DECELERATION * Game.GetSeconds(gameTime);
-            else if (speed.Y > 1.0f) speed.Y -= DECELERATION * Game.GetSeconds(gameTime);
-            else if (speed.Y < -1.0f) speed.Y += DECELERATION * Game.GetSeconds(gameTime);
-            else if (speed.Z > 1.0f) speed.Z -= DECELERATION * Game.GetSeconds(gameTime);
-            else if (speed.Z < -1.0f) speed.Z += DECELERATION * Game.GetSeconds(gameTime);
-            else speed *= 0.6f;
+            if (speed.X > 10.0f) speed.X -= DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.X < -10.0f) speed.X += DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.Y > 10.0f) speed.Y -= DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.Y < -10.0f) speed.Y += DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.Z > 10.0f) speed.Z -= DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.Z < -10.0f) speed.Z += DECELERATION * Game.GetSeconds(gameTime);
+            else speed *= 0.2f;
         }
 
         // Conversion Methods :
@@ -602,16 +574,6 @@ namespace WiiBoxing3D.Input
         private Vector3 pt_to_vect(Point3F p)
         {
             return new Vector3(p.X, p.Y, p.Z);
-        }
-
-        private double DotProduct(Vector3 v1, Vector3 v2)
-        {
-            return
-            (
-               v1.X * v2.X +
-               v1.Y * v2.Y +
-               v1.Z * v2.Z
-            );
         }
 
     }

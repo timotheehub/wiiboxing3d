@@ -97,7 +97,7 @@ namespace WiiBoxing3D.GameComponent
                 punchesNeeded = 0;
                 return;
             }
-            else
+            else if (CurrentHitTime <= 0)
             {
                 if (e.ObjectCollidedWith.GetType() == typeof(LeftGlove))
                 {
@@ -127,17 +127,18 @@ namespace WiiBoxing3D.GameComponent
                 player.PunchingType = gestureType;
                 player.goodPunch = (gestureType == PunchingType.JAB);
                 hitByGlove(gestureType);
+
+                if ((gestureType == PunchingType.JAB)
+                    || (gestureType == PunchingType.NOT_INIT))
+                {
+                    base.OnCollidedHandler(sender, e);
+                }
+                else
+                {
+                    if (soundHook != null) soundHook.Play();
+                }
             }
 
-            if ((gestureType == PunchingType.JAB)
-                || (gestureType == PunchingType.NOT_INIT)) 
-            {
-                base.OnCollidedHandler(sender, e);
-            }
-            else
-            {
-                if (soundHook != null) soundHook.Play();
-            }
         }
 
     }

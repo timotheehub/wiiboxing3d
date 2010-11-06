@@ -1,5 +1,4 @@
 ﻿
-// TODO : Insert ImpactSFXAsset for derived PunchingBags
 /// <Instructions>
 /// To specify the sound asset to be used as the ImpactSFX,
 /// add the string name of the asset as the second parameter

@@ -12,7 +12,7 @@ namespace WiiBoxing3D.Screen
     {
         public Level1Screen(CustomGame game) : base(game)
         {
-            PlayerSpeed = 1.0f;
+            PlayerSpeed = 1.5f;
             GameStage = GameStage.CAREER1;
             MininumScore = 500;
         }

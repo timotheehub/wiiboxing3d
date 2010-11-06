@@ -57,7 +57,7 @@ namespace WiiBoxing3D.GameComponent
             if (Game.wiimoteManager.isWiimote)
             {
                 // Nunchuk no movement
-                if (Game.wiimoteManager.RightSpeed.Length() < 0.1f)
+                if (Game.wiimoteManager.RightSpeed.Length() < 0.2f)
                 {
                     IsPunching = false;
                 }
@@ -89,6 +89,11 @@ namespace WiiBoxing3D.GameComponent
                 else if (relative_offset.Z < -1.0f) relative_offset.Z += speed * Game.GetSeconds(GameTime);
                 else relative_offset *= 0.8f;
             }
+
+            Game.wiimoteManager.maxRightHandLeftOffset =
+                        Math.Max(Game.wiimoteManager.maxRightHandLeftOffset, relative_offset.X);
+            Game.wiimoteManager.maxRightHandRightOffset =
+                        Math.Max(Game.wiimoteManager.maxRightHandRightOffset, -relative_offset.X);
 
             this.Position = player_position + OFF_SET + relative_offset;
         }

@@ -11,6 +11,8 @@ namespace WiiBoxing3D.GameComponent
     {
         public Vector3 OFF_SET = new Vector3(1, -0.8f, 2.3f);      //original position w.r.t player position
         public Vector3 relative_offset;   //relative position w.r.t player position
+        public float maxLeftRelativeOffset;
+        public float maxRightRelativeOffset;
 
         public LeftGlove(CustomGame game, Player player)
             : base(game, player, "")
@@ -59,7 +61,7 @@ namespace WiiBoxing3D.GameComponent
             if (Game.wiimoteManager.isWiimote)
             {
                 // Wiimote no movement
-                if (Game.wiimoteManager.LeftSpeed.Length() < 0.1f)
+                if (Game.wiimoteManager.LeftSpeed.Length() < 0.2f)
                 {
                     IsPunching = false;
                 }
@@ -91,6 +93,11 @@ namespace WiiBoxing3D.GameComponent
                 else if (relative_offset.Z < -1.0f) relative_offset.Z += speed * Game.GetSeconds(GameTime);
                 else relative_offset *= 0.8f;
             }
+
+            Game.wiimoteManager.maxLeftHandLeftOffset =
+                        Math.Max(Game.wiimoteManager.maxLeftHandLeftOffset, relative_offset.X);
+            Game.wiimoteManager.maxLeftHandRightOffset =
+                        Math.Max(Game.wiimoteManager.maxLeftHandRightOffset, -relative_offset.X);
 
             this.Position = player_position + OFF_SET + relative_offset;
         }
