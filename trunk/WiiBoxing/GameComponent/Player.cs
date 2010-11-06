@@ -85,7 +85,7 @@ namespace WiiBoxing3D.GameComponent
                 DrawTime--;
             }
 
-            GameplayTime += GameTime.ElapsedRealTime.TotalSeconds;
+            GameplayTime += Game.GetSeconds(GameTime);
 
             if (Game.keyboardManager.checkKey(Keys.Left, KeyboardEvent.KEY_DOWN, "Left")) Offset.X += MOVE_DISTANCE;
             if (Game.keyboardManager.checkKey(Keys.Right, KeyboardEvent.KEY_DOWN, "Right")) Offset.X -= MOVE_DISTANCE;

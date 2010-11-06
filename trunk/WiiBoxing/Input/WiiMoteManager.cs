@@ -32,14 +32,10 @@ namespace WiiBoxing3D.Input
 
         public float headX = 0;
         public float headY = 0;
-        public float headDist = 2;
+        public float headDist = 1;
         public Player player;
-        bool isPressHome = false;
-        bool isPressA = false;
-        bool isPressLeft = false;
-        bool isPressRight = false;
-        bool isPressUp = false;
-        bool isPressDown = false;
+        public bool needToCallPressA = false;
+        public bool needToCallPressHome = false;
 
         public Vector3 LeftSpeed
         { 
@@ -88,6 +84,14 @@ namespace WiiBoxing3D.Input
         const float WIIMOTE_ACCELERATION_SCALING = 500;
 
         public PunchingType PunchingType = PunchingType.NOT_INIT;
+
+        bool isPressHome = false;
+        bool isPressA = false;
+        bool isPressLeft = false;
+        bool isPressRight = false;
+        bool isPressUp = false;
+        bool isPressDown = false;
+
 
         // Initialization			:
         // ==========================
@@ -140,7 +144,7 @@ namespace WiiBoxing3D.Input
             // Update Wiimote speed
             if (WiimoteAccel.Length() >= 2)
             {
-                WiimoteSpeed += WiimoteAccel * 0.02f * WIIMOTE_ACCELERATION_SCALING;
+                WiimoteSpeed += WiimoteAccel * Game.GetSeconds(gameTime) * WIIMOTE_ACCELERATION_SCALING;
                 double s1 = DotProduct(WiimoteSpeed, new Vector3(1, 0, 0));
                 double s2 = DotProduct(WiimoteSpeed, new Vector3(0, 0, 1));
                 double s3 = DotProduct(WiimoteSpeed, new Vector3(-1, 0, 0));
@@ -167,10 +171,9 @@ namespace WiiBoxing3D.Input
             }
             else
             {
-                WiimoteSpeed *= 0.9f;
-                if (WiimoteSpeed.Length() < 0.001f)
+                ReduceSpeed(ref WiimoteSpeed, gameTime);
+                if (WiimoteSpeed.Length() < 0.1f)
                 {
-                    RecognizeWiimoteGesture(); // DEBUG
                     wiimoteGesturesList.Clear();
                 }
             }
@@ -178,7 +181,7 @@ namespace WiiBoxing3D.Input
             // Update Nunchuk speed
             if (NunchukAccel.Length() >= 2)
             {
-                NunchukSpeed += NunchukAccel * 0.02f * WIIMOTE_ACCELERATION_SCALING;
+                NunchukSpeed += NunchukAccel * Game.GetSeconds(gameTime) *WIIMOTE_ACCELERATION_SCALING;
                 double s1 = DotProduct(NunchukSpeed, new Vector3(1, 0, 0));
                 double s2 = DotProduct(NunchukSpeed, new Vector3(0, 0, 1));
                 double s3 = DotProduct(NunchukSpeed, new Vector3(-1, 0, 0));
@@ -205,10 +208,9 @@ namespace WiiBoxing3D.Input
             }
             else
             {
-                NunchukSpeed *= 0.9f;
-                if (NunchukSpeed.Length() < 0.001f)
+                ReduceSpeed(ref NunchukSpeed, gameTime);
+                if (NunchukSpeed.Length() < 0.1f)
                 {
-                    RecognizeNunchukGesture(); // DEBUG
                     nunchukGesturesList.Clear();
                 }
             }
@@ -477,7 +479,7 @@ namespace WiiBoxing3D.Input
                if (isPressA == false)
                {
                    Console.WriteLine("A");
-                   Game.gameScreen.PressA();
+                   needToCallPressA = true;
                    isPressA = true;
                }
             }
@@ -492,7 +494,7 @@ namespace WiiBoxing3D.Input
                 if (isPressHome == false)
                 {
                     Console.WriteLine("Home");
-                    Game.gameScreen.PressHome();
+                    needToCallPressHome = true;
                     isPressHome = true;
                 }
             }
@@ -566,6 +568,19 @@ namespace WiiBoxing3D.Input
         private void WiimoteExtensionChangedHandler(object sender, WiimoteExtensionChangedEventArgs e)
         {
             Console.WriteLine("Nunchuk " + (e.Inserted ? "attached" : "removed") + "!");
+        }
+
+        private void ReduceSpeed(ref Vector3 speed, GameTime gameTime)
+        {
+            const float DECELERATION = 300.0f;
+
+            if (speed.X > 1.0f) speed.X -= DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.X < -1.0f) speed.X += DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.Y > 1.0f) speed.Y -= DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.Y < -1.0f) speed.Y += DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.Z > 1.0f) speed.Z -= DECELERATION * Game.GetSeconds(gameTime);
+            else if (speed.Z < -1.0f) speed.Z += DECELERATION * Game.GetSeconds(gameTime);
+            else speed *= 0.6f;
         }
 
         // Conversion Methods :

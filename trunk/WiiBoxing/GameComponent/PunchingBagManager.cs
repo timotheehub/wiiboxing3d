@@ -32,7 +32,7 @@ namespace WiiBoxing3D.GameComponent
 
         const uint MAX_PUNCHBAGS = 5;
         const uint DISTANCE_FROM_CENTER = 5;
-        const float MIN_DEPTH = 20;
+        const float MIN_DEPTH = 10;
         const float MAX_DEPTH = 200;
         const float HEIGHT_PUNCHBAGS = -2;
         const float HEIGHT_BOXES = -0.8f;

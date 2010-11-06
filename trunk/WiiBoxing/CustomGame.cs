@@ -81,6 +81,8 @@ namespace WiiBoxing3D
         /// </summary>
         protected override void Initialize()
         {
+            IsFixedTimeStep = false; // No minimal framerate
+
             graphics.PreferredBackBufferWidth = 1080;
             graphics.PreferredBackBufferHeight = 720;
             graphics.IsFullScreen = false;
@@ -212,6 +214,11 @@ namespace WiiBoxing3D
                 bkgrdMusicInstance.Play();
                 lastSoundName = soundName;
             }
+        }
+
+        public float GetSeconds(GameTime gameTime)
+        {
+            return (float)((gameTime.ElapsedRealTime.TotalSeconds == 0.0f) ? 0.02 : gameTime.ElapsedRealTime.TotalSeconds);
         }
     }
 }

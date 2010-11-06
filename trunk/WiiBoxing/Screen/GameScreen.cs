@@ -37,6 +37,7 @@ namespace WiiBoxing3D.Screen
 
         public virtual void Update(GameTime GameTime)
         {
+            // Keyboard
             if (Game.keyboardManager.checkKey(Keys.Up))
             {
                 PressUp();
@@ -68,6 +69,18 @@ namespace WiiBoxing3D.Screen
             if (Game.keyboardManager.checkKey(Keys.Home))
             {
                 PressPause();
+            }
+
+            // Wiimote : A & Home
+            if (Game.wiimoteManager.needToCallPressA)
+            {
+                Game.wiimoteManager.needToCallPressA = false;
+                PressA();
+            }
+            if (Game.wiimoteManager.needToCallPressHome)
+            {
+                Game.wiimoteManager.needToCallPressHome = false;
+                PressHome();
             }
         }
 
