@@ -46,18 +46,18 @@ namespace WiiBoxing3D.GameComponent
             BoundingSphere currentModelBounds = Mesh.BoundingSphere;
             currentModelBounds.Center = new Vector3(Position.X, 0, Position.Z);
 
-            // If it's a player, the space of collision is smaller. Yeah, this is called cheating :D
+            // If the wiimote is used, the space of collision is a bit larger.
             if (CollidableObject.GetType() == typeof(Player))
             {
-                currentModelBounds.Radius = 1.0f;
+                currentModelBounds.Radius = 1.4f;
             }
             else if (Game.wiimoteManager.isWiimote)
             {
-                currentModelBounds.Radius = 1.5f;
+                currentModelBounds.Radius = 1.6f;
             }
             else
             {
-                currentModelBounds.Radius = 1.2f;
+                currentModelBounds.Radius = 1.4f;
             }
 
             BoundingSphere checkModelBounds = CollidableObject.Mesh.BoundingSphere;

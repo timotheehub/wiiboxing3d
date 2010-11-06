@@ -65,7 +65,7 @@ namespace WiiBoxing3D.Screen
                     Game.ChangeScreenState(new CareerMenuScreen(Game));
                     break;
                 case 3:
-					Game.ChangeScreenState ( new ConfigScreen ( Game ) );
+                    Game.ChangeScreenState(new ConfigScreen(Game));
                     break;
                 case 4:
                     Game.ChangeScreenState(new Help1Screen(Game, false, null));

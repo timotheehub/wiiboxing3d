@@ -15,7 +15,7 @@ namespace WiiBoxing3D.GameComponent
         // Protected Constants		:
         // ==========================
         protected const int HIT_TIME = 20;	// in game frames
-        protected const string SoundJabAsset = @"Audio\metalSound";
+        protected const string SoundJabAsset = @"Audio\metalJab";
 
 
         // Public Properties		:
