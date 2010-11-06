@@ -14,7 +14,7 @@ With the wiimote and nunchuk in your hands, you can punch the punching bags that
 
 With these punches, you can hit punching bags and the present boxes in the game.
 
-<insert screen of typical game play with punching bags and box>
+<img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/screenshot2.jpg" border="0" alt="Screenie">
 
 Types of punching bags
   - wood
@@ -27,8 +27,6 @@ Box
   - what is it (picture)
   - how to hit it
   - replenish stamina points
-
-
 
 
 
