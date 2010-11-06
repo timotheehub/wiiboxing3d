@@ -6,7 +6,7 @@ Wiiboxing 3D is a boxing video game built on the Wii platform. The game uses hea
 
 You are moving forward in a long corridor, hanging from the ceilings of this corridor are punching bags that are of different colors and materials. Your goal is to punch the bags as they get close to you. 
 
-With head-tracking employed, your view changes with the movement of your head. For example, if you lean over in order to reach a bag, the screen perspective changes accordingly, as in real life. Similarly, if you turn your head left or right, your perspective will change. This gives an immersive feel to the game.
+With head-tracking employed, your view changes with the movement of your head. For example, if you lean over in order to reach a bag, the screen perspective changes accordingly, as in real life. Similarly, if you move laterally, bags far off on either side come closer to you. This gives an immersive feel to the game.
 
 1. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Game_Requirements"> Game Requirements </a>
 
