@@ -13,4 +13,4 @@ There are also several devices that you should have to play the game:
     <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/img5127-1.jpg" border="0" alt="Photobucket">
   
   - 2 Wiimotes + 1 nunchuk 
-    <a href="http://s301.photobucket.com/albums/nn53/schlart/cs3249/?action=view&current=img5090.jpg" target="_blank"><img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/img5090.jpg" border="0" alt="cs3249"></a>
+    <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/img5090.jpg" border="0" alt="cs3249">
