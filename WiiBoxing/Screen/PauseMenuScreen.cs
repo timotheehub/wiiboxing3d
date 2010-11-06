@@ -93,6 +93,7 @@ namespace WiiBoxing3D.Screen
 
         public override void PressHome()
         {
+            Game.ChangeMusic("Audio\\bkgrd");
             gamePlayScreen.IsPlaying = true;
         }
     }
