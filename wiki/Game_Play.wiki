@@ -1,9 +1,20 @@
 #Introduces elements of the game such as the gestures needed and the punching bag; Also introduces how to play the game
 
+With the wiimote and nunchuk in your hands, you can punch the punching bags that come towards you.
 
-Types of gestures 
-  - left and right hook <insert picture>
-  - punch <insert picture>
+=There are 2 types of punches:=
+  
+  1) Punch
+    <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punch.jpg" border="0" alt="cs3249">
+
+*check if punch is the one where have to change direction of fist
+  
+  2) Hook (Left and Right)
+     <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/hook.jpg" border="0" alt="Photobucket">
+
+With these punches, you can hit punching bags and the present boxes in the game.
+
+<insert screen of typical game play with punching bags and box>
 
 Types of punching bags
   - wood
@@ -21,11 +32,3 @@ Box
 
 
 
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
