@@ -65,6 +65,7 @@ namespace WiiBoxing3D.Screen
             switch (selectedOption)
             {
                 case 1:
+                    Game.ChangeMusic("Audio\\bkgrd");
                     gamePlayScreen.IsPlaying = true;
                     break;
                 case 2:
