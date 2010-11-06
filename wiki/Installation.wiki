@@ -16,9 +16,8 @@
 
   - The first wiimote that you paired will be used to track the movements of the other wiimote. Place this wiimote on something behind your computer, which is higher than your computer, like in the following picture:
 
-<a target='_blank' href='http://img841.imageshack.us/i/img5126ql.jpg/'><img src='http://img841.imageshack.us/img841/4162/img5126ql.th.jpg' border='0'/></a>
+  <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/img5126ql.jpg" border="0" alt="cs3249">
 
-Uploaded with <a target='_blank' href='http://imageshack.us'>ImageShack.us</a>
 
   - You still have the second wii-mote to pair, so repeat the procedure above, expect for the last time - you don't have to place this wii-mote anywhere except your hands, as you'll be using this to punch.
 
@@ -26,6 +25,6 @@ Uploaded with <a target='_blank' href='http://imageshack.us'>ImageShack.us</a>
 
  - Open the folder and open the file "WiiBoxing"
 
-<img src="http://i301.photobucket.com/albums/nn53/schlart/Wiiboxingfile.png" border="0" alt="wiiboxing file">
+   <img src="http://i301.photobucket.com/albums/nn53/schlart/Wiiboxingfile.png" border="0" alt="wiiboxing file">
 
  - The file will open in Visual Studio C#. Hit F5 to load the game. You can start playing :)
