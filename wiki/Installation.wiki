@@ -22,8 +22,4 @@
 
   - Make sure your nunchuk is connected to the wiimote, now you're ready to launch the game and start playing!
 
-3. Open the folder and open the file "WiiBoxing"
-
-   <img src="http://i301.photobucket.com/albums/nn53/schlart/Wiiboxingfile.png" border="0" alt="wiiboxing file">
-
-4.  The file will open in Visual Studio C#. Hit F5 to load the game. You can start playing :)
+3. Open the folders in this order to find the .exe file: Wii3dBoxing > WiiBoxing > bin > x86 > WiiBoxing3D. Clicking on the last file, "WiiBoxing3D" will launch the game - you're ready to play!
