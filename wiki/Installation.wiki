@@ -18,13 +18,12 @@
 
   <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/img5126ql.jpg" border="0" alt="cs3249">
 
-
   - You still have the second wii-mote to pair, so repeat the procedure above, expect for the last time - you don't have to place this wii-mote anywhere except your hands, as you'll be using this to punch.
 
   - Make sure your nunchuk is connected to the wiimote, now you're ready to launch the game and start playing!
 
- - Open the folder and open the file "WiiBoxing"
+3. Open the folder and open the file "WiiBoxing"
 
    <img src="http://i301.photobucket.com/albums/nn53/schlart/Wiiboxingfile.png" border="0" alt="wiiboxing file">
 
- - The file will open in Visual Studio C#. Hit F5 to load the game. You can start playing :)
+4.  The file will open in Visual Studio C#. Hit F5 to load the game. You can start playing :)
