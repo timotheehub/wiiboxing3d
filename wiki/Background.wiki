@@ -1,0 +1,4 @@
+#summary Background on Wii Boxing 3D
+
+= Background =
+We are a group of students from National University of Singapore undertaking CS3249 _Elements Of User Interface Design_ in Semester 1 in 2010/2011. In this course, we are break down into 2 different team (Design Team & Implementation Team). A design team of 8 people form and develop the original concept of Wii Boxing 3D by Timothée Ledure. After weeks of developing, the design team came out with a detailed design report and hand it over to the implementation team. The implementation team consist of 7 people were breakdown and assigned to work on different part of the project. During this phase, changes are made to the original report but keeping the main concept of the game. After weeks of implementation, we are proud to present to you, our Wii Boxing 3D! 
