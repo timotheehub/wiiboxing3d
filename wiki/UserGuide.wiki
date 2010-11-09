@@ -8,6 +8,9 @@ You are moving forward in a long corridor, hanging from the ceilings of this cor
 
 With head-tracking employed, your view changes with the movement of your head. For example, if you lean over in order to reach a bag, the screen perspective changes accordingly, as in real life. Similarly, if you move laterally, bags far off on either side come closer to you. This gives an immersive feel to the game.
 
+Here's a short clip on the gameplay:
+<object width="480" height="385"><param name="movie" value="http://www.youtube.com/v/OJNBsoSLLnk?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/OJNBsoSLLnk?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object>
+
 1. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Game_Requirements"> Game Requirements </a>
 
 2. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Installation"> Installation </a>
