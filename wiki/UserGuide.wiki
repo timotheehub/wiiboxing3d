@@ -12,7 +12,7 @@ Here's a short clip on the gameplay:
 
 <wiki:video url="http://www.youtube.com/watch?v=OJNBsoSLLnk"/>
 
-1. Background
+1. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Background">  Background </a>
 
 2. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Game_Requirements"> Game Requirements </a>
 
