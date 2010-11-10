@@ -18,12 +18,4 @@ Here's a short clip on the gameplay:
 
 3. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Installation"> Installation </a>
 
-4. Game Play
-
-  - Gestures, types of punches, using the nunchuk and wii
-
-  - Elements in the game, the types of punching bags + boxes, punch type needed to clear    those obstacles
-
-  - Stamina bar, points, levels i.e. how to win, lose points etc
-
-5. Contact Us
+4. Contact Us
