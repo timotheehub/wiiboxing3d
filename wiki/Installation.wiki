@@ -1,6 +1,6 @@
 #How to install Wiiboxing 3D
 
-1. Download the files from: 
+1. Download our installer from:
 
 2. Before you can start playing, you need to pair the 2 wii-motes with the computer.
 
@@ -22,4 +22,4 @@
 
   - Make sure your nunchuk is connected to the wiimote, now you're ready to launch the game and start playing!
 
-3. Open the folders in this order to find the .exe file: Wii3dBoxing > WiiBoxing > bin > x86 > WiiBoxing3D. Clicking on the last file, "WiiBoxing3D" will launch the game - you're ready to play!
+3. Open the installer to install the game. You're ready to play!
