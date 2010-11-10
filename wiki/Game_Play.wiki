@@ -9,7 +9,6 @@ With the wiimote and nunchuk in your hands, you can punch the punching bags that
   1) Punch
     <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punch.jpg" border="0" alt="cs3249">
 
-*check if punch is the one where have to change direction of fist
   
   2) Hook (Left and Right)
      <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/hook.jpg" border="0" alt="Photobucket">
@@ -20,8 +19,9 @@ With these punches, you can hit punching bags and the present boxes in the game.
 =Types of punching bags=
 <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punchingbags.jpg" border="0" alt="punching bags">
 
-Box
+Present Box
+
+
   - what is it (picture)
   - how to hit it
   - replenish stamina points
-
