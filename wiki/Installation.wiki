@@ -1,6 +1,4 @@
-#How to install Wiiboxing 3D
-
-1. Download our installer from:
+1. Download our installer from: http://code.google.com/p/wiiboxing3d/downloads/list
 
 2. Before you can start playing, you need to pair the 2 wii-motes with the computer.
 
