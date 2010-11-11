@@ -33,7 +33,7 @@ hitting these boxes will replenish the player's stamina and points are given
 
 =Goal Counter=
 
-<img src="http://i1201.photobucket.com/albums/bb358/coremptiness/gameover.png" border="0" alt="Photobucket">
+<img src="http://i1201.photobucket.com/albums/bb358/coremptiness/gameover-1.png" border="0" alt="Photobucket">
 
 For both the tutorials and career mode, there is a goal counter in red at the top right hand corner.
 
