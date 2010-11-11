@@ -1,3 +1,4 @@
+
 With the wiimote and nunchuk in your hands, you can punch the punching bags that come towards you.
 
 <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/screenshot2.jpg" border="0" alt="Screenie">
@@ -6,7 +7,6 @@ With the wiimote and nunchuk in your hands, you can punch the punching bags that
   
   1) Punch
     <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punch.jpg" border="0" alt="cs3249">
-
   
   2) Hook (Left and Right)
      <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/hook.jpg" border="0" alt="Photobucket">
@@ -28,16 +28,10 @@ however, the metal punching bags can only be hit using either left or right hook
 
 <img src="http://i1201.photobucket.com/albums/bb358/coremptiness/present.png" border="0" alt="Photobucket">
 
-the present boxes can only be hit using a jab
-
-hitting these boxes will replenish the player's stamina and points are given
+The present boxes can only be hit using a jab, and hitting these boxes will replenish the player's stamina and give 10 points.
 
 =Goal Counter=
 
 <img src="http://i1201.photobucket.com/albums/bb358/coremptiness/gameover-1.png" border="0" alt="Photobucket">
 
-For both the tutorials and career mode, there is a goal counter in red at the top right hand corner.
-
-The player has to fulfill the goal in order to process to the next level, else he/she has to keep on trying.
-
-Upon completion of level, meeting the goal, the goal counter will turn green as an indication to the player that he/she has cleared the level. 
+For each stage in your career, you have to fulfill a goal, which is a minimum number of points for you to pass your stage. Once you fulfill the goal, the goal counter will turn green and you will have passed the level. If you do not fulfill the goal, you can always try again.
