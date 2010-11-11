@@ -17,17 +17,16 @@ With these punches, you can hit punching bags and the present boxes in the game.
 
 <img src="http://i1201.photobucket.com/albums/bb358/coremptiness/gameover-1.png" border="0" alt="Photobucket">
 
-the number on the punching bags indicate the number of times the player has to hit.
- 
-for every successful hit, the number on the punching back will decrease.
+The number on the punching bags indicate the number of times the you have to hit the bags.
 
-however, the metal punching bags can only be hit using either left or right hook.
+Take note that the metal punching bags can only be hit using either left or right hook! The rest of the bags can be hit with either a hook or a jab.
+
 
 =Present Box=
 
 <img src="http://i1201.photobucket.com/albums/bb358/coremptiness/present.png" border="0" alt="Photobucket">
 
-The present boxes can only be hit using a jab, and hitting these boxes will replenish the player's stamina and give 10 points.
+The present boxes can only be hit using a jab, and hitting these boxes will replenish the your stamina and give you extra 10 points!
 
 =Goal Counter=
 
