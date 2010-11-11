@@ -1,3 +1,5 @@
+#summary Start here!
+
 Hello! Welcome to the Wiiboxing 3D user guide! 
 
 <img src="http://i301.photobucket.com/albums/nn53/schlart/logo-1.png" border="0" alt="Wii Boxing 3D">
