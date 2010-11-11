@@ -15,7 +15,7 @@ With these punches, you can hit punching bags and the present boxes in the game.
 
 =Types of punching bags=
 
-<img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punchingbags.jpg" border="0" alt="punching bags">
+<img src="http://i301.photobucket.com/albums/nn53/schlart/punchingbags.jpg" border="0" alt="punching bag">
 
 The number on the punching bags indicate the number of times the you have to hit the bags.
 
