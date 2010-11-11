@@ -1,4 +1,3 @@
-
 With the wiimote and nunchuk in your hands, you can punch the punching bags that come towards you.
 
 <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/screenshot2.jpg" border="0" alt="Screenie">
@@ -16,7 +15,7 @@ With these punches, you can hit punching bags and the present boxes in the game.
 
 =Types of punching bags=
 
-<img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punchingbags.jpg" border="0" alt="punching bags">
+<img src="http://i1201.photobucket.com/albums/bb358/coremptiness/gameover-1.png" border="0" alt="Photobucket">
 
 the number on the punching bags indicate the number of times the player has to hit.
  
