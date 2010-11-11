@@ -4,11 +4,11 @@ With the wiimote and nunchuk in your hands, you can punch the punching bags that
 
 =There are 2 types of punches=
   
-  1) Punch
-    <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punch.jpg" border="0" alt="cs3249">
+1. Punch
+  <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punch.jpg" border="0" alt="cs3249">
   
-  2) Hook (Left and Right)
-     <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/hook.jpg" border="0" alt="Photobucket">
+2. Hook (Left and Right)
+  <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/hook.jpg" border="0" alt="Photobucket">
 
 With these punches, you can hit punching bags and the present boxes in the game.
 
