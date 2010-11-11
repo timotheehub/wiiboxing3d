@@ -17,9 +17,16 @@ With these punches, you can hit punching bags and the present boxes in the game.
 =Types of punching bags=
 <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punchingbags.jpg" border="0" alt="punching bags">
 
-Present Box
+the number on the punching bags indicate the number of times the player has to hit.
+ 
+for every successful hit, the number on the punching back will decrease.
 
+however, the metal punching bags can only be hit using either left or right hook.
 
-  - what is it (picture)
-  - how to hit it
-  - replenish stamina points
+=Present Box=
+
+<img src="http://i1201.photobucket.com/albums/bb358/coremptiness/present.png" border="0" alt="Photobucket">
+
+the present boxes can only be hit using a jab
+
+hitting these boxes will replenish the player's stamina and points are given
