@@ -30,6 +30,6 @@ The present boxes can only be hit using a jab, and hitting these boxes will repl
 
 =Goal Counter=
 
-<img src="http://i1201.photobucket.com/albums/bb358/coremptiness/gameover-1.png" border="0" alt="Photobucket">
+<img src="http://i1201.photobucket.com/albums/bb358/coremptiness/gameover.png" border="0" alt="Photobucket">
 
 For each stage in your career, you have to fulfill a goal, which is a minimum number of points for you to pass your stage. Once you fulfill the goal, the goal counter will turn green and you will have passed the level. If you do not fulfill the goal, you can always try again.
