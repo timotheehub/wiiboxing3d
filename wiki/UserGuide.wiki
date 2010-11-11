@@ -18,4 +18,6 @@ Here's a short clip on the gameplay:
 
 3. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Installation"> Installation </a>
 
+4. <a href = "https://code.google.com/p/wiiboxing3d/wiki/Game_Play"> Game Play </a>
+
 4. <a href = "http://code.google.com/p/wiiboxing3d/wiki/Contact_Us"> Contact Us </a>
