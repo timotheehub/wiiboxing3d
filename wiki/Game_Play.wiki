@@ -30,3 +30,13 @@ however, the metal punching bags can only be hit using either left or right hook
 the present boxes can only be hit using a jab
 
 hitting these boxes will replenish the player's stamina and points are given
+
+=Goal Counter=
+
+<img src="http://i1201.photobucket.com/albums/bb358/coremptiness/gameover.png" border="0" alt="Photobucket">
+
+For both the tutorials and career mode, there is a goal counter in red at the top right hand corner.
+
+The player has to fulfill the goal in order to process to the next level, else he/she has to keep on trying.
+
+Upon completion of level, meeting the goal, the goal counter will turn green as an indication to the player that he/she has cleared the level. 
