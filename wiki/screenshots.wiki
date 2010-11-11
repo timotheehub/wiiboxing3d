@@ -22,7 +22,8 @@ _Stage Clear_
 <img src="http://img825.imageshack.us/img825/7848/stageclear.jpg" border="0" alt="Wii Boxing 3D"/>
 
 _Tutorial_
-<img src="http://img339.imageshack.us/img339/9928/tut1v.jpg" border="0" alt="Wii Boxing 3D"/>
+
+<img src="http://img339.imageshack.us/img339/9928/tut1v.jpg" border="0" width="541" height="360" alt="Wii Boxing 3D"/>
 <img src="http://img213.imageshack.us/img213/9061/tut2ce.jpg" border="0" alt="Wii Boxing 3D"/>
 <img src="http://img593.imageshack.us/img593/8903/tut3.jpg" border="0" alt="Wii Boxing 3D"/>
 <img src="http://img202.imageshack.us/img202/2819/tut5u.jpg" border="0" alt="Wii Boxing 3D"/>
