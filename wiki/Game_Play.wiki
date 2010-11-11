@@ -4,14 +4,13 @@ With the wiimote and nunchuk in your hands, you can punch the punching bags that
 
 =There are 2 types of punches=
   
-  - Punch
+  1) Punch
     <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/punch.jpg" border="0" alt="cs3249">
   
-  - Hook (Left and Right)
+  2) Hook (Left and Right)
      <img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/hook.jpg" border="0" alt="Photobucket">
 
 With these punches, you can hit punching bags and the present boxes in the game.
-
 
 
 =Types of punching bags=
@@ -23,17 +22,14 @@ The number on the punching bags indicate the number of times the you have to hit
 Take note that the metal punching bags can only be hit using either left or right hook! The rest of the bags can be hit with either a hook or a jab.
 
 
-
 =Present Box=
 
-<img src="http://i1201.photobucket.com/albums/bb358/coremptiness/present.png" border="0" alt="Photobucket">
+<img src="http://i301.photobucket.com/albums/nn53/schlart/cs3249/presentbox.jpg" border="0" alt="Photobucket">
 
 The present boxes can only be hit using a jab, and hitting these boxes will replenish the your stamina and give you extra 10 points!
 
-
-
 =Goal Counter=
 
-<img src="http://i1201.photobucket.com/albums/bb358/coremptiness/gameover.png" border="0" alt="Photobucket">
+<img src="http://i301.photobucket.com/albums/nn53/schlart/gameover.png" border="0" alt="gameover">
 
 For each stage in your career, you have to fulfill a goal, which is a minimum number of points for you to pass your stage. Once you fulfill the goal, the goal counter will turn green and you will have passed the level. If you do not fulfill the goal, you can always try again.
